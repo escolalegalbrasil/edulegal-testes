@@ -12,7 +12,7 @@ Este repositório contém uma **versão experimental da plataforma EduLegal**, s
 
 O modo **Explorar a interface sem login** usa dados demonstrativos.
 
-Os testes completos de login e permissões ainda dependem da criação das contas fictícias no Supabase Auth.
+Em 25/11/2026, **seis contas fictícias do Supabase Auth foram criadas e confirmadas** e associadas a duas escolas, com dois diretores, dois professores e dois alunos. As verificações de RLS com identidades simuladas passaram. **A validação de login real no navegador ainda depende do diretor**, utilizando as senhas que ele definiu.
 
 O ambiente oficial permanece em [escolalegalbrasil/edulegal](https://github.com/escolalegalbrasil/edulegal) e só receberá alterações após testes e aprovação expressa do diretor.
 
@@ -23,7 +23,9 @@ O ambiente oficial permanece em [escolalegalbrasil/edulegal](https://github.com/
 - `painel-acessos.html` — verificação das permissões com contas fictícias.
 
 ## Publicação
-Para ativar o site: **Settings → Pages → Deploy from a branch → main → /(root) → Save**.
+O GitHub informa que o **Pages está habilitado**. Se o site não abrir, conferir em **Settings → Pages** a origem: branch `main`, pasta `/(root)`.
 
-Endereço esperado quando publicado:
+Endereço previsto do laboratório:
 https://escolalegalbrasil.github.io/edulegal-testes/
+
+Consulte [TESTE-LOGIN.md](TESTE-LOGIN.md) para o roteiro de teste com os seis perfis.
