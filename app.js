@@ -55,6 +55,7 @@ function showApp(){
  if(!state.demo&&["director","teacher"].includes(state.role)){
   const b=document.createElement("button");
   b.type="button";b.className="navitem";b.dataset.view="gestao";
+  b.addEventListener("click",()=>navigate("gestao"));
   const t=document.createElement("span");t.dataset.icon="case";b.append(t,document.createTextNode("Painel da escola"));
   menu.appendChild(b);mountIcons(b);
  }
