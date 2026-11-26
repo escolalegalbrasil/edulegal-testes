@@ -1,14 +1,14 @@
 "use strict";
 /* Referencia visual: EduLegal_Laboratorio_Visual(1).html
    Ambiente exclusivo de testes: nenhum dado ou chave de producao. */
-const icons={home:'<path d="m3 10 9-7 9 7v10H15v-6H9v6H3z"/>',book:'<path d="M12 5c-3-3-7-3-10-2v16c4-1 7 0 10 2 3-2 6-3 10-2V3c-3-1-7-1-10 2v16"/>',code:'<path d="m8 6-6 6 6 6m8-12 6 6-6 6m-2-15-4 18"/>',chat:'<path d="M21 11a9 9 0 0 1-9 9 10 10 0 0 1-4-.9L3 21l1.8-5A9 9 0 1 1 21 11z"/><path d="M8 11h.01M12 11h.01M16 11h.01"/>',case:'<rect x="3" y="7" width="18" height="14" rx="2"/><path d="M8 7V4h8v3M3 12h18m-11 0v3h4v-3"/>',user:'<circle cx="12" cy="8" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/>',game:'<path d="M7 6h10c3 0 4 3 5 9s-3 5-6 2H8c-3 3-7 4-6-2s2-9 5-9zM7 9v6m-3-3h6m7-2h.01m3 3h.01"/>',cpu:'<rect x="5" y="5" width="14" height="14" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 2v3m6-3v3M9 19v3m6-3v3M2 9h3m-3 6h3m14-6h3m-3 6h3"/>',pen:'<path d="m3 3 15 5 3 10-3 3-10-3L3 3zm0 0 9 9m0 0a2 2 0 1 0 3 3 2 2 0 0 0-3-3"/>',bulb:'<path d="M9 18h6m-5 3h4M8 15a7 7 0 1 1 8 0l-1 3H9z"/>'};
+const icons={home:'<path d="m3 10 9-7 9 7v10H15v-6H9v6H3z"/>',book:'<path d="M12 5c-3-3-7-3-10-2v16c4-1 7 0 10 2 3-2 6-3 10-2V3c-3-1-7-1-10 2v16"/>',code:'<path d="m8 6-6 6 6 6m8-12 6 6-6 6m-2-15-4 18"/>',chat:'<path d="M21 11a9 9 0 0 1-9 9 10 10 0 0 1-4-.9L3 21l1.8-5A9 9 0 1 1 21 11z"/><path d="M8 11h.01M12 11h.01M16 11h.01"/>',case:'<rect x="3" y="7" width="18" height="14" rx="2"/><path d="M8 7V4h8v3M3 12h18m-11 0v3h4v-3"/>',user:'<circle cx="12" cy="8" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/>',game:'<path d="M7 6h10c3 0 4 3 5 9s-3 5-6 2H8c-3 3-7 4-6-2s2-9 5-9zM7 9v6m-3-3h6m7-2h.01m3 3h.01"/>',cpu:'<rect x="5" y="5" width="14" height="14" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 2v3m6-3v3M9 19v3m6-3v3M2 9h3m-3 6h3m14-6h3m-3 6h3"/>',pen:'<path d="m3 3 15 5 3 10-3 3-10-3L3 3zm0 0 9 9m0 0a2 2 0 1 0 3 3 2 2 0 0 0-3-3"/>',video:'<rect x="3" y="4" width="18" height="16" rx="2"/><path d="m10 8 6 4-6 4z"/>',bulb:'<path d="M9 18h6m-5 3h4M8 15a7 7 0 1 1 8 0l-1 3H9z"/>'};
 const defaults={dark:{bg:'#313338',header:'#232428',sidebar:'#2B2D31',card:'#383A40',feature:'#383A40',border:'#47494F',selected:'#4E5058',title:'#F2F3F5',text:'#DBDEE1',muted:'#B5BAC1',navtext:'#DBDEE1',selectedtext:'#F2F3F5',cardtext:'#F2F3F5',brand:'#F4D78C',accent:'#F4D78C',featurelabel:'#F4D78C',track:'#50535B',progress:'#F4D78C',button:'#4E5058',buttontext:'#F2F3F5',buttonarrow:'#F4D78C',navicon:'#B5BAC1',projectsicon:'#8CB9DA',mentoricon:'#83B89C',robloxicon:'#F4D78C',roboticon:'#8CB9DA',webicon:'#8CB9DA',writeicon:'#83B89C',idea:'#383A40',ideaicon:'#F4D78C',ideatext:'#F4D78C'},light:{bg:'#FBF8EF',header:'#FFFDF8',sidebar:'#F0EEE6',card:'#FFFDF8',feature:'#FFFDF8',border:'#DEDCD3',selected:'#E3E1DA',title:'#253832',text:'#253832',muted:'#626C65',navtext:'#253832',selectedtext:'#253832',cardtext:'#253832',brand:'#A67516',accent:'#F4D78C',featurelabel:'#8A6419',track:'#E3E1DA',progress:'#D6AC50',button:'#E5E3DD',buttontext:'#253832',buttonarrow:'#8A6419',navicon:'#626C65',projectsicon:'#286B98',mentoricon:'#21765E',robloxicon:'#A67516',roboticon:'#286B98',webicon:'#286B98',writeicon:'#21765E',idea:'#FFF8E5',ideaicon:'#A67516',ideatext:'#8A6419'}};
 const API_URL="https://feijoegkjleirfzbumnk.supabase.co";
 const API_KEY="sb_publishable_pzytAyOPleWQVrTnzg22ew_qAcIgVQu";
 const app=window.supabase ? window.supabase.createClient(API_URL,API_KEY) : null;
 const $=id=>document.getElementById(id);
-const state={demo:false,user:null,memberships:[],orgs:[],orgId:null,role:null,trails:[],view:"inicio"};
-const pages=["inicio","livros","projetos","portfolio"];
+const state={demo:false,user:null,memberships:[],orgs:[],orgId:null,role:null,trails:[],view:"inicio",area:null};
+const pages=["inicio","livros","projetos","portfolio","categoria"];
 const clone=x=>JSON.parse(JSON.stringify(x));
 let palettes=clone(defaults);
 let theme="dark";
@@ -121,6 +121,58 @@ const BOOK0_TASKS={
  video:["Escolher uma ideia para animar","Organizar duas ou três cenas","Experimentar uma sequência em movimento"]
 };
 const BOOK0_TITLES={roblox:"Meu Primeiro Obby",robotica:"Minha Primeira Luz",escrita:"Minha Primeira História",web:"Minha Primeira Página",pico8:"Meu Primeiro Jogo 2D",video:"Minha Primeira Animação"};
+/* Seis áreas com páginas próprias: o catálogo de livros será expandido sem duplicar telas.
+   Os links abaixo são SOMENTE para protótipos antigos, que serão refeitos em outro chat. */
+const LEARNING_AREAS=[
+ {id:"roblox",title:"Roblox Studio",icon:"game",intro:"Construa jogos, mundos e desafios com modelagem 3D e programação em Luau."},
+ {id:"robotica",title:"Robótica e Arduino",icon:"cpu",intro:"Explore circuitos, sensores e projetos com eletrônica e programação."},
+ {id:"web",title:"Sites e programação",icon:"code",intro:"Crie páginas e experiências interativas com HTML, CSS e JavaScript."},
+ {id:"escrita",title:"Escrita criativa",icon:"pen",intro:"Invente histórias, personagens e livros com suas próprias ideias."},
+ {id:"pico8",title:"Jogos 2D — PICO-8",icon:"game",intro:"Desenvolva jogos 2D com personagens, cenários e desafios."},
+ {id:"video",title:"Vídeo e animação",icon:"video",intro:"Experimente edição, animação e criação de vídeos."}
+];
+const BOOK_CATALOG=[
+ {id:"obby-prototipo",area:"roblox",title:"Meu Primeiro Obby",desc:"Construção 3D e primeiros Scripts no Roblox Studio.",url:BOOK1_URL,status:"Protótipo provisório — será recriado"}
+];
+function getArea(id){return LEARNING_AREAS.find(a=>a.id===id)||null;}
+function areaBooks(id){return BOOK_CATALOG.filter(b=>b.area===id);}
+function goToArea(id){if(!getArea(id))return;state.area=id;navigate("categoria");}
+function categoryTiles(main){
+ const grid=el("div","tiles area-tiles");
+ for(const area of LEARNING_AREAS){
+  const tile=el("button","tile area-tile");tile.type="button";
+  const symbol=el("span");symbol.dataset.icon=area.icon;
+  const copy=el("span","area-tile-content");
+  copy.append(el("strong","",area.title),el("small","",areaBooks(area.id).length+" livro(s) em demonstração"));
+  tile.append(symbol,copy);
+  tile.addEventListener("click",()=>goToArea(area.id));
+  grid.append(tile);
+ }
+ main.append(grid);mountIcons(grid);
+}
+function renderCategory(main){
+ const area=getArea(state.area);
+ if(!area){main.append(notice("Área não encontrada. Volte à biblioteca."));main.append(navButton("Voltar aos livros →","livros","cta"));return;}
+ main.append(navButton("← Todas as áreas","livros","area-back"));
+ main.append(heading("EXPLORAR ÁREA",area.title));
+ main.append(el("p","area-intro",area.intro));
+ main.append(el("h2","section","Livros desta área"));
+ const books=areaBooks(area.id);
+ if(!books.length)main.append(notice("Ainda não há livros nesta área. Quando forem preparados e revisados, aparecerão aqui."));
+ else{
+  for(const b of books){
+   const card=el("section","continue category-book");
+   card.append(el("div","eyebrow",b.status),el("h2","",b.title),el("p","sub",b.desc));
+   const link=el("a","cta","Abrir protótipo →");link.href=b.url;card.append(link);main.append(card);
+  }
+  main.append(notice("O material acima é um protótipo antigo, ainda em revisão. Os livros definitivos serão desenvolvidos separadamente e adicionados à biblioteca quando estiverem prontos."));
+ }
+ const actions=el("div","home-actions");
+ actions.append(navButton("Planejar um projeto meu →","projetos","soft-btn"));
+ actions.append(navButton("Explorar outra área →","livros","soft-btn"));
+ main.append(actions);
+}
+
 function demoBook0(){
  if(!state.demo)return null;
  try{const d=JSON.parse(sessionStorage.getItem(BOOK0_KEY)||"null");
@@ -233,12 +285,7 @@ function renderHome(main){
   main.append(el("p","meta","Você registrou "+finished.length+" tarefa(s) em “Já terminei”. Elas continuam disponíveis na página Projetos, caso queira revisar."));
  }
  main.append(el("h2","section","Minhas explorações"));
- const tiles=el("div","tiles");
- for(const [title,icon] of [["Roblox Studio","game"],["Robótica","cpu"],["Desenvolvimento Web","code"],["Escrita criativa","pen"]]){
-  const b=navButton(title,"livros","tile");
-  const i=el("span");i.dataset.icon=icon;b.prepend(i);tiles.append(b);
- }
- main.append(tiles);
+ categoryTiles(main);
  const idea=el("div","idea");
  const ico=el("span");ico.dataset.icon="bulb";
  idea.append(ico,el("span","","Pensou em um projeto novo? Você pode planejá-lo mesmo sem livro."));
@@ -250,18 +297,16 @@ function renderHome(main){
 
 function renderBooks(main){
  main.append(heading("BIBLIOTECA","Meus livros"));
- const book0=el("section","continue");
- book0.append(el("div","eyebrow","LIVRO 0 · ACOLHIMENTO"));
- book0.append(el("h2","","Ponto de Partida"));
- book0.append(el("p","sub","Conheça áreas da EduLegal, experimente pequenas atividades e escolha um primeiro projeto."));
- book0.append(demoBookLink("Abrir Livro 0 →"));main.append(book0);
- const book1=el("section","continue");
- book1.style.marginTop="14px";
- book1.append(el("div","eyebrow","LIVRO 1 · ROBLOX STUDIO"));
- book1.append(el("h2","","Meu Primeiro Obby"));
- book1.append(el("p","sub","Construa plataformas, teste obstáculos, experimente propriedades e escreva aos poucos um Script em Luau. Inclui pistas graduais e três modos de orientação."));
- book1.append(demoBook1Link("Abrir Livro 1 →"));main.append(book1);
- main.append(notice("Esses livros ainda são protótipos demonstrativos. Suas respostas não serão salvas no Supabase nem associadas a contas. Use apenas dados fictícios."));
+ const welcome=el("section","continue");
+ welcome.append(el("div","eyebrow","LIVRO DE ACOLHIMENTO · PROTÓTIPO"));
+ welcome.append(el("h2","","Ponto de Partida"));
+ welcome.append(el("p","sub","Comece conhecendo possibilidades. Esta versão é provisória e será recriada."));
+ welcome.append(demoBookLink("Abrir protótipo de acolhimento →"));
+ main.append(welcome);
+ main.append(el("h2","section","Escolha uma área para explorar"));
+ main.append(el("p","meta","Cada área organiza seus próprios livros. Você pode voltar e experimentar outras quando quiser."));
+ categoryTiles(main);
+ main.append(notice("Os livros existentes ainda são protótipos para demonstração. O catálogo crescerá conforme os novos livros forem aprovados."));
 }
 
 function renderProjects(main){
@@ -326,12 +371,21 @@ function renderGestao(main){
  const a=el("a","link","Abrir verificador de acessos (somente leitura)");
  a.href="./painel-acessos.html";main.append(a);
 }
-function navigate(page){
+function navigate(page,fromHistory=false){
  if(!pages.includes(page)&&page!=="gestao")page="inicio";
  if(page==="gestao"&&!["director","teacher"].includes(state.role))page="inicio";
+ if(page==="categoria"&&!getArea(state.area))page="livros";
+ const url=new URL(window.location.href);
+ if(page==="inicio")url.searchParams.delete("view");
+ else url.searchParams.set("view",page);
+ if(page==="categoria")url.searchParams.set("area",state.area);
+ else url.searchParams.delete("area");
+ const desired=url.pathname+url.search+url.hash;
+ const current=window.location.pathname+window.location.search+window.location.hash;
+ if(!fromHistory&&desired!==current)window.history.pushState(null,"",desired);
  state.view=page;
  document.querySelectorAll("[data-view]").forEach(b=>{
-  const current=b.dataset.view===page;
+  const current=b.dataset.view===page||(page==="categoria"&&b.dataset.view==="livros");
   b.classList.toggle("active",current);
   if(current)b.setAttribute("aria-current","page");else b.removeAttribute("aria-current");
  });
@@ -339,6 +393,7 @@ function navigate(page){
  renderOrgPicker(main);
  if(page==="inicio")renderHome(main);
  else if(page==="livros")renderBooks(main);
+ else if(page==="categoria")renderCategory(main);
  else if(page==="projetos")renderProjects(main);
  else if(page==="portfolio")renderPortfolio(main);
  else renderGestao(main);
@@ -363,8 +418,22 @@ $("loginForm").addEventListener("submit",async event=>{
 });
 mountIcons();
 applyTheme();
-// O parâmetro ?demo=1 exibe SOMENTE dados fictícios e não acessa informações da conta.
-if(new URLSearchParams(window.location.search).get("demo")==="1"){
+// As páginas de categorias usam endereços próprios, sem separar o catálogo em vários arquivos.
+const initialQuery=new URLSearchParams(window.location.search);
+function routeFromQuery(){
+ const v=new URLSearchParams(window.location.search).get("view");
+ return pages.includes(v)&& (v!=="categoria"||getArea(state.area))?v:"inicio";
+}
+state.area=getArea(initialQuery.get("area"))?.id||null;
+state.view=routeFromQuery();
+window.addEventListener("popstate",()=>{
+ const q=new URLSearchParams(window.location.search);
+ state.area=getArea(q.get("area"))?.id||null;
+ const requested=routeFromQuery();
+ if(!$("appShell").hidden)navigate(requested,true);
+ else state.view=requested;
+});
+if(initialQuery.get("demo")==="1"){
  state.demo=true;state.user=null;state.orgId=null;state.role="student";state.trails=[];
- state.view=new URLSearchParams(window.location.search).get("view")==="projetos"?"projetos":"inicio";showApp();
+ showApp();
 }else refreshAuth();
