@@ -198,57 +198,54 @@ function renderOrgPicker(main){
 }
 function renderHome(main){
  main.append(heading("MEU ESPAÇO DE APRENDIZAGEM","O que vamos criar hoje?"));
- if(state.demo){
-  const book=demoBook0();
-  const card=el("section","continue");
-  if(book?.completedAt){
-   card.append(el("div","eyebrow","SUA PRIMEIRA EXPLORAÇÃO"));
-   card.append(el("h2","","Sua escolha já está no dashboard!"));
-   card.append(el("p","sub","Percurso escolhido: "+BOOK0_TITLES[book.choice]+". As tarefas estão no Backlog. Você decide quais passar para “Vou fazer hoje”."));
-   card.append(navButton("Ver minhas tarefas →","projetos","cta"));
-   card.append(demoBookLink("Revisitar Ponto de Partida →"));
-   if(book.choice==="roblox")card.append(demoBook1Link("Abrir Livro 1 — Meu Primeiro Obby →"));
-  }else{
-   card.append(el("div","eyebrow","LIVRO DE ACOLHIMENTO"));
-   card.append(el("h2","","Ponto de Partida"));
-   card.append(el("p","sub","Descubra possibilidades, faça pequenas experiências e escolha uma primeira ideia de projeto."));
-   card.append(demoBookLink("Começar o Livro 0 →"));
-  }
-  main.append(card);
-  main.append(el("h2","section","Minhas explorações"));
-  const tiles=el("div","tiles");
-  for(const [title,icon] of [["Roblox Studio","game"],["Robótica","cpu"],["Desenvolvimento Web","code"],["Escrita criativa","pen"]]){
-   const b=navButton(title,"livros","tile");const i=el("span");i.dataset.icon=icon;b.prepend(i);tiles.append(b);
-  }
-  main.append(tiles);
-  if(book?.completedAt){
-   main.append(el("h2","section","Meu planejamento de hoje"));
-   const summary=el("section","trail-item");
-   const today=Array.isArray(book.plan?.today)?book.plan.today:[];
-   if(!today.length)summary.append(el("p","meta","Seu plano está vazio. Visite Projetos, escolha suas tarefas no Backlog e coloque-as em “Vou fazer hoje”."));
-   today.forEach((id)=>{
-     const t=demoTaskTitle(book,id);if(t)summary.append(el("p","", "• "+t));
-   });
-   summary.append(navButton("Organizar minhas tarefas →","projetos","cta"));main.append(summary);
-  }
-  main.append(notice("Prévia com dados fictícios: o percurso fica somente nesta aba e não é gravado na conta de nenhum aluno."));
-  mountIcons(main);return;
- }
- const latest=state.trails[0];
+ const book=state.demo?demoBook0():null;
+ const hasSuggestedTasks=Boolean(book?.completedAt&&BOOK0_TASKS[book.choice]?.length);
+ const selectedToday=hasSuggestedTasks&&Array.isArray(book.plan?.today)
+  ?book.plan.today.filter(id=>demoTaskTitle(book,id)):[];
+
  const card=el("section","continue");
- card.append(el("div","eyebrow","CONTINUE DE ONDE PAROU"));
- card.append(el("h2","",latest?.title||"Seu próximo projeto começa aqui"));
- card.append(el("p","sub",latest?"Uma mentoria disponível para continuar":"Quando uma trilha for criada, ela aparecerá neste espaço."));
- card.append(navButton(latest?"Continuar aprendendo →":"Explorar meus livros →",latest?"mentoria":"livros","cta"));main.append(card);
+ if(hasSuggestedTasks){
+  card.append(el("div","eyebrow","MEU PLANEJAMENTO"));
+  card.append(el("h2","",selectedToday.length?"Meu plano de hoje":"Que tal escolher o que fazer hoje?"));
+  card.append(el("p","sub",selectedToday.length
+   ?"Você escolheu "+selectedToday.length+" tarefa(s) do seu projeto. Pode consultar ou reorganizar seu plano quando quiser."
+   :"Seu livro sugeriu tarefas para o Backlog. Escolha quais gostaria de experimentar hoje. Não precisa fazer tudo."));
+  card.append(navButton(selectedToday.length?"Abrir meu planejamento →":"Escolher minhas tarefas →","projetos","cta"));
+ }else{
+  card.append(el("div","eyebrow","MEU PRIMEIRO PERCURSO"));
+  card.append(el("h2","","Seu próximo projeto começa aqui"));
+  card.append(el("p","sub","Explore os livros interativos, conheça possibilidades e escolha algo que gostaria de criar. As tarefas do projeto aparecerão depois no Backlog."));
+  // Sem tarefas vinculadas, o botão nunca direciona para mentorias.
+  card.append(navButton("Explorar meus livros →","livros","cta"));
+ }
+ main.append(card);
+
+ if(state.demo&&hasSuggestedTasks){
+  main.append(el("h2","section","Meu plano de hoje"));
+  const summary=el("section","trail-item");
+  if(!selectedToday.length)summary.append(el("p","meta","Ainda não escolheu tarefas para hoje. Vá a Projetos e arraste uma ou duas tarefas do Backlog."));
+  selectedToday.forEach(id=>{
+   const title=demoTaskTitle(book,id);
+   if(title)summary.append(el("p","","• "+title));
+  });
+  summary.append(navButton("Ver todas as tarefas →","projetos","cta"));
+  main.append(summary);
+ }
  main.append(el("h2","section","Minhas explorações"));
  const tiles=el("div","tiles");
  for(const [title,icon] of [["Roblox Studio","game"],["Robótica","cpu"],["Desenvolvimento Web","code"],["Escrita criativa","pen"]]){
-  const b=navButton(title,"livros","tile");const i=el("span");i.dataset.icon=icon;b.prepend(i);tiles.append(b);
+  const b=navButton(title,"livros","tile");
+  const i=el("span");i.dataset.icon=icon;b.prepend(i);tiles.append(b);
  }
  main.append(tiles);
- const idea=el("div","idea");const ico=el("span");ico.dataset.icon="bulb";
- idea.append(ico,el("span","","Tem uma nova ideia de projeto? Vamos criar juntos?"));
- idea.append(navButton("→","projetos","idea-link"));main.append(idea);mountIcons(main);
+ const idea=el("div","idea");
+ const ico=el("span");ico.dataset.icon="bulb";
+ idea.append(ico,el("span","","Tem uma nova ideia de projeto? Descubra outras possibilidades nos livros."));
+ idea.append(navButton("→","livros","idea-link"));
+ main.append(idea);
+ if(state.demo)main.append(notice("Prévia com dados fictícios: o planejamento é demonstrativo e fica somente nesta aba do navegador."));
+ else main.append(notice("A integração das tarefas às contas do Supabase de testes ainda não foi implementada. Por enquanto, a página inicial encaminha para a biblioteca."));
+ mountIcons(main);
 }
 
 function renderBooks(main){
