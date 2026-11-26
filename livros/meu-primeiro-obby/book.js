@@ -353,7 +353,17 @@
  initResetLink();
  applyMode(state.mode);
  renderCodeStep();
- displayChapter(state.chapter);
+ // Ao chegar pelo quadro Projetos, abrir a missão correspondente sem criar outro planejamento.
+ const chapterFromTask=new URLSearchParams(window.location.search).get("chapter");
+ if(chapterFromTask!==null&&/^[0-8]$/.test(chapterFromTask)){
+  displayChapter(Number(chapterFromTask));
+  // O próximo recarregamento deve usar o progresso salvo, e não reabrir obrigatoriamente este capítulo.
+  try{
+   const cleanUrl=new URL(window.location.href);
+   cleanUrl.searchParams.delete("chapter");
+   window.history.replaceState(null,"",cleanUrl.pathname+cleanUrl.search+cleanUrl.hash);
+  }catch(_){}
+ }else displayChapter(state.chapter);
  window.addEventListener("pagehide",()=>{
   loopToken++;
   if(printUrl)URL.revokeObjectURL(printUrl);
