@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><title>EduLegal · Percurso piloto Bro</title>
+<style>
+*{box-sizing:border-box}html{font-size:15px}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+body[data-theme=dark]{--bg:#313338;--header:#232428;--sidebar:#2b2d31;--card:#383a40;--selected:#4e5058;--border:#505157;--title:#f2f3f5;--text:#dbdee1;--muted:#b5bac1;--brand:#f4d78c;--accent:#f4d78c;--accent2:#83b89c}
+body[data-theme=light]{--bg:#fbf8ef;--header:#fffdf8;--sidebar:#f0eee6;--card:#fffdf8;--selected:#e3e1da;--border:#dedcd3;--title:#253832;--text:#253832;--muted:#626c65;--brand:#a67516;--accent:#a67516;--accent2:#21765e}
+button,select,textarea{font:inherit}button{cursor:pointer}button:focus-visible,textarea:focus-visible{outline:2px solid var(--brand);outline-offset:3px}
+header{background:var(--header);border-bottom:1px solid var(--border);min-height:72px;padding:12px clamp(20px,4vw,50px);display:flex;align-items:center;justify-content:space-between;gap:12px}
+.logo{font-size:29px;letter-spacing:-1.5px;font-weight:800;color:var(--title)}.logo span{color:var(--brand)}.tag{color:var(--muted);font-size:12px}
+.layout{display:grid;grid-template-columns:205px minmax(0,1fr);min-height:calc(100vh - 72px)}aside{background:var(--sidebar);border-right:1px solid var(--border);padding:24px 14px}
+aside h2{font-size:14px;margin:4px 10px 18px}main{width:100%;max-width:980px;padding:36px clamp(20px,5vw,70px);margin:0 auto}
+.nav{width:100%;border:0;background:transparent;color:var(--text);display:flex;align-items:center;gap:10px;text-align:left;padding:13px 12px;border-radius:9px;margin:4px 0}.nav.active{background:var(--selected);color:var(--title);font-weight:700}
+.eyebrow{font-size:12px;letter-spacing:.07em;color:var(--muted);font-weight:650;text-transform:uppercase}h1{color:var(--title);font-size:clamp(25px,4vw,37px);line-height:1.18;letter-spacing:-.025em;margin:10px 0}h2{color:var(--title);font-size:21px;line-height:1.3}.lead{color:var(--muted);max-width:65ch;line-height:1.6}.line{width:48px;height:4px;background:var(--accent);border-radius:4px;margin:18px 0 26px}
+.panel{background:var(--card);border:1px solid var(--border);border-radius:13px;padding:22px;margin:15px 0}.small{font-size:13px;color:var(--muted);line-height:1.5}.choice-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:14px 0}
+.choice{border:1px solid var(--border);background:var(--card);color:var(--text);border-radius:10px;text-align:left;padding:17px;min-height:80px;display:flex;flex-direction:column;align-items:flex-start;gap:8px;font-weight:600}.choice small{font-weight:400;color:var(--muted)}.choice.selected{border-color:var(--accent);outline:1px solid var(--accent)}.choice:focus-visible{outline:2px solid var(--accent)}
+.primary{border:0;border-radius:8px;background:var(--brand);color:var(--header);font-weight:750;padding:12px 17px;margin:9px 8px 6px 0}.secondary{border:1px solid var(--border);background:var(--selected);color:var(--text);border-radius:8px;padding:9px 12px}.pill{border:1px solid var(--border);background:transparent;color:var(--text);padding:7px 11px;border-radius:999px;margin:3px}.pill.active{border-color:var(--accent);background:var(--selected);font-weight:700}
+.board{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}.column{background:var(--card);border:1px solid var(--border);border-radius:12px;min-height:245px;padding:12px}.column.over{outline:2px dashed var(--brand)}.column h3{font-size:15px;margin:8px}.task{border:1px solid var(--border);border-radius:9px;background:var(--bg);padding:13px;margin:9px 0}.task strong{display:block;color:var(--title)}.task small{display:block;color:var(--muted);margin:5px 0 11px}.task button{border:0;background:var(--selected);color:var(--text);padding:6px 9px;margin:0 6px 4px 0;border-radius:7px;font-size:12px}
+.steps{margin:14px 0 0;padding-left:20px;line-height:1.8}.steps li{padding:4px 0}details{border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin:13px 0;background:var(--card)}summary{cursor:pointer;font-weight:650}
+textarea{width:100%;min-height:85px;border:1px solid var(--border);border-radius:9px;padding:12px;background:var(--bg);color:var(--text);resize:vertical}label{display:block;margin:13px 0 7px;font-weight:600}.notice{border-left:3px solid var(--accent2);padding:10px 16px;background:var(--card);border-radius:6px;margin:16px 0;line-height:1.5}
+.badgebox{display:grid;grid-template-columns:75px 1fr;align-items:center;gap:14px}.medal{background:var(--selected);border:1px solid var(--border);display:grid;place-items:center;width:70px;height:70px;border-radius:18px;font-size:30px}
+.divider{border:0;border-top:1px solid var(--border);margin:20px 0}.muted{color:var(--muted)}.hidden{display:none!important}.right{display:flex;align-items:center;gap:12px;flex-wrap:wrap}a{color:var(--brand)}
+.status{margin:12px 0;color:var(--accent2);font-size:13px;min-height:19px}
+@media(max-width:720px){.layout{display:block}aside{padding:10px;display:flex;overflow:auto;gap:5px}aside h2{display:none}.nav{white-space:nowrap;width:auto;margin:0;padding:10px}.choice-grid,.board{grid-template-columns:1fr}header{flex-wrap:wrap}main{padding:24px 18px}}
+</style>
+</head>
+<body data-theme="dark">
+<header>
+ <div><div class="logo">edu<span>Legal.</span></div><div class="tag">Percurso piloto · Bro é um aluno fictício</div></div>
+ <div class="right"><button id="theme" class="secondary" type="button">☀ Tema claro</button><a class="tag" href="../../index.html">Voltar à EduLegal de testes</a></div>
+</header>
+<div class="layout">
+<aside aria-label="Navegação do percurso"><h2>Aprendizagem</h2>
+ <button class="nav active" data-tab="acolhimento">👋 Acolhimento</button>
+ <button class="nav" data-tab="planejamento">🗂 Meu plano</button>
+ <button class="nav" data-tab="roblox">🎮 Primeiro Obby</button>
+ <button class="nav" data-tab="portfolio">🏅 Portfólio</button>
+</aside>
+<main id="main">
+<section data-screen="acolhimento">
+ <div class="eyebrow">Livro 0 · Acolhimento</div>
+ <h1>Bro, o que podemos criar?</h1><div class="line"></div>
+ <p class="lead">Você não precisa saber o que quer aprender ainda. Pode experimentar algumas ideias e escolher um começo. Se mudar de ideia depois, tudo bem!</p>
+ <h2>Veja algumas possibilidades</h2>
+ <div class="choice-grid" role="group" aria-label="Áreas que gostaria de experimentar">
+  <button class="choice" data-area="roblox">🎮 Roblox Studio <small>Construir um percurso de obstáculos</small></button>
+  <button class="choice" data-area="robotica">🤖 Robótica <small>Fazer uma luz reagir a um botão</small></button>
+  <button class="choice" data-area="web">💻 Desenvolvimento web <small>Criar uma página com suas ideias</small></button>
+  <button class="choice" data-area="escrita">✍️ Escrita criativa <small>Inventar um personagem e uma história</small></button>
+ </div>
+ <p id="areaResponse" class="status" aria-live="polite"></p>
+ <div class="panel">
+   <h2>O que você já experimentou no Roblox Studio?</h2>
+   <p class="small">Não é uma prova. Escolha a opção que mais se aproxima da sua experiência hoje.</p>
+   <div class="choice-grid" id="experience" role="group" aria-label="Minha experiência anterior">
+    <button class="choice" data-exp="novo">Nunca abri o Roblox Studio <small>Podemos conhecer a tela juntos.</small></button>
+    <button class="choice" data-exp="pecas">Já coloquei blocos no mapa <small>Podemos experimentar novas ferramentas.</small></button>
+    <button class="choice" data-exp="codigo">Já testei algum Script <small>Podemos explorar um desafio novo.</small></button>
+   </div>
+   <p class="small">Esta escolha ajuda a sugerir um ponto de partida. Ela não classifica você nem define seu próximo livro.</p>
+ </div>
+ <button class="primary" id="start" type="button">Ver meu primeiro projeto →</button>
+</section>
+
+<section data-screen="planejamento" class="hidden">
+ <div class="eyebrow">Antes de criar · Planejamento do dia</div>
+ <h1>O que vou experimentar hoje?</h1><div class="line"></div>
+ <p class="lead">Não precisa inventar uma meta difícil. Escolha uma ou duas tarefas. Arraste os cartões para <strong>Vou fazer hoje</strong>, ou use os botões. Você pode mudar o plano quando quiser.</p>
+ <div class="board">
+  <div class="column" id="laterColumn" data-zone="later"><h3>Ideias para depois</h3><div class="tasks" id="later"></div></div>
+  <div class="column" id="todayColumn" data-zone="today"><h3>Vou fazer hoje</h3><div class="tasks" id="today"></div></div>
+ </div>
+ <p id="planStatus" class="status" aria-live="polite"></p>
+ <button class="primary" id="goBook" type="button">Abrir a atividade escolhida →</button>
+ <div class="notice">Planejar é escolher um primeiro passo. Se uma ideia não funcionar, podemos mudar o caminho.</div>
+</section>
+
+<section data-screen="roblox" class="hidden">
+ <div class="eyebrow">Livro 1 · Roblox Studio · Exemplo de primeira missão</div>
+ <h1>Meu primeiro Obby</h1><div class="line"></div>
+ <p class="lead">Vamos começar com uma plataforma simples. Mais tarde, aprenderemos a fazê-la aparecer e desaparecer usando propriedades e pequenas linhas de Luau.</p>
+ <div class="panel">
+   <h2>Minha missão de agora</h2>
+   <p id="currentMission" class="lead"></p>
+   <h3>Entenda</h3><p>Uma <code>Part</code> é um objeto que você pode colocar no mundo. Ela possui propriedades, como tamanho, posição e cor.</p>
+   <h3>Experimente</h3><ol class="steps"><li>Abra um projeto Baseplate no Roblox Studio.</li><li>Insira uma <code>Part</code> e aumente seu tamanho.</li><li>Na janela Propriedades, marque <code>Anchored</code>.</li><li>Use <code>Play</code> e observe o resultado.</li></ol>
+   <details id="hint"><summary>Preciso de uma pista</summary><p>Procure a janela <strong>Explorer</strong>, selecione a Part e encontre <strong>Anchored</strong> na janela <strong>Properties</strong>. Se essas janelas não aparecerem, abra-as pelo menu do Studio.</p></details>
+   <h3>Observe</h3><label for="reflection">O que aconteceu quando você testou a plataforma?</label>
+   <textarea id="reflection" placeholder="Por exemplo: o bloco não caiu quando marquei Anchored."></textarea>
+   <p class="small">Escreva o que realmente observou. Esta demonstração não consegue enxergar automaticamente seu Roblox Studio.</p>
+   <button class="primary" id="saveReflection" type="button">Registrar minha descoberta</button>
+   <p id="reflectionStatus" class="status" aria-live="polite"></p>
+ </div>
+ <div class="notice">Depois desta primeira missão, o livro real terá as etapas de plataformas, saltos, Transparency, CanCollide e o Script que faz uma peça aparecer e desaparecer. A versão completa ainda será construída e testada.</div>
+ <button class="secondary" id="backPlan" type="button">← Voltar ao meu plano</button>
+ <button class="primary" id="seePortfolio" type="button">Ver rascunho do portfólio →</button>
+</section>
+
+<section data-screen="portfolio" class="hidden">
+ <div class="eyebrow">Portfólio · Exemplo privado</div><h1>Minhas criações</h1><div class="line"></div>
+ <div class="panel">
+  <h2>Meu primeiro Obby</h2><p class="small">Projeto em construção · Roblox Studio</p>
+  <p>Estou aprendendo a construir plataformas e a testar como elas funcionam. Depois, vou explorar uma plataforma que aparece e desaparece.</p>
+  <hr class="divider">
+  <p><strong>Minha descoberta registrada</strong></p>
+  <p id="portfolioReflection" class="muted">Ainda não foi registrada uma observação neste protótipo.</p>
+  <hr class="divider">
+  <div class="badgebox"><div class="medal">🏗️</div><div><strong>Primeiras Construções</strong><p class="small">Badge de nível inicial · <strong>não concedido</strong>. Precisará de evidências reais de construção e conferência dos critérios.</p></div></div>
+ </div>
+ <div class="panel"><h2>O que a EduLegal conseguiu registrar?</h2>
+  <p id="report" class="small"></p>
+  <p class="small">Isto não é um relatório de IA nem uma avaliação de autorregulação. São apenas eventos simples desta demonstração, sem inferir capacidade, personalidade ou emoções.</p>
+ </div>
+ <div class="notice">Na plataforma real, o projeto e os badges validados poderão aparecer no portfólio. A publicação externa será uma escolha supervisionada, não automática.</div>
+</section>
+<footer class="small">Laboratório visual de testes — dados fictícios, sem pontos visíveis, sem IA e sem conexão ao Supabase. As escolhas são mantidas apenas nesta sessão do navegador.</footer>
+</main></div>
+<script>
+(function(){
+ "use strict";
+ const STORAGE="edulegal-percurso-bro-v0";
+ const tasks=[
+  {id:"explorer",title:"Conhecer Explorer e Propriedades",detail:"Encontrar uma Part e observar suas propriedades."},
+  {id:"part",title:"Construir minha primeira plataforma",detail:"Inserir uma Part, mudar tamanho e ativar Anchored."},
+  {id:"salto",title:"Testar o salto entre plataformas",detail:"Usar Play, observar e ajustar distâncias."},
+  {id:"transparency",title:"Experimentar um bloco invisível",detail:"Testar Transparency e CanCollide."},
+  {id:"script",title:"Fazer o bloco aparecer e desaparecer",detail:"Escrever o Script em partes pequenas."}
+ ];
+ let state={area:"roblox",experience:"",today:["part"],hintOpened:false,reflection:""};
+ try{const saved=JSON.parse(sessionStorage.getItem(STORAGE)||"null");if(saved&&Array.isArray(saved.today))state=Object.assign(state,saved);}catch(_){}
+ const $=id=>document.getElementById(id);
+ function save(){try{sessionStorage.setItem(STORAGE,JSON.stringify(state));}catch(_){}}
+ function navigate(tab){
+  document.querySelectorAll("[data-screen]").forEach(s=>s.classList.toggle("hidden",s.dataset.screen!==tab));
+  document.querySelectorAll("[data-tab]").forEach(b=>{b.classList.toggle("active",b.dataset.tab===tab);b.setAttribute("aria-current",b.dataset.tab===tab?"page":"false");});
+  if(tab==="planejamento")renderBoard();
+  if(tab==="roblox"){const task=tasks.find(t=>t.id===state.today[0]);$("currentMission").textContent=task?task.title:"Construa uma plataforma e observe seu funcionamento."; }
+  if(tab==="portfolio")updatePortfolio();
+  window.scrollTo({top:0,behavior:"auto"});
+ }
+ function renderChoices(){
+  document.querySelectorAll("[data-area]").forEach(b=>{const active=state.area===b.dataset.area;b.classList.toggle("selected",active);b.setAttribute("aria-pressed",String(active));});
+  document.querySelectorAll("[data-exp]").forEach(b=>{const active=state.experience===b.dataset.exp;b.classList.toggle("selected",active);b.setAttribute("aria-pressed",String(active));});
+  $("areaResponse").textContent=state.area==="roblox"?"Legal! Neste exemplo vamos experimentar Roblox Studio.":"Essa área também fará parte da EduLegal. Neste percurso demonstrativo, vamos experimentar Roblox Studio.";
+ }
+ function renderBoard(){
+  for(const zone of ["today","later"]){const container=$(zone);container.replaceChildren();const items=tasks.filter(t=>(zone==="today")===state.today.includes(t.id));items.sort((a,b)=>zone==="today"?state.today.indexOf(a.id)-state.today.indexOf(b.id):tasks.indexOf(a)-tasks.indexOf(b));items.forEach(task=>{
+   const box=document.createElement("article");box.className="task";box.draggable=true;box.dataset.id=task.id;
+   const title=document.createElement("strong");title.textContent=task.title;
+   const note=document.createElement("small");note.textContent=task.detail;box.append(title,note);
+   const move=document.createElement("button");move.type="button";move.textContent=zone==="today"?"Deixar para depois":"Fazer hoje";move.addEventListener("click",()=>moveTask(task.id,zone==="today"?"later":"today"));box.append(move);
+   if(zone==="today"){
+    const up=document.createElement("button");up.textContent="↑ Antes";up.setAttribute("aria-label","Mover "+task.title+" para cima");up.addEventListener("click",()=>shift(task.id,-1));
+    const down=document.createElement("button");down.textContent="↓ Depois";down.setAttribute("aria-label","Mover "+task.title+" para baixo");down.addEventListener("click",()=>shift(task.id,1));box.append(up,down);
+   }
+   box.addEventListener("dragstart",e=>{e.dataTransfer.setData("text/plain",task.id);e.dataTransfer.effectAllowed="move";});container.append(box);
+  });}
+  $("planStatus").textContent=state.today.length? "Você escolheu "+state.today.length+" tarefa(s) para hoje. O plano pode mudar.":"Seu plano ainda está vazio. Escolha uma tarefa para começar.";
+ }
+ function moveTask(id,zone){state.today=state.today.filter(x=>x!==id);if(zone==="today")state.today.push(id);save();renderBoard();}
+ function shift(id,dir){const i=state.today.indexOf(id);const j=i+dir;if(i<0||j<0||j>=state.today.length)return;[state.today[i],state.today[j]]=[state.today[j],state.today[i]];save();renderBoard();}
+ document.querySelectorAll("[data-zone]").forEach(col=>{
+  col.addEventListener("dragover",e=>{e.preventDefault();col.classList.add("over");});
+  col.addEventListener("dragleave",()=>col.classList.remove("over"));
+  col.addEventListener("drop",e=>{e.preventDefault();col.classList.remove("over");const id=e.dataTransfer.getData("text/plain");if(tasks.some(t=>t.id===id))moveTask(id,col.dataset.zone);});
+ });
+ document.querySelectorAll("[data-tab]").forEach(b=>b.addEventListener("click",()=>navigate(b.dataset.tab)));
+ document.querySelectorAll("[data-area]").forEach(b=>b.addEventListener("click",()=>{state.area=b.dataset.area;save();renderChoices();}));
+ document.querySelectorAll("[data-exp]").forEach(b=>b.addEventListener("click",()=>{state.experience=b.dataset.exp;save();renderChoices();}));
+ $("start").onclick=()=>navigate("planejamento");
+ $("goBook").onclick=()=>navigate("roblox");
+ $("backPlan").onclick=()=>navigate("planejamento");
+ $("seePortfolio").onclick=()=>navigate("portfolio");
+ $("hint").addEventListener("toggle",()=>{if($("hint").open){state.hintOpened=true;save();}});
+ $("reflection").value=state.reflection||"";
+ $("saveReflection").onclick=()=>{state.reflection=$("reflection").value.slice(0,1200);save();$("reflectionStatus").textContent="Descoberta registrada nesta sessão. Você pode editar se quiser.";};
+ function updatePortfolio(){
+  $("portfolioReflection").textContent=state.reflection||"Ainda não foi registrada uma observação neste protótipo.";
+  $("report").textContent="Neste exemplo, Bro escolheu "+state.today.length+" tarefa(s) para hoje, "+(state.hintOpened?"consultou uma pista":"não consultou a pista disponível")+" e "+(state.reflection?"registrou uma observação.":"ainda não registrou uma observação.")+" Esses fatos, sozinhos, não demonstram seu grau de autorregulação.";
+ }
+ $("theme").onclick=()=>{const next=document.body.dataset.theme==="dark"?"light":"dark";document.body.dataset.theme=next;$("theme").textContent=next==="dark"?"☀ Tema claro":"☾ Tema escuro";};
+ renderChoices();navigate("acolhimento");
+})();
+</script>
+</body>
+</html>
