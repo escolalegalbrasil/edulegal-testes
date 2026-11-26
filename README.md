@@ -47,3 +47,16 @@ Consulte [TESTE-LOGIN.md](TESTE-LOGIN.md) para o roteiro de teste com os seis pe
 - As atividades de Arduino e Roblox deste acolhimento são **simulações no navegador**, não utilizam hardware nem o Roblox Studio real. Os livros técnicos completos são etapas posteriores.
 - Dados de demonstração só ficam no `sessionStorage` da aba e só são lidos pela interface no **modo fictício** (`?demo=1`); não vinculam contas reais ou de testes, não são enviados ao Supabase e não são avaliações de autorregulação.
 - Não há chat de IA, pontuação, badges concedidos, uploads ou analytics automáticos nesta versão.
+
+
+## Livro 1 — Meu Primeiro Obby (protótipo interativo)
+
+- [Abrir o Livro 1 no ambiente de testes](https://escolalegalbrasil.github.io/edulegal-testes/livros/meu-primeiro-obby/)
+- [Ver os arquivos do livro](livros/meu-primeiro-obby/index.html)
+- Nove capítulos: apresentação, interface do Studio, Part/Anchored, percurso e testes, Transparency/CanCollide, código incremental, loop de aparecer/desaparecer, investigação de bugs, conclusão reflexiva.
+- Três modos de apoio: **Passo a passo**, **Dicas quando precisar** e **Mais independente**. O modo muda apenas o tipo de orientação, não o objetivo nem o valor do aluno.
+- **Editor Luau de apoio**, com quatro microdesafios: identificar a Part, desaparecer, reaparecer, repetir usando while true do com task.wait. A conferência verifica somente trechos do texto: não executa Luau; o teste real acontece no Roblox Studio.
+- A imagem da interface da missão 1 é da documentação oficial Roblox. Outras figuras são esquemas e simulações locais, sem pretensão de simular o motor Roblox.
+- Campos para reflexão, prévia de print local (não enviada ou salva), rascunho de projeto e próximo desafio. O rascunho aparece no Portfólio em **modo demonstração**, sem conferir domínio e sem conceder badges automaticamente.
+- Sem conexão de dados com Supabase/IA, sem pesquisa ou coleta de dados reais; usa somente sessionStorage por aba e deve ser testado com personagens fictícios.
+- Para limpar apenas as respostas do Livro 1, usar **Reiniciar somente este livro** no rodapé do livro. A EduLegal oficial não foi alterada.
