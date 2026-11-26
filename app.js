@@ -121,9 +121,11 @@ const BOOK0_TASKS={
  roblox:["Conhecer a área de trabalho, o Explorer e a janela Propriedades","Construir uma plataforma com uma Part e testar Anchored","Criar e testar um pequeno percurso de obstáculos","Explorar Transparency e CanCollide","Escrever um Script em pequenas etapas"],
  robotica:["Conhecer um LED e o que ele faz","Reconhecer um circuito simples e seguro","Descobrir como acender e apagar uma luz com programação"],
  escrita:["Inventar um personagem","Escolher um lugar para a aventura","Criar um acontecimento inesperado"],
- web:["Conhecer uma página HTML","Criar um título e um pequeno texto","Mudar a aparência com CSS"]
+ web:["Conhecer uma página HTML","Criar um título e um pequeno texto","Mudar a aparência com CSS"],
+ pico8:["Conhecer os personagens e o cenário de um jogo","Planejar um desafio simples","Experimentar movimentar um personagem no PICO-8"],
+ video:["Escolher uma ideia para animar","Organizar duas ou três cenas","Experimentar uma sequência em movimento"]
 };
-const BOOK0_TITLES={roblox:"Meu Primeiro Obby",robotica:"Minha Primeira Luz",escrita:"Minha Primeira História",web:"Minha Primeira Página"};
+const BOOK0_TITLES={roblox:"Meu Primeiro Obby",robotica:"Minha Primeira Luz",escrita:"Minha Primeira História",web:"Minha Primeira Página",pico8:"Meu Primeiro Jogo 2D",video:"Minha Primeira Animação"};
 function demoBook0(){
  if(!state.demo)return null;
  try{const d=JSON.parse(sessionStorage.getItem(BOOK0_KEY)||"null");
