@@ -98,8 +98,24 @@
   }catch(_){}
   $("planSummary").textContent=today.length?"Seu plano de hoje inclui: "+today.join(" · ")+". Você pode alterar suas escolhas na página Projetos.":"Ainda não escolheu tarefas para hoje? Você pode organizá-las no Backlog de Projetos quando quiser.";
  }
+ // Desenho interativo: primeiro identificar uma peça, depois reconhecer suas propriedades.
+ // É uma simulação explicativa; não observa o Roblox Studio do aluno.
+ function selectStudioPart(){
+  const scene=$("diagramScenePart"),explorer=$("diagramExplorerPart");
+  scene.classList.add("is-selected");explorer.classList.add("is-selected");
+  scene.setAttribute("aria-pressed","true");explorer.setAttribute("aria-pressed","true");
+  const table=$("diagramProperties");table.replaceChildren();
+  for(const [name,value] of [["Name","Part"],["Color","Dourado"],["Size","4, 1, 4"],["Anchored","false"]]){
+   const row=document.createElement("div");row.className="diagram-prop-row";
+   const key=document.createElement("span");key.textContent=name;
+   const val=document.createElement("span");val.textContent=value;val.className="prop-value";
+   row.append(key,val);table.append(row);
+  }
+  $("diagramFeedback").textContent="Você selecionou a mesma Part! Ela está destacada no mundo 3D e no Explorer. Properties agora mostra características dessa peça. Experimente também no Roblox Studio.";
+ }
+ for(const id of ["diagramScenePart","diagramExplorerPart"])$(id).addEventListener("click",selectStudioPart);
  const answers={
-  properties:{correct:"properties",yes:"Isso! Properties mostra as características do objeto que você selecionou no Explorer.",no:"Boa tentativa. Explorer organiza os objetos e Play testa o jogo. Qual janela muda tamanho, cor e outras propriedades?"},
+  properties:{correct:"properties",yes:"Isso! Depois de selecionar a Part no Explorer, encontramos suas características em Properties. Agora tente localizar Name e Color no próprio Studio.",no:"Vamos olhar de novo: Explorer é a lista de objetos, e Play testa o jogo. Clique na Part no desenho acima e veja qual janela mostra Name, Color e Size."},
   distance:{correct:"dificil",yes:"Isso é uma boa previsão. Teste na prática e veja se seu personagem consegue completar o salto.",no:"Faça o teste no Studio: se a distância aumentar demais, será que o personagem ainda alcança a próxima plataforma?"},
   collision:{correct:"cancollide",yes:"Exatamente. Transparency altera o visual; CanCollide define se a peça pode bloquear a passagem.",no:"Pense na diferença entre ver uma peça e poder atravessá-la. Qual propriedade controla a colisão?"},
   bug:{correct:"colisao",yes:"Boa investigação! Verificar CanCollide ajuda a entender por que o personagem continua pisando no bloco invisível.",no:"Antes de apagar tudo, tente localizar a propriedade relacionada a colisões. Você pode abrir uma pista."}
