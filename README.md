@@ -43,7 +43,7 @@ Consulte [TESTE-LOGIN.md](TESTE-LOGIN.md) para o roteiro de teste com os seis pe
 - [Abrir Livro 0 no site de testes](https://escolalegalbrasil.github.io/edulegal-testes/livros/ponto-de-partida/)
 - [Ver arquivos do livro](livros/ponto-de-partida/index.html)
 - Cinco capítulos: boas-vindas, áreas da EduLegal, microexperiências práticas (Roblox/LED virtual/escrita), escolha inicial e tarefas sugeridas.
-- Ao concluir, uma notificação leva ao **dashboard demonstrativo**: as duas primeiras tarefas são colocadas em "Vou fazer hoje" e podem ser arrastadas ou movidas por botões em **Projetos**.
+- Ao concluir, uma notificação leva ao **dashboard demonstrativo**: **todas as tarefas surgem no Backlog (coluna esquerda)**. O aluno escolhe quais deseja passar para **Vou fazer hoje (coluna direita)**, arrastando ou utilizando botões em **Projetos**.
 - As atividades de Arduino e Roblox deste acolhimento são **simulações no navegador**, não utilizam hardware nem o Roblox Studio real. Os livros técnicos completos são etapas posteriores.
 - Dados de demonstração só ficam no `sessionStorage` da aba e só são lidos pela interface no **modo fictício** (`?demo=1`); não vinculam contas reais ou de testes, não são enviados ao Supabase e não são avaliações de autorregulação.
 - Não há chat de IA, pontuação, badges concedidos, uploads ou analytics automáticos nesta versão.
