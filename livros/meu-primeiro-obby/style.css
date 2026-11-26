@@ -36,9 +36,37 @@ details{border:1px solid var(--border);border-radius:9px;padding:13px 16px;margi
 .plat{position:absolute;background:#86a8cf;transform:skewY(-18deg);height:17px;box-shadow:8px 9px 0 #405f88;border-radius:3px}.p1{width:125px;top:69%;left:8%}.p2{width:80px;top:49%;left:41%;background:#a2cfb5;box-shadow:8px 9px 0 #4a846d}.p3{width:75px;top:32%;left:69%;background:#e0b95d;box-shadow:8px 9px 0 #967230}.p4{width:68px;top:82%;left:67%;opacity:.35}.avatar{position:absolute;top:49%;left:23%;color:#ffd87d;font-size:39px;text-shadow:4px 7px 0 #987136}.spark{position:absolute;right:10%;top:9%;color:#f4d78c;font-size:32px}
 .skills,.tool-grid,.property-grid,.badges{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;margin:13px 0 17px}.skills span,.tool-grid>div,.property-grid>div{border:1px solid var(--border);border-radius:9px;padding:13px;background:var(--soft)}.tool-grid>div{display:flex;flex-direction:column;gap:7px}.tool-grid small{color:var(--muted)}.property-grid p{font-size:14px;margin:6px 0}
 .screenshot{margin:20px 0;border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--card)}.screenshot img{display:block;width:100%;max-height:420px;object-fit:contain;background:#2b313b}.screenshot figcaption{font-size:12px;color:var(--muted);padding:11px 15px;line-height:1.6}
-.studio-schematic{max-width:710px;margin:19px auto;border:1px solid #68727c;border-radius:9px;overflow:hidden;background:#212830;color:#f1f2f4}.studio-top{background:#171b20;padding:11px;font-size:12px;font-weight:750}.studio-top span{float:right;font-weight:450;color:#c6d5dd}.studio-main{display:grid;grid-template-columns:minmax(0,2fr) minmax(145px,1fr);height:230px}
-.studio-view{position:relative;overflow:hidden;background:linear-gradient(#8ab0c5,#bbcbd5 60%,#708a87 61%,#4c6968)}.studio-view small{position:absolute;top:8px;left:9px;color:#173343;background:#ffffffc0;padding:4px 6px;border-radius:4px}.studio-floor{position:absolute;inset:61% -20% 0;transform:perspective(140px) rotateX(32deg);background:repeating-linear-gradient(0deg,transparent 0 24px,#304b5180 25px 26px),repeating-linear-gradient(90deg,transparent 0 23px,#304b5180 24px 25px)}
-.studio-part{position:absolute;left:41%;top:43%;width:80px;height:31px;background:#eac46b;box-shadow:8px 8px 0 #a4833f;transform:skewY(-12deg)}.studio-panels{display:grid;grid-template-rows:1fr 1fr}.studio-panels>div{background:#313942;border-bottom:1px solid #616d77;padding:10px;font-weight:700;font-size:13px}.studio-panels small{display:block;color:#afc0cf;font-size:11px;margin-top:10px;line-height:1.8;font-weight:450}
+/* Mini Studio didático: uma única Part no cenário, Explorer e Properties. */
+.question-tip{margin-top:15px;background:var(--soft);border-left:3px solid var(--gold);border-radius:7px;padding:12px 15px;font-size:14px}
+.studio-schematic{max-width:800px;margin:20px auto 12px;border:1px solid #6d8493;border-radius:11px;overflow:hidden;background:#222b34;color:#edf4fa;box-shadow:0 4px 18px #0002}
+.studio-top{background:#151e27;padding:11px 15px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:12px;font-weight:700}
+.studio-top span{font-weight:500;color:#b8cada}
+.studio-main{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(185px,1fr);min-height:335px}
+.studio-view{position:relative;min-height:335px;overflow:hidden;background:linear-gradient(#99bdcf 0%,#acc9d4 61%,#708b84 62%,#435d58 100%)}
+.studio-view-label{position:absolute;top:11px;left:12px;z-index:2;display:flex;gap:8px;align-items:center;font-weight:750;font-size:13px;background:#20343dcf;color:#fff;padding:6px 9px;border-radius:6px}
+.diagram-num{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:#f4d78c;color:#273039;font-size:12px;flex-shrink:0;font-weight:850}
+.studio-floor{position:absolute;bottom:-12px;left:-30%;right:-30%;height:41%;transform:perspective(200px) rotateX(35deg);transform-origin:top;background:repeating-linear-gradient(0deg,transparent 0 22px,#28434b66 23px 24px),repeating-linear-gradient(90deg,transparent 0 23px,#28434b66 24px 25px)}
+.studio-part-button{position:absolute;left:39%;top:42%;display:grid;place-items:center;gap:10px;background:transparent;border:2px solid transparent;border-radius:11px;padding:9px;min-width:125px;min-height:94px;color:#20343d;font-weight:750;z-index:3;cursor:pointer}
+.studio-part-button:focus-visible{outline:3px solid #ffdb70;outline-offset:2px}
+.studio-part-shape{display:block;width:90px;height:35px;transform:skewY(-10deg);background:#edc868;box-shadow:9px 9px 0 #a17c36;border-radius:3px}
+.part-label{background:#eef7fc;box-shadow:0 1px 4px #21333f55;padding:3px 10px;border-radius:12px;font-size:12px}
+.studio-part-button.is-selected{border-color:#64c4ff;background:#f4fcff30}
+.studio-panels{display:grid;grid-template-rows:minmax(143px,1fr) minmax(182px,1.25fr);background:#2a343f}
+.studio-explorer,.studio-properties{border-left:1px solid #617381;min-width:0}
+.studio-explorer{border-bottom:1px solid #617381}
+.studio-panel-title{background:#1e2933;padding:10px;display:flex;align-items:center;gap:7px;font-size:13px;font-weight:800;border-bottom:1px solid #526777;flex-wrap:wrap}
+.studio-panel-title small{display:block;font-size:10px;color:#b3c2d0;font-weight:500;flex-basis:100%;padding-left:29px;margin-top:-3px}
+.studio-tree{padding:11px 13px}
+.workspace-line{font:12px ui-monospace,Consolas,monospace;color:#d4e1ee;padding:3px 2px}
+.studio-tree-item{display:block;width:100%;border:1px solid transparent;text-align:left;background:transparent;color:#e9f4fb;font:12px ui-monospace,Consolas,monospace;margin-top:5px;padding:6px 10px 6px 25px;border-radius:5px}
+.studio-tree-item:hover{background:#445a69}.studio-tree-item.is-selected{background:#326e9a;border-color:#78c7ff;font-weight:750;color:#fff}
+.studio-properties-rows{padding:10px;font-size:12px;min-height:85px}
+.studio-empty{color:#cbd6df;font-size:12px;margin:2px;line-height:1.6}
+.diagram-prop-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);border-bottom:1px solid #5e7382;gap:8px;padding:5px 2px}
+.diagram-prop-row .prop-value{color:#ffe39a;font-weight:700;overflow-wrap:anywhere}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin:16px 0 4px}
+.compare>div{background:var(--soft);border:1px solid var(--border);border-radius:9px;padding:13px 15px}
+.compare strong{color:var(--title)}.compare p{margin:6px 0 0;font-size:13px;color:var(--text)}
 .reflection{border:1px dashed var(--border);background:var(--card);border-radius:12px;padding:17px;margin:21px 0}.reflection label{display:block;color:var(--title);font-weight:650;margin-bottom:10px}.reflection label span,.panel label span{font-size:12px;font-weight:450;color:var(--muted)}
 textarea,input[type=text]{background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:9px;padding:13px;width:100%;resize:vertical}.reflection textarea{min-height:76px}
 .physics-sim,.loop-demo{position:relative;height:215px;max-width:580px;border:1px solid #596975;border-radius:12px;overflow:hidden;background:linear-gradient(#304453,#3d5564)}.physics-floor,.loop-floor{height:31px;background:#74a191;position:absolute;bottom:0;left:0;right:0;border-top:3px solid #abdac6}
@@ -65,3 +93,22 @@ textarea,input[type=text]{background:var(--bg);color:var(--text);border:1px soli
 /* O main recebe foco programatico para a navegacao acessivel entre capitulos.
    Removemos somente o contorno visual desse container, sem alterar o foco dos controles interativos. */
 #main:focus, #main:focus-visible { outline: none; }
+
+/* Responsividade específica do esquema interativo no Livro 1. */
+@media(max-width:660px){
+ .studio-main{grid-template-columns:1fr;min-height:0}
+ .studio-view{min-height:230px}
+ .studio-part-button{left:35%;top:36%}
+ .studio-panels{grid-template-columns:1fr 1fr;grid-template-rows:1fr;min-height:190px}
+ .studio-explorer{border-bottom:0;border-right:1px solid #617381}
+ .studio-properties{border-left:0}
+ .studio-panel-title{min-height:72px}
+ .compare{grid-template-columns:1fr}
+}
+@media(max-width:420px){
+ .studio-panels{grid-template-columns:1fr;grid-template-rows:auto auto}
+ .studio-explorer{border-right:0;border-bottom:1px solid #617381}
+ .studio-panel-title{min-height:0}
+ .studio-view{min-height:200px}
+ .studio-part-button{left:33%;top:30%}
+}
