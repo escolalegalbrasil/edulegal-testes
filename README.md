@@ -29,3 +29,11 @@ Endereço previsto do laboratório:
 https://escolalegalbrasil.github.io/edulegal-testes/
 
 Consulte [TESTE-LOGIN.md](TESTE-LOGIN.md) para o roteiro de teste com os seis perfis.
+
+## Percurso piloto: Acolhimento → Primeiro Obby
+
+- [Abrir o protótipo em HTML (código)](experimentos/percurso-bro/index.html)
+- [Ler a especificação pedagógica](docs/percurso-piloto-acolhimento-obby.md)
+- Nesta primeira versão, há acolhimento com escolhas concretas, planejamento diário por tarefas arrastáveis (com alternativa por botões), uma amostra das missões de Roblox e rascunho de portfólio.
+- **É apenas uma demonstração**: não está integrada a contas, IA, analytics, livro completo, upload ou concessão de badges. O protótipo guarda escolhas somente nesta sessão do navegador.
+- Não usar dados reais. A versão de produção da EduLegal não foi alterada.
