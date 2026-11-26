@@ -1,6 +1,6 @@
 # Percurso piloto — Acolhimento → Primeiro Obby (EduLegal)
 
-**Status:** especificação inicial aprovada em diálogo em 25/11/2026; protótipo a validar. Nenhum livro completo, relatório de IA, pontos ou badge real foi implementado.
+**Status (25/11/2026):** percurso em protótipos funcionais no repositório de testes: Livro 0 (`livros/ponto-de-partida/`) e Livro 1 de Roblox (`livros/meu-primeiro-obby/`). Ambos requerem revisão pedagógica e teste completo no navegador e no Roblox Studio. Nenhum relatório de IA, ponto real ou badge validado foi implementado.
 
 ## Objetivo pedagógico
 Promover a autorregulação da aprendizagem, motivando o aluno a criar projetos ligados aos seus interesses, desenvolver habilidades técnicas e socioemocionais, apropriar-se dos conhecimentos necessários à realização dos projetos e tornar-se consciente das próprias habilidades e dificuldades.
@@ -66,7 +66,7 @@ IA analisa nos bastidores; professor/diretor revisa quando necessário.
 
 ## Marcos de implementação
 A. Protótipo com Livro 0 e planner arrastável na página Projetos, Backlog à esquerda e plano do dia à direita; não usa IA, coleta real nem banco de produção.
-B. Livros pedagógicos reais (acolhimento + Obby) com testes em diferentes modos.
+B. Livros demonstrativos de acolhimento + Obby elaborados, com três modos de orientação; **testes com alunos e no Roblox Studio pendentes**.
 C. Registro estruturado no Supabase **de testes**; autoria e isolamento de escola/aluno por RLS.
 D. Entrega de prints com consentimento e segurança; relatório por atividade.
 E. Regras de avaliação de badges com evidências; montagem do portfólio.
