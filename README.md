@@ -67,7 +67,7 @@ Consulte [TESTE-LOGIN.md](TESTE-LOGIN.md) para o roteiro de teste com os seis pe
 - Sem tarefas, o dashboard oferece dois caminhos: **Explorar meus livros** ou **Planejar meu próprio projeto**. Com tarefas, destaca o planejamento e mantém a biblioteca acessível.
 - A página Projetos permite **criar projetos e tarefas sem livro** e gerenciar tarefas em **Backlog → Vou fazer hoje → Já terminei**. A terceira coluna representa conclusão *declarada pelo aluno*, não domínio validado ou concessão de badges.
 - Tarefas podem ser arrastadas ou movidas por botões; uma tarefa terminada pode ser retomada. Os dados são **somente demonstração em sessionStorage**, ainda não associados ao Supabase de testes.
-- **Os Livros 0 e 1 existentes são rascunhos temporários**, a serem recriados em conversa específica para livros. Nesta etapa, não alteramos conteúdo pedagógico; apenas uma ligação técnica provisória para abrir capítulos do Obby foi adicionada anteriormente. Os vínculos aos livros atuais serão substituídos pelo futuro contrato de integração.
+- **O Livro 1 existente é rascunho temporário**, a serem recriados em conversa específica para livros. Nesta etapa, não alteramos conteúdo pedagógico; apenas uma ligação técnica provisória para abrir capítulos do Obby foi adicionada anteriormente. Os vínculos aos livros atuais serão substituídos pelo futuro contrato de integração.
 
 ## Biblioteca por áreas (26/11/2026)
 
@@ -76,3 +76,11 @@ Consulte [TESTE-LOGIN.md](TESTE-LOGIN.md) para o roteiro de teste com os seis pe
 - Catálogo inicial centralizado em `LEARNING_AREAS` e `BOOK_CATALOG` do `app.js`, preparado para receber novos livros após revisão. As áreas sem material mostram uma mensagem clara; **Meu Primeiro Obby** aparece apenas em Roblox, marcado como protótipo antigo.
 - **Ponto de Partida** permanece destacado na biblioteca geral como acolhimento, também rotulado como protótipo. Ambos os livros serão recriados em outra conversa e **não tiveram seu conteúdo editado nesta etapa**.
 - Tudo foi alterado somente no repositório de testes. A plataforma de produção e o banco de produção permanecem intocados.
+
+## Livro 0 conectado ao Supabase de testes (26/11/2026)
+
+- O **novo Ponto de Partida enviado pelo diretor** está publicado em [livros/ponto-de-partida/](livros/ponto-de-partida/index.html), com uma ponte de integração opcional. O conteúdo antigo dessa pasta foi substituído em testes; os scripts antigos `book.js` e `style.css` não são utilizados por esse HTML autocontido.
+- Entrar na plataforma com a conta **fictícia de aluno A ou B**, abrir o livro, concluir e clicar em **Salvar meu percurso na minha conta de testes**. Isso grava um resumo do registro em `learning_book_records`, um projeto em `learning_projects` e tarefas em `learning_tasks`, **todas inicialmente no Backlog**. O aluno escolhe o que irá fazer hoje.
+- O envio é repetível sem duplicar tarefas existentes ou redefinir tarefas já movidas. A página Projetos agora usa Supabase para contas de aluno autenticadas, e demonstração local para visitantes fictícios sem login.
+- RLS testado por SQL com aluno A, aluno B e diretor A, usando transações revertidas. **Ainda é necessário testar o fluxo completo no navegador com as contas fictícias.** Não usar dados reais.
+- Veja o [roteiro e limitações da integração](docs/integracao-livro0-supabase-testes.md). A EduLegal oficial permanece intacta.
