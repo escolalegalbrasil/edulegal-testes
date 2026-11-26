@@ -1,0 +1,75 @@
+# Percurso piloto — Acolhimento → Primeiro Obby (EduLegal)
+
+**Status:** especificação inicial aprovada em diálogo em 25/11/2026; protótipo a validar. Nenhum livro completo, relatório de IA, pontos ou badge real foi implementado.
+
+## Objetivo pedagógico
+Promover a autorregulação da aprendizagem, motivando o aluno a criar projetos ligados aos seus interesses, desenvolver habilidades técnicas e socioemocionais, apropriar-se dos conhecimentos necessários à realização dos projetos e tornar-se consciente das próprias habilidades e dificuldades.
+
+## Livro 0 — Acolhimento
+1. Boas-vindas curtas; explicar que o aluno pode descobrir e mudar seus interesses.
+2. Mostrar áreas em cartões concretos com exemplos de projetos (Roblox Studio, robótica, desenvolvimento web, escrita criativa etc.).
+3. Pequenas escolhas e demonstrações práticas intercaladas com perguntas simples; **evitar perguntas abstratas sobre personalidade ou estilo**.
+4. Escolher um primeiro percurso (exemplo fictício: Roblox Studio).
+5. Planejamento inicial assistido: a EduLegal oferece duas ou três tarefas muito concretas para a primeira sessão; o aluno pode aceitar, trocar, reorganizar, incluir uma ideia própria ou simplesmente explorar.
+6. Nunca inferir personalidade, emoção, motivação ou autorregulação a partir de uma única escolha. Registros iniciais são hipóteses pedagógicas provisórias.
+
+## Livro 1 — Meu Primeiro Obby
+As tarefas exemplificam aprendizagens concretas:
+- reconhecer Explorer, Propriedades, Move, Scale, Rotate e Play;
+- inserir uma `Part`, configurar `Anchored`, `Size`, `Position`, cores e materiais;
+- construir e testar um pequeno percurso;
+- investigar `Transparency` e `CanCollide` manualmente;
+- escrever poucas linhas de Luau por vez, entendendo `Script`, `script.Parent`, propriedades e `task.wait`;
+- fazer uma plataforma aparecer e desaparecer em intervalos, com teste e reflexão;
+- escolher uma expansão autoral.
+
+Adotar o padrão Entenda → Experimente → Observe → Confira, pistas graduais, primeiro tentativa e testes no Roblox Studio. A IA não será um chat obrigatório; ajudar a depurar via IA somente como último recurso.
+
+## Planner diário: integração com livro e projeto
+Princípio: **o aluno não precisa saber formular metas sobre conteúdos que desconhece**. O livro oferece possibilidades concretas e progressivamente transfere responsabilidade do planejamento.
+
+- A unidade de planejamento é uma **tarefa pequena de projeto**, vinculada a uma missão do livro e a um conhecimento/habilidade.
+- No começo do encontro: exibir cartões com ações observáveis, por exemplo: “Criar uma plataforma”; “Testar se consigo saltar”; “Observar o que muda em Transparency”.
+- O aluno arrasta do conjunto **Depois** para **Vou fazer hoje**. Permitir ação equivalente por botões/teclado, para acessibilidade.
+- A ordem do plano determina a ordem de apresentação de sugestões, sem bloquear explorações espontâneas ou exigir conclusão.
+- Ao executar uma tarefa, abrir a missão correspondente do livro. Ao voltar, registrar tentativa, teste, dificuldades e eventual evidência enviada; o cartão guarda estado (não iniciado, experimentando, concluído pelo aluno, conferido).
+- Para iniciantes, apresentar um plano sugerido; para alunos mais autônomos, permitir escolher/criar mais tarefas. Direção é dinâmica por atividade, não rótulo da criança.
+- A conclusão de uma tarefa é uma declaração/registro do aluno até ser confrontada com evidências; **não é inferência automática de domínio**.
+
+## Três modos inicialmente previstos
+Guiado, Acompanhado, Exploratório. Todos preservam objetivos nucleares e sequências técnicas verificadas, mas ajustam quantidade de orientação e oportunidades de escolha. O aluno pode solicitar mais direção; a transição acontece entre etapas conforme evidências e decisão pedagógica.
+
+## Registro de aprendizagem, sem vigilância excessiva
+Coletar apenas o necessário e distinguindo observação de hipótese:
+- tarefa vinculada, data, atividade e versão;
+- plano inicial e alterações feitas pelo aluno;
+- dica opcional aberta (não interpretar isoladamente);
+- hipótese e teste voluntariamente registrados;
+- situação da tarefa declarada pelo aluno;
+- entrega opcional de print/código e reflexão;
+- evidências e critérios de habilidade, não só pontos.
+Não interpretar ausência de clique, tempo bruto ou quantidade de dicas como diagnóstico/medida de autorregulação.
+
+## Relatório por atividade
+Emitido ao concluir uma etapa do livro, com:
+- objetivo, conhecimento trabalhado e evidências;
+- planejamento, monitoramento, revisão, solicitação de apoio e reflexão **quando observáveis**;
+- descrição do progresso e próximos desafios possíveis, com grau de confiança e limitações.
+IA analisa nos bastidores; professor/diretor revisa quando necessário.
+
+## Badges e portfólio
+- Pontos **internos**, jamais exibidos ao aluno; não usar contagem para pressão por recompensa.
+- Badges descritivos com níveis de complexidade e critérios de evidência; não concedidos automaticamente somente por completar páginas.
+- **Sim, projeto e badges aparecerão no portfólio**, mas o projeto deve ser selecionado/organizado pelo aluno e a publicação externa exige revisão e autorização adequadas.
+- Portfolio pode ter título, imagens/prints, descrição, o que aprendeu, como resolveu um desafio, conhecimentos e conquistas validadas.
+- Badges socioemocionais sem pontuação numérica; registros contextuais, participação voluntária e mediação humana.
+
+## Marcos de implementação
+A. Protótipo estático + planner arrastável, sem autenticação, IA ou banco de produção.
+B. Livros pedagógicos reais (acolhimento + Obby) com testes em diferentes modos.
+C. Registro estruturado no Supabase **de testes**; autoria e isolamento de escola/aluno por RLS.
+D. Entrega de prints com consentimento e segurança; relatório por atividade.
+E. Regras de avaliação de badges com evidências; montagem do portfólio.
+F. Avaliação do diretor e dos alunos em piloto supervisionado.
+
+**A produção permanece intocada até autorização expressa do diretor.**
