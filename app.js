@@ -114,6 +114,50 @@ function navButton(label,target,className=""){
  const b=el("button",className,label);b.type="button";
  b.addEventListener("click",()=>navigate(target));return b;
 }
+/* Livro 0: os registros locais são usados SOMENTE na prévia fictícia, nunca na conta autenticada. */
+const BOOK0_KEY="edulegal-testes-ponto-de-partida-v1";
+const BOOK0_URL="./livros/ponto-de-partida/";
+const BOOK0_TASKS={
+ roblox:["Conhecer a área de trabalho, o Explorer e a janela Propriedades","Construir uma plataforma com uma Part e testar Anchored","Criar e testar um pequeno percurso de obstáculos","Explorar Transparency e CanCollide","Escrever um Script em pequenas etapas"],
+ robotica:["Conhecer um LED e o que ele faz","Reconhecer um circuito simples e seguro","Descobrir como acender e apagar uma luz com programação"],
+ escrita:["Inventar um personagem","Escolher um lugar para a aventura","Criar um acontecimento inesperado"],
+ web:["Conhecer uma página HTML","Criar um título e um pequeno texto","Mudar a aparência com CSS"]
+};
+const BOOK0_TITLES={roblox:"Meu Primeiro Obby",robotica:"Minha Primeira Luz",escrita:"Minha Primeira História",web:"Minha Primeira Página"};
+function demoBook0(){
+ if(!state.demo)return null;
+ try{const d=JSON.parse(sessionStorage.getItem(BOOK0_KEY)||"null");
+   if(d?.version!==1||!Object.hasOwn(BOOK0_TASKS,d.choice))return null;
+   return d;
+ }catch(_){return null;}
+}
+function demoTaskIds(book){return BOOK0_TASKS[book.choice].map((_,i)=>book.choice+"-"+(i+1));}
+function demoTaskTitle(book,id){
+ const idx=demoTaskIds(book).indexOf(id);
+ return idx>=0?BOOK0_TASKS[book.choice][idx]:null;
+}
+function demoMoveTask(id,destination){
+ const book=demoBook0();if(!book||!demoTaskTitle(book,id))return;
+ const ids=demoTaskIds(book);
+ const oldToday=Array.isArray(book.plan?.today)?book.plan.today.filter(x=>ids.includes(x)):[];
+ const oldLater=Array.isArray(book.plan?.later)?book.plan.later.filter(x=>ids.includes(x)):[];
+ book.plan={today:oldToday.filter(x=>x!==id),later:oldLater.filter(x=>x!==id)};
+ if(destination==="today")book.plan.today.push(id);else book.plan.later.push(id);
+ try{sessionStorage.setItem(BOOK0_KEY,JSON.stringify(book));}catch(_){}
+ navigate("projetos");
+}
+function demoShiftTask(id,delta){
+ const book=demoBook0();if(!book)return;
+ const arr=Array.isArray(book.plan?.today)?book.plan.today.slice():[];
+ const i=arr.indexOf(id),j=i+delta;if(i<0||j<0||j>=arr.length)return;
+ [arr[i],arr[j]]=[arr[j],arr[i]];
+ book.plan.today=arr;
+ try{sessionStorage.setItem(BOOK0_KEY,JSON.stringify(book));}catch(_){}
+ navigate("projetos");
+}
+function demoBookLink(label){
+ const a=el("a","cta",label);a.href=BOOK0_URL;return a;
+}
 function renderOrgPicker(main){
  if(state.demo){main.append(notice("Prévia visual: os dados desta tela são fictícios. Nenhuma consulta ao Supabase é feita neste modo."));return;}
  if(!state.orgId){main.append(notice("Seu acesso ainda não está vinculado a uma escola aprovada. O diretor deverá autorizar essa conta de testes."));return;}
@@ -128,38 +172,114 @@ function renderOrgPicker(main){
 }
 function renderHome(main){
  main.append(heading("MEU ESPAÇO DE APRENDIZAGEM","O que vamos criar hoje?"));
+ if(state.demo){
+  const book=demoBook0();
+  const card=el("section","continue");
+  if(book?.completedAt){
+   card.append(el("div","eyebrow","SUA PRIMEIRA EXPLORAÇÃO"));
+   card.append(el("h2","","Sua escolha já está no dashboard!"));
+   card.append(el("p","sub","Percurso escolhido: "+BOOK0_TITLES[book.choice]+". As tarefas sugeridas estão disponíveis no seu planejamento."));
+   card.append(navButton("Ver minhas tarefas →","projetos","cta"));
+   card.append(demoBookLink("Revisitar Ponto de Partida →"));
+  }else{
+   card.append(el("div","eyebrow","LIVRO DE ACOLHIMENTO"));
+   card.append(el("h2","","Ponto de Partida"));
+   card.append(el("p","sub","Descubra possibilidades, faça pequenas experiências e escolha uma primeira ideia de projeto."));
+   card.append(demoBookLink("Começar o Livro 0 →"));
+  }
+  main.append(card);
+  main.append(el("h2","section","Minhas explorações"));
+  const tiles=el("div","tiles");
+  for(const [title,icon] of [["Roblox Studio","game"],["Robótica","cpu"],["Desenvolvimento Web","code"],["Escrita criativa","pen"]]){
+   const b=navButton(title,"livros","tile");const i=el("span");i.dataset.icon=icon;b.prepend(i);tiles.append(b);
+  }
+  main.append(tiles);
+  if(book?.completedAt){
+   main.append(el("h2","section","Meu planejamento de hoje"));
+   const summary=el("section","trail-item");
+   const today=Array.isArray(book.plan?.today)?book.plan.today:[];
+   if(!today.length)summary.append(el("p","meta","Você pode escolher suas primeiras tarefas na página Projetos."));
+   today.forEach((id)=>{
+     const t=demoTaskTitle(book,id);if(t)summary.append(el("p","", "• "+t));
+   });
+   summary.append(navButton("Organizar minhas tarefas →","projetos","cta"));main.append(summary);
+  }
+  main.append(notice("Prévia com dados fictícios: o percurso fica somente nesta aba e não é gravado na conta de nenhum aluno."));
+  mountIcons(main);return;
+ }
+ const latest=state.trails[0];
  const card=el("section","continue");
  card.append(el("div","eyebrow","CONTINUE DE ONDE PAROU"));
- const latest=state.demo?{title:"Minha primeira loja no Roblox",subtitle:"Missão 3 · Comprando um item",progress:45}:state.trails[0];
  card.append(el("h2","",latest?.title||"Seu próximo projeto começa aqui"));
- card.append(el("p","sub",state.demo?latest.subtitle:latest?"Uma mentoria disponível para continuar":"Quando uma trilha for criada, ela aparecerá neste espaço."));
- if(state.demo){
-  const prog=el("div","progressrow");
-  const track=el("div","track");const bar=el("div","bar");bar.style.width="45%";track.append(bar);
-  prog.append(track,el("strong","","45%"));card.append(prog);
- }
- const cta=navButton(latest?"Continuar aprendendo  →":"Explorar meus livros  →",latest?"mentoria":"livros","cta");
- card.append(cta);main.append(card);
+ card.append(el("p","sub",latest?"Uma mentoria disponível para continuar":"Quando uma trilha for criada, ela aparecerá neste espaço."));
+ card.append(navButton(latest?"Continuar aprendendo →":"Explorar meus livros →",latest?"mentoria":"livros","cta"));main.append(card);
  main.append(el("h2","section","Minhas explorações"));
  const tiles=el("div","tiles");
  for(const [title,icon] of [["Roblox Studio","game"],["Robótica","cpu"],["Desenvolvimento Web","code"],["Escrita criativa","pen"]]){
-  const b=navButton(title,"livros","tile");
-  const i=el("span");i.dataset.icon=icon;b.prepend(i);tiles.append(b);
+  const b=navButton(title,"livros","tile");const i=el("span");i.dataset.icon=icon;b.prepend(i);tiles.append(b);
  }
  main.append(tiles);
- const idea=el("div","idea");const ico=el("span");ico.dataset.icon="bulb";idea.append(ico,el("span","","Tem uma nova ideia de projeto? Vamos criar juntos?"));
- const open=navButton("→","projetos","idea-link");idea.append(open);main.append(idea);
- mountIcons(main);
+ const idea=el("div","idea");const ico=el("span");ico.dataset.icon="bulb";
+ idea.append(ico,el("span","","Tem uma nova ideia de projeto? Vamos criar juntos?"));
+ idea.append(navButton("→","projetos","idea-link"));main.append(idea);mountIcons(main);
 }
+
 function renderBooks(main){
  main.append(heading("BIBLIOTECA","Meus livros"));
- main.append(notice("O catálogo dos livros interativos será conectado aqui após conferirmos os arquivos e as versões finais. Nenhum livro foi importado ainda."));
- const list=el("div","stack");list.append(el("div","trail-item","Os livros terão retomada de progresso, atividades e editor de código vinculado ao projeto."));main.append(list);
+ const card=el("section","continue");
+ card.append(el("div","eyebrow","LIVRO 0 · PRIMEIRA EXPERIÊNCIA"));
+ card.append(el("h2","","Ponto de Partida"));
+ card.append(el("p","sub","Conheça áreas da EduLegal, experimente uma pequena atividade e escolha um primeiro projeto."));
+ card.append(demoBookLink("Abrir livro interativo →"));
+ main.append(card);
+ if(!state.demo)main.append(notice("Este livro é uma demonstração isolada. Suas escolhas não serão salvas nesta conta de testes. Ao retornar, o link abre o dashboard fictício."));
+ else main.append(notice("O próximo livro — Meu Primeiro Obby — está em preparação. Esta biblioteca ainda não contém seus capítulos completos."));
 }
+
 function renderProjects(main){
  main.append(heading("MEUS PROJETOS","O que estou criando?"));
- main.append(notice("Os projetos serão privados por padrão e poderão reunir tarefas, arquivos, registros, livros e mentorias. Integração em desenvolvimento."));
+ const book=demoBook0();
+ if(!state.demo||!book?.completedAt){
+  main.append(notice("Os projetos serão privados por padrão e poderão reunir tarefas, arquivos, registros, livros e mentorias. Integração em desenvolvimento."));
+  if(state.demo)main.append(demoBookLink("Escolher um percurso no Livro 0 →"));
+  return;
+ }
+ main.append(el("p","meta","Ideia de projeto: "+BOOK0_TITLES[book.choice]+" · Planejamento de demonstração"));
+ main.append(notice("Estas tarefas foram sugeridas automaticamente quando você escolheu seu percurso. Pode arrastá-las ou usar os botões para mudar seu plano. Ainda não são atividades concluídas."));
+ const grid=el("div","plan-grid");
+ const ids=demoTaskIds(book);
+ const today=Array.isArray(book.plan?.today)?book.plan.today.filter(x=>ids.includes(x)):[];
+ const later=Array.isArray(book.plan?.later)?book.plan.later.filter(x=>ids.includes(x)):[];
+ for(const zone of ["today","later"]){
+  const col=el("section","plan-column");
+  col.append(el("h2","",zone==="today"?"Vou fazer hoje":"Posso fazer depois"));
+  const list=zone==="today"?today:later;
+  list.forEach(id=>{
+   const box=el("article","plan-task");
+   box.draggable=true;
+   box.append(el("strong","",demoTaskTitle(book,id)||"Tarefa"));
+   const actions=el("div","plan-actions");
+   const move=el("button","soft-btn",zone==="today"?"Deixar para depois":"Fazer hoje");
+   move.type="button";move.addEventListener("click",()=>demoMoveTask(id,zone==="today"?"later":"today"));actions.append(move);
+   if(zone==="today"){
+    for(const [label,delta] of [["↑ Antes",-1],["↓ Depois",1]]){
+     const b=el("button","soft-btn",label);b.type="button";
+     b.addEventListener("click",()=>demoShiftTask(id,delta));actions.append(b);
+    }
+   }
+   box.append(actions);
+   box.addEventListener("dragstart",ev=>{ev.dataTransfer.setData("text/plain",id);ev.dataTransfer.effectAllowed="move";});
+   col.append(box);
+  });
+  col.addEventListener("dragover",ev=>{ev.preventDefault();col.classList.add("dragover");});
+  col.addEventListener("dragleave",()=>col.classList.remove("dragover"));
+  col.addEventListener("drop",ev=>{ev.preventDefault();col.classList.remove("dragover");const id=ev.dataTransfer.getData("text/plain");if(ids.includes(id))demoMoveTask(id,zone);});
+  grid.append(col);
+ }
+ main.append(grid);
+ const note=el("p","meta","O livro específico ainda está em construção; estas são sugestões de planejamento, não uma avaliação de habilidades.");main.append(note);
 }
+
 function renderMentoria(main){
  main.append(heading("CONVERSAS DE APRENDIZAGEM","Minhas mentorias"));
  if(state.demo){main.append(notice("Exemplo visual: Minha primeira loja no Roblox. Não é uma conversa real."));return;}
@@ -174,7 +294,19 @@ function renderMentoria(main){
  });
  main.append(list);
 }
-function renderPortfolio(main){main.append(heading("MINHAS CRIAÇÕES","Portfólio"));main.append(notice("O portfólio poderá reunir projetos e conquistas, com publicação opcional e supervisão. Ainda não ativado."));}
+function renderPortfolio(main){
+ main.append(heading("MINHAS CRIAÇÕES","Portfólio"));
+ const book=demoBook0();
+ if(state.demo&&book?.completedAt){
+  const card=el("section","trail-item");
+  card.append(el("h2","","Projeto escolhido: "+BOOK0_TITLES[book.choice]));
+  card.append(el("p","meta","Ideia inicial, ainda não é um projeto construído."));
+  if(book.reflection)card.append(el("p","","Uma descoberta ou intenção registrada: "+book.reflection));
+  card.append(el("p","meta","Quando houver produções e evidências, este espaço poderá apresentar prints, projetos e badges de habilidades validadas."));
+  main.append(card);
+ }else main.append(notice("O portfólio poderá reunir projetos e conquistas, com publicação opcional e supervisão. Ainda não ativado."));
+}
+
 function renderGestao(main){
  main.append(heading("ACOMPANHAMENTO","Painel da escola"));
  main.append(notice("Perfil "+roleName(state.role)+": as ferramentas de convites e moderação estão em desenvolvimento no banco de testes."));
@@ -219,4 +351,7 @@ $("loginForm").addEventListener("submit",async event=>{
 });
 mountIcons();
 applyTheme();
-refreshAuth();
+// O parâmetro ?demo=1 exibe SOMENTE dados fictícios e não acessa informações da conta.
+if(new URLSearchParams(window.location.search).get("demo")==="1"){
+ state.demo=true;state.user=null;state.orgId=null;state.role="student";state.trails=[];state.view="inicio";showApp();
+}else refreshAuth();
