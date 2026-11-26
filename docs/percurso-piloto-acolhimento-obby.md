@@ -34,7 +34,7 @@ Princípio: **o aluno não precisa saber formular metas sobre conteúdos que des
 
 - A unidade de planejamento é uma **tarefa pequena de projeto**, vinculada a uma missão do livro e a um conhecimento/habilidade.
 - No começo do encontro: exibir cartões com ações observáveis, por exemplo: “Criar uma plataforma”; “Testar se consigo saltar”; “Observar o que muda em Transparency”.
-- A página **Projetos** apresenta duas colunas, nesta ordem: **Backlog** (esquerda, todas as tarefas sugeridas) e **Vou fazer hoje** (direita, inicialmente vazia). Uma instrução explícita orienta o aluno a escolher uma ou duas tarefas e arrastá-las, ou usar botões equivalentes para acessibilidade.
+- A página **Projetos** apresenta **três colunas**, nesta ordem: **Backlog** (tarefas disponíveis), **Vou fazer hoje** (tarefas selecionadas pelo aluno) e **Já terminei** (tarefas que o aluno declara ter concluído). O aluno move por arrastar ou botões. Pode devolver uma tarefa concluída para Hoje ou Backlog.
 - A ordem do plano determina a ordem de apresentação de sugestões, sem bloquear explorações espontâneas ou exigir conclusão.
 - Ao executar uma tarefa, abrir a missão correspondente do livro. Ao voltar, registrar tentativa, teste, dificuldades e eventual evidência enviada; o cartão guarda estado (não iniciado, experimentando, concluído pelo aluno, conferido).
 - Para iniciantes, sugerir um conjunto pequeno de tarefas concretas e orientar como escolher, **sem preencher automaticamente o plano do dia**. Para alunos mais autônomos, permitir escolher/criar mais tarefas. Direção é dinâmica por atividade, não rótulo da criança.
@@ -44,13 +44,13 @@ Princípio: **o aluno não precisa saber formular metas sobre conteúdos que des
 
 O planejamento é um recurso **da aba Projetos**, não uma segunda lista criada nos livros. Os livros **ensinam a planejar com experiências concretas**, sugerem tarefas e ajudam a revisar decisões; não mantêm um quadro independente.
 
-- **Início** mostra o resumo do plano e um botão contextual: sem tarefas do aluno, **Meus livros**; com tarefas disponíveis no Backlog ou no plano de hoje, **Projetos**. O botão principal nunca abre Mentoria.
+- **Início** mostra um resumo do planejamento. **Sem tarefas**, oferece **dois botões**: explorar livros **e** planejar um projeto próprio. Com tarefas, enfatiza Projetos, mas mantém a biblioteca acessível. O botão principal nunca abre Mentoria.
 - **Meus livros** apresenta possibilidades e conteúdos; ao escolher um percurso, as tarefas sugeridas passam para o Backlog de Projetos, ainda não selecionadas para o dia.
-- **Projetos** é a fonte única para escolher e reorganizar tarefas: Backlog à esquerda, Vou fazer hoje à direita. As tarefas são vinculadas ao livro/capítulo relevante. A edição do plano fica aqui.
+- **Projetos** é a fonte única para escolher e reorganizar tarefas em **Backlog → Vou fazer hoje → Já terminei**. O aluno também pode criar um **projeto próprio, mesmo sem livro**, adicionar tarefas ao Backlog, mover ou reabrir tarefas e filtrar por projeto. A edição do plano fica aqui.
 - **Dentro do livro**, oferecer apenas contexto curto da tarefa atual, pistas e perguntas concretas de previsão/teste/reflexão; o livro pode sugerir um novo passo e vincular a tarefa ao Backlog, mas **não abre outro planner dentro do livro**.
 - **Depois de uma atividade**, o aluno pode registrar o que fez e como verificou; os registros atualizam o mesmo objeto de tarefa e alimentam relatórios. A conclusão no planejamento é uma declaração do aluno, não comprovação automática de competência.
 - **Na volta à plataforma**, oferecer retomar uma tarefa do plano ou revisá-lo; não impor metas abstratas, não exigir terminar tudo em uma sessão e permitir mudança de ideia.
-- No protótipo atual, as tarefas do Livro 0 já aparecem no Backlog e a tela Início já usa botão contextual. **Ainda falta** abrir a missão específica a partir do cartão e atualizar status/conclusões; persistência por aluno depende do Supabase de testes.
+- No protótipo atual, as tarefas fictícias do Livro 0 aparecem no Backlog, projetos próprios podem ser criados, cartões passam por três colunas e registram conclusão declarada, com retorno possível. O Livro 1 antigo ainda é **rascunho demonstrativo** e seu vínculo a tarefas é provisório: os livros serão recriados e a ligação por atividade será refeita com um padrão de integração estável. Persistência por aluno depende do Supabase de testes.
 
 ## Três modos inicialmente previstos
 Guiado, Acompanhado, Exploratório. Todos preservam objetivos nucleares e sequências técnicas verificadas, mas ajustam quantidade de orientação e oportunidades de escolha. O aluno pode solicitar mais direção; a transição acontece entre etapas conforme evidências e decisão pedagógica.
@@ -81,7 +81,7 @@ IA analisa nos bastidores; professor/diretor revisa quando necessário.
 - Badges socioemocionais sem pontuação numérica; registros contextuais, participação voluntária e mediação humana.
 
 ## Marcos de implementação
-A. Protótipo com Livro 0 e planner arrastável na página Projetos, Backlog à esquerda e plano do dia à direita; não usa IA, coleta real nem banco de produção.
+A. Protótipo com três colunas em Projetos (Backlog, Vou fazer hoje, Já terminei), criação de projetos próprios e tarefas fictícias, sem IA, coleta real nem banco de produção.
 B. Livros demonstrativos de acolhimento + Obby elaborados, com três modos de orientação; **testes com alunos e no Roblox Studio pendentes**.
 C. Registro estruturado no Supabase **de testes**; autoria e isolamento de escola/aluno por RLS.
 D. Entrega de prints com consentimento e segurança; relatório por atividade.
