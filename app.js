@@ -117,6 +117,8 @@ function navButton(label,target,className=""){
 /* Livro 0: os registros locais são usados SOMENTE na prévia fictícia, nunca na conta autenticada. */
 const BOOK0_KEY="edulegal-testes-ponto-de-partida-v1";
 const BOOK0_URL="./livros/ponto-de-partida/";
+const BOOK1_KEY="edulegal-testes-obby-v1";
+const BOOK1_URL="./livros/meu-primeiro-obby/";
 const BOOK0_TASKS={
  roblox:["Conhecer a área de trabalho, o Explorer e a janela Propriedades","Construir uma plataforma com uma Part e testar Anchored","Criar e testar um pequeno percurso de obstáculos","Explorar Transparency e CanCollide","Escrever um Script em pequenas etapas"],
  robotica:["Conhecer um LED e o que ele faz","Reconhecer um circuito simples e seguro","Descobrir como acender e apagar uma luz com programação"],
@@ -143,6 +145,17 @@ function demoBook0(){
    }
    return d;
  }catch(_){return null;}
+}
+function demoBook1(){
+ if(!state.demo)return null;
+ try{
+  const d=JSON.parse(sessionStorage.getItem(BOOK1_KEY)||"null");
+  if(d?.version!==1)return null;
+  return d;
+ }catch(_){return null;}
+}
+function demoBook1Link(label){
+ const a=el("a","cta",label);a.href=BOOK1_URL;return a;
 }
 function demoTaskIds(book){return BOOK0_TASKS[book.choice].map((_,i)=>book.choice+"-"+(i+1));}
 function demoTaskTitle(book,id){
@@ -194,6 +207,7 @@ function renderHome(main){
    card.append(el("p","sub","Percurso escolhido: "+BOOK0_TITLES[book.choice]+". As tarefas estão no Backlog. Você decide quais passar para “Vou fazer hoje”."));
    card.append(navButton("Ver minhas tarefas →","projetos","cta"));
    card.append(demoBookLink("Revisitar Ponto de Partida →"));
+   if(book.choice==="roblox")card.append(demoBook1Link("Abrir Livro 1 — Meu Primeiro Obby →"));
   }else{
    card.append(el("div","eyebrow","LIVRO DE ACOLHIMENTO"));
    card.append(el("h2","","Ponto de Partida"));
@@ -239,14 +253,18 @@ function renderHome(main){
 
 function renderBooks(main){
  main.append(heading("BIBLIOTECA","Meus livros"));
- const card=el("section","continue");
- card.append(el("div","eyebrow","LIVRO 0 · PRIMEIRA EXPERIÊNCIA"));
- card.append(el("h2","","Ponto de Partida"));
- card.append(el("p","sub","Conheça áreas da EduLegal, experimente uma pequena atividade e escolha um primeiro projeto."));
- card.append(demoBookLink("Abrir livro interativo →"));
- main.append(card);
- if(!state.demo)main.append(notice("Este livro é uma demonstração isolada. Suas escolhas não serão salvas nesta conta de testes. Ao retornar, o link abre o dashboard fictício."));
- else main.append(notice("O próximo livro — Meu Primeiro Obby — está em preparação. Esta biblioteca ainda não contém seus capítulos completos."));
+ const book0=el("section","continue");
+ book0.append(el("div","eyebrow","LIVRO 0 · ACOLHIMENTO"));
+ book0.append(el("h2","","Ponto de Partida"));
+ book0.append(el("p","sub","Conheça áreas da EduLegal, experimente pequenas atividades e escolha um primeiro projeto."));
+ book0.append(demoBookLink("Abrir Livro 0 →"));main.append(book0);
+ const book1=el("section","continue");
+ book1.style.marginTop="14px";
+ book1.append(el("div","eyebrow","LIVRO 1 · ROBLOX STUDIO"));
+ book1.append(el("h2","","Meu Primeiro Obby"));
+ book1.append(el("p","sub","Construa plataformas, teste obstáculos, experimente propriedades e escreva aos poucos um Script em Luau. Inclui pistas graduais e três modos de orientação."));
+ book1.append(demoBook1Link("Abrir Livro 1 →"));main.append(book1);
+ main.append(notice("Esses livros ainda são protótipos demonstrativos. Suas respostas não serão salvas no Supabase nem associadas a contas. Use apenas dados fictícios."));
 }
 
 function renderProjects(main){
@@ -292,7 +310,8 @@ function renderProjects(main){
   grid.append(col);
  }
  main.append(grid);
- const note=el("p","meta","O livro específico ainda está em construção; estas são sugestões de planejamento, não uma avaliação de habilidades.");main.append(note);
+ if(book.choice==="roblox")main.append(demoBook1Link("Abrir Livro 1 — Meu Primeiro Obby →"));
+ const note=el("p","meta","Estas são tarefas sugeridas, não uma avaliação de habilidades. O Livro 1 já pode ser experimentado em modo de testes.");main.append(note);
 }
 
 function renderMentoria(main){
@@ -311,15 +330,38 @@ function renderMentoria(main){
 }
 function renderPortfolio(main){
  main.append(heading("MINHAS CRIAÇÕES","Portfólio"));
- const book=demoBook0();
- if(state.demo&&book?.completedAt){
+ const book0=demoBook0();
+ const book1=demoBook1();
+ if(!state.demo||(!book0?.completedAt&&!book1?.savedToPortfolio)){
+  main.append(notice("O portfólio poderá reunir projetos e conquistas, com publicação opcional e supervisão. Ainda não ativado para contas reais."));
+  return;
+ }
+ if(book1?.savedToPortfolio&&book1.projectTitle){
   const card=el("section","trail-item");
-  card.append(el("h2","","Projeto escolhido: "+BOOK0_TITLES[book.choice]));
-  card.append(el("p","meta","Ideia inicial, ainda não é um projeto construído."));
-  if(book.reflection)card.append(el("p","","Uma descoberta ou intenção registrada: "+book.reflection));
-  card.append(el("p","meta","Quando houver produções e evidências, este espaço poderá apresentar prints, projetos e badges de habilidades validadas."));
+  card.append(el("div","eyebrow","RASCUNHO PRIVADO · LIVRO 1"));
+  card.append(el("h2","",book1.projectTitle));
+  card.append(el("p","meta","Roblox Studio · Projeto registrado pelo aluno nesta demonstração; funcionamento e autoria ainda não foram verificados."));
+  if(book1.finalReflection){
+   card.append(el("strong","","O que descobri ou aprendi"));
+   card.append(el("p","",book1.finalReflection));
+  }
+  if(book1.nextIdea){
+   card.append(el("strong","","O que quero investigar depois"));
+   card.append(el("p","",book1.nextIdea));
+  }
+  card.append(el("p","meta","A imagem escolhida no livro não é armazenada neste protótipo. Badges serão exibidos futuramente somente quando houver critérios e evidências validadas."));
+  card.append(demoBook1Link("Continuar meu Obby →"));
   main.append(card);
- }else main.append(notice("O portfólio poderá reunir projetos e conquistas, com publicação opcional e supervisão. Ainda não ativado."));
+ }
+ if(book0?.completedAt){
+  const card=el("section","trail-item");
+  card.style.marginTop="14px";
+  card.append(el("h2","","Projeto escolhido no acolhimento: "+BOOK0_TITLES[book0.choice]));
+  card.append(el("p","meta","Ideia inicial do Livro 0, não uma criação comprovada."));
+  if(book0.reflection)card.append(el("p","","Uma descoberta ou intenção registrada: "+book0.reflection));
+  main.append(card);
+ }
+ main.append(notice("Prévia de portfólio apenas nesta sessão e neste modo de demonstração. Não há publicação pública, análise de IA nem concessão automática de badges."));
 }
 
 function renderGestao(main){
