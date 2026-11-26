@@ -7,7 +7,7 @@ const API_URL="https://feijoegkjleirfzbumnk.supabase.co";
 const API_KEY="sb_publishable_pzytAyOPleWQVrTnzg22ew_qAcIgVQu";
 const app=window.supabase ? window.supabase.createClient(API_URL,API_KEY) : null;
 const $=id=>document.getElementById(id);
-const state={demo:false,user:null,memberships:[],orgs:[],orgId:null,role:null,trails:[],view:"inicio",area:null};
+const state={demo:false,user:null,memberships:[],orgs:[],orgId:null,role:null,trails:[],view:"inicio",area:null,cloudSummary:null,cloudError:null};
 const pages=["inicio","livros","projetos","portfolio","categoria"];
 const clone=x=>JSON.parse(JSON.stringify(x));
 let palettes=clone(defaults);
@@ -86,6 +86,11 @@ async function refreshAuth(){
   if(error||!data?.user){state.demo=false;state.user=null;showLogin();return;}
   state.demo=false;state.user=data.user;
   await updateMemberships();
+  state.cloudSummary=null;state.cloudError=null;
+  if(state.role==="student"&&state.orgId&&window.EduLegalCloudPlanning){
+   try{state.cloudSummary=await window.EduLegalCloudPlanning.load(app,state.user.id,state.orgId);}
+   catch(e){state.cloudError=String(e.message||e);}
+  }
   showApp();
  }catch(err){showLogin("Não foi possível validar a sessão: "+err.message);}
 }
@@ -113,66 +118,14 @@ const BOOK0_URL="./livros/ponto-de-partida/";
 const BOOK1_KEY="edulegal-testes-obby-v1";
 const BOOK1_URL="./livros/meu-primeiro-obby/";
 const BOOK0_TASKS={
- roblox:["Conhecer a área de trabalho, o Explorer e a janela Propriedades","Construir uma plataforma com uma Part e testar Anchored","Criar e testar um pequeno percurso de obstáculos","Explorar Transparency e CanCollide","Escrever um Script em pequenas etapas"],
- robotica:["Conhecer um LED e o que ele faz","Reconhecer um circuito simples e seguro","Descobrir como acender e apagar uma luz com programação"],
- escrita:["Inventar um personagem","Escolher um lugar para a aventura","Criar um acontecimento inesperado"],
- web:["Conhecer uma página HTML","Criar um título e um pequeno texto","Mudar a aparência com CSS"],
- pico8:["Conhecer os personagens e o cenário de um jogo","Planejar um desafio simples","Experimentar movimentar um personagem no PICO-8"],
- video:["Escolher uma ideia para animar","Organizar duas ou três cenas","Experimentar uma sequência em movimento"]
+ roblox:["Conhecer o ambiente do Roblox Studio","Construir a primeira plataforma da pista","Testar o personagem dentro do jogo"],
+ robotica:["Conhecer a placa e os componentes do circuito","Montar um circuito com LED e resistor, com a energia desligada e orientação de um adulto","Programar e testar a luz com orientação"],
+ web:["Conhecer onde escrever e testar HTML","Criar uma página com título e texto","Modificar a aparência da página com CSS"],
+ escrita:["Inventar um personagem e um lugar","Escrever o começo da história","Reler o que escreveu e escolher uma ideia para continuar"],
+ pico8:["Conhecer a tela e o editor de sprites do PICO-8","Desenhar o primeiro personagem","Testar um comando simples de movimento"],
+ video:["Escolher uma ação simples para animar","Preparar três imagens ou quadros","Organizar e reproduzir os quadros para observar o movimento"]
 };
-const BOOK0_TITLES={roblox:"Meu Primeiro Obby",robotica:"Minha Primeira Luz",escrita:"Minha Primeira História",web:"Minha Primeira Página",pico8:"Meu Primeiro Jogo 2D",video:"Minha Primeira Animação"};
-/* Seis áreas com páginas próprias: o catálogo de livros será expandido sem duplicar telas.
-   Os links abaixo são SOMENTE para protótipos antigos, que serão refeitos em outro chat. */
-const LEARNING_AREAS=[
- {id:"roblox",title:"Roblox Studio",icon:"game",intro:"Construa jogos, mundos e desafios com modelagem 3D e programação em Luau."},
- {id:"robotica",title:"Robótica e Arduino",icon:"cpu",intro:"Explore circuitos, sensores e projetos com eletrônica e programação."},
- {id:"web",title:"Sites e programação",icon:"code",intro:"Crie páginas e experiências interativas com HTML, CSS e JavaScript."},
- {id:"escrita",title:"Escrita criativa",icon:"pen",intro:"Invente histórias, personagens e livros com suas próprias ideias."},
- {id:"pico8",title:"Jogos 2D — PICO-8",icon:"game",intro:"Desenvolva jogos 2D com personagens, cenários e desafios."},
- {id:"video",title:"Vídeo e animação",icon:"video",intro:"Experimente edição, animação e criação de vídeos."}
-];
-const BOOK_CATALOG=[
- {id:"obby-prototipo",area:"roblox",title:"Meu Primeiro Obby",desc:"Construção 3D e primeiros Scripts no Roblox Studio.",url:BOOK1_URL,status:"Protótipo provisório — será recriado"}
-];
-function getArea(id){return LEARNING_AREAS.find(a=>a.id===id)||null;}
-function areaBooks(id){return BOOK_CATALOG.filter(b=>b.area===id);}
-function goToArea(id){if(!getArea(id))return;state.area=id;navigate("categoria");}
-function categoryTiles(main){
- const grid=el("div","tiles area-tiles");
- for(const area of LEARNING_AREAS){
-  const tile=el("button","tile area-tile");tile.type="button";
-  const symbol=el("span");symbol.dataset.icon=area.icon;
-  const copy=el("span","area-tile-content");
-  copy.append(el("strong","",area.title),el("small","",areaBooks(area.id).length?areaBooks(area.id).length+" protótipo para conhecer":"Aguardando novos livros"));
-  tile.append(symbol,copy);
-  tile.addEventListener("click",()=>goToArea(area.id));
-  grid.append(tile);
- }
- main.append(grid);mountIcons(grid);
-}
-function renderCategory(main){
- const area=getArea(state.area);
- if(!area){main.append(notice("Área não encontrada. Volte à biblioteca."));main.append(navButton("Voltar aos livros →","livros","cta"));return;}
- main.append(navButton("← Todas as áreas","livros","area-back"));
- main.append(heading("EXPLORAR ÁREA",area.title));
- main.append(el("p","area-intro",area.intro));
- main.append(el("h2","section","Livros desta área"));
- const books=areaBooks(area.id);
- if(!books.length)main.append(notice("Ainda não há livros nesta área. Quando forem preparados e revisados, aparecerão aqui."));
- else{
-  for(const b of books){
-   const card=el("section","continue category-book");
-   card.append(el("div","eyebrow",b.status),el("h2","",b.title),el("p","sub",b.desc));
-   const link=el("a","cta","Abrir protótipo →");link.href=b.url;card.append(link);main.append(card);
-  }
-  main.append(notice("O material acima é um protótipo antigo, ainda em revisão. Os livros definitivos serão desenvolvidos separadamente e adicionados à biblioteca quando estiverem prontos."));
- }
- const actions=el("div","home-actions");
- actions.append(navButton("Planejar um projeto meu →","projetos","soft-btn"));
- actions.append(navButton("Explorar outra área →","livros","soft-btn"));
- main.append(actions);
-}
-
+const BOOK0_TITLES={roblox:"Meu primeiro Obby",robotica:"Minha primeira invenção eletrônica",web:"Minha primeira página web",escrita:"Minha primeira aventura",pico8:"Meu primeiro jogo 2D",video:"Minha primeira animação"};
 function demoBook0(){
  if(!state.demo)return null;
  try{const d=JSON.parse(sessionStorage.getItem(BOOK0_KEY)||"null");
@@ -244,9 +197,10 @@ function renderOrgPicker(main){
 function renderHome(main){
  main.append(heading("MEU ESPAÇO DE APRENDIZAGEM","O que vamos criar hoje?"));
  const planner=state.demo&&window.EduLegalDemoPlanning
-  ?window.EduLegalDemoPlanning.summary(demoBook0(),BOOK0_TASKS,BOOK0_TITLES):null;
+  ?window.EduLegalDemoPlanning.summary(demoBook0(),BOOK0_TASKS,BOOK0_TITLES)
+  :state.cloudSummary;
  const tasks=planner?.all||[];
- const pending=tasks.filter(task=>task.zone!=="done");
+ const pending=tasks.filter(task=>(task.zone||task.status)!=="done");
  const finished=planner?.done||[];
  const selectedToday=planner?.today||[];
  const card=el("section","continue");
@@ -274,7 +228,7 @@ function renderHome(main){
   main.append(el("h2","section","Escolhi fazer hoje"));
   const summary=el("section","trail-item");
   for(const task of selectedToday.slice(0,4)){
-    const p=el("p","", "• "+task.title+" — "+task.projectTitle);
+    const p=el("p","", "• "+task.title+" — "+(task.projectTitle||task.project?.title||"Meu projeto"));
     summary.append(p);
   }
   if(selectedToday.length>4)summary.append(el("p","meta","E mais "+(selectedToday.length-4)+" tarefa(s) no planejamento."));
@@ -291,30 +245,44 @@ function renderHome(main){
  idea.append(ico,el("span","","Pensou em um projeto novo? Você pode planejá-lo mesmo sem livro."));
  idea.append(navButton("→","projetos","idea-link"));main.append(idea);
  if(state.demo)main.append(notice("Prévia fictícia: suas tarefas ficam somente nesta aba e não são enviadas ao Supabase."));
- else main.append(notice("A integração dos projetos às contas do Supabase de testes ainda está em desenvolvimento. Você pode experimentar o planejador usando o modo de demonstração."));
+ else if(state.cloudError)main.append(notice("Não foi possível carregar seu planejamento: "+state.cloudError));
  mountIcons(main);
 }
 
 function renderBooks(main){
  main.append(heading("BIBLIOTECA","Meus livros"));
  const welcome=el("section","continue");
- welcome.append(el("div","eyebrow","LIVRO DE ACOLHIMENTO · PROTÓTIPO"));
+ welcome.append(el("div","eyebrow","LIVRO 0 · TESTES DE INTEGRAÇÃO"));
  welcome.append(el("h2","","Ponto de Partida"));
- welcome.append(el("p","sub","Comece conhecendo possibilidades. Esta versão é provisória e será recriada."));
- welcome.append(demoBookLink("Abrir protótipo de acolhimento →"));
+ welcome.append(el("p","sub","Descubra possibilidades e escolha seu primeiro projeto. Esta versão foi enviada para integração e permite salvar o percurso com uma conta fictícia de aluno."));
+ welcome.append(demoBookLink("Abrir Ponto de Partida →"));
  main.append(welcome);
  main.append(el("h2","section","Escolha uma área para explorar"));
  main.append(el("p","meta","Cada área organiza seus próprios livros. Você pode voltar e experimentar outras quando quiser."));
  categoryTiles(main);
- main.append(notice("Os livros existentes ainda são protótipos para demonstração. O catálogo crescerá conforme os novos livros forem aprovados."));
+ main.append(notice("O Ponto de Partida está em testes de integração. Os outros livros seguem como protótipos e serão substituídos pelas versões revisadas."));
 }
 
 function renderProjects(main){
  main.append(heading("MEUS PROJETOS","O que estou criando?"));
  if(!state.demo){
-  main.append(notice("O planejamento vinculado à conta ainda não está ativado. Para testar a criação de projetos próprios e o Backlog, entre na demonstração fictícia. Os dados reais não serão utilizados."));
-  const a=el("a","cta","Experimentar planejador fictício →");
-  a.href="./index.html?demo=1&view=projetos";main.append(a);
+  if(state.role!=="student"||!state.orgId){
+   main.append(notice("O planejamento do aluno fica disponível para contas fictícias de aluno aprovadas. O acompanhamento de professores e diretores será construído posteriormente."));
+   return;
+  }
+  if(!window.EduLegalCloudPlanning){
+   main.append(notice("O planejador não carregou. Atualize a página e tente novamente."));return;
+  }
+  window.EduLegalCloudPlanning.render(main,{
+   client:app,userId:state.user.id,orgId:state.orgId,
+   onChanged:async()=>{
+    try{
+     state.cloudSummary=await window.EduLegalCloudPlanning.load(app,state.user.id,state.orgId);
+     state.cloudError=null;
+    }catch(e){state.cloudError=String(e.message||e);}
+    if(state.view==="projetos")navigate("projetos");
+   }
+  });
   return;
  }
  if(!window.EduLegalDemoPlanning){
@@ -327,7 +295,6 @@ function renderProjects(main){
   onRefresh:()=>navigate("projetos")
  });
 }
-
 
 function renderPortfolio(main){
  main.append(heading("MINHAS CRIAÇÕES","Portfólio"));
@@ -401,10 +368,10 @@ function navigate(page,fromHistory=false){
 $("themeDark").onclick=()=>{theme="dark";applyTheme();};
 $("themeLight").onclick=()=>{theme="light";applyTheme();};
 document.querySelectorAll("[data-view]").forEach(b=>b.addEventListener("click",()=>navigate(b.dataset.view)));
-$("demoBtn").onclick=()=>{state.demo=true;state.user=null;state.orgId=null;state.role="student";state.trails=[];state.view="inicio";showApp();};
+$("demoBtn").onclick=()=>{state.demo=true;state.user=null;state.orgId=null;state.role="student";state.trails=[];state.cloudSummary=null;state.cloudError=null;state.view="inicio";showApp();};
 $("exitBtn").onclick=async()=>{
  if(!state.demo&&app)await app.auth.signOut();
- state.user=null;state.demo=false;state.orgId=null;state.role=null;state.memberships=[];state.trails=[];state.view="inicio";
+ state.user=null;state.demo=false;state.orgId=null;state.role=null;state.memberships=[];state.trails=[];state.cloudSummary=null;state.cloudError=null;state.view="inicio";
  showLogin();
 };
 $("loginForm").addEventListener("submit",async event=>{
