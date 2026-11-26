@@ -37,3 +37,13 @@ Consulte [TESTE-LOGIN.md](TESTE-LOGIN.md) para o roteiro de teste com os seis pe
 - Nesta primeira versão, há acolhimento com escolhas concretas, planejamento diário por tarefas arrastáveis (com alternativa por botões), uma amostra das missões de Roblox e rascunho de portfólio.
 - **É apenas uma demonstração**: não está integrada a contas, IA, analytics, livro completo, upload ou concessão de badges. O protótipo guarda escolhas somente nesta sessão do navegador.
 - Não usar dados reais. A versão de produção da EduLegal não foi alterada.
+
+## Livro 0 — Ponto de Partida (protótipo interativo)
+
+- [Abrir Livro 0 no site de testes](https://escolalegalbrasil.github.io/edulegal-testes/livros/ponto-de-partida/)
+- [Ver arquivos do livro](livros/ponto-de-partida/index.html)
+- Cinco capítulos: boas-vindas, áreas da EduLegal, microexperiências práticas (Roblox/LED virtual/escrita), escolha inicial e tarefas sugeridas.
+- Ao concluir, uma notificação leva ao **dashboard demonstrativo**: as duas primeiras tarefas são colocadas em "Vou fazer hoje" e podem ser arrastadas ou movidas por botões em **Projetos**.
+- As atividades de Arduino e Roblox deste acolhimento são **simulações no navegador**, não utilizam hardware nem o Roblox Studio real. Os livros técnicos completos são etapas posteriores.
+- Dados de demonstração só ficam no `sessionStorage` da aba e só são lidos pela interface no **modo fictício** (`?demo=1`); não vinculam contas reais ou de testes, não são enviados ao Supabase e não são avaliações de autorregulação.
+- Não há chat de IA, pontuação, badges concedidos, uploads ou analytics automáticos nesta versão.
