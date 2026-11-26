@@ -126,6 +126,69 @@ const BOOK0_TASKS={
  video:["Escolher uma ação simples para animar","Preparar três imagens ou quadros","Organizar e reproduzir os quadros para observar o movimento"]
 };
 const BOOK0_TITLES={roblox:"Meu primeiro Obby",robotica:"Minha primeira invenção eletrônica",web:"Minha primeira página web",escrita:"Minha primeira aventura",pico8:"Meu primeiro jogo 2D",video:"Minha primeira animação"};
+/* Catálogo de áreas da nova interface. As rotas são páginas virtuais dentro do site de testes;
+   os livros da biblioteca podem ser substituídos sem alterar a navegação. */
+const LEARNING_AREAS=[
+ {id:"roblox",title:"Roblox Studio",icon:"game",description:"Crie jogos e mundos em 3D usando modelagem e programação em Luau."},
+ {id:"robotica",title:"Robótica e Arduino",icon:"cpu",description:"Explore circuitos, sensores e invenções com Arduino e ESP32."},
+ {id:"web",title:"Sites e programação",icon:"code",description:"Crie páginas e experiências interativas com HTML, CSS e JavaScript."},
+ {id:"escrita",title:"Escrita criativa",icon:"pen",description:"Invente personagens, aventuras, histórias e seus próprios livros."},
+ {id:"pico8",title:"Jogos 2D — PICO-8",icon:"game",description:"Crie jogos 2D com cenários, sprites e programação."},
+ {id:"video",title:"Vídeo e animação",icon:"video",description:"Conte histórias com imagens, vídeos, edição e animação."}
+];
+const BOOK_CATALOG=[
+ {id:"obby-prototipo",area:"roblox",title:"Meu Primeiro Obby",description:"Construção 3D e primeiros Scripts no Roblox Studio.",href:BOOK1_URL,status:"Protótipo antigo — será substituído pelo novo livro."}
+];
+function getArea(id){return LEARNING_AREAS.find(a=>a.id===id)||null;}
+function areaBooks(id){return BOOK_CATALOG.filter(book=>book.area===id);}
+function categoryTiles(main){
+ const grid=el("div","tiles area-tiles");
+ for(const area of LEARNING_AREAS){
+  const tile=el("button","tile area-tile");
+  tile.type="button";
+  const symbol=el("span");symbol.dataset.icon=area.icon;
+  const content=el("span","area-tile-content");
+  content.append(el("strong","",area.title));
+  content.append(el("small","",areaBooks(area.id).length
+   ?"1 protótipo para conhecer"
+   :"Aguardando novos livros"));
+  tile.append(symbol,content);
+  tile.addEventListener("click",()=>{state.area=area.id;navigate("categoria");});
+  grid.append(tile);
+ }
+ main.append(grid);mountIcons(grid);
+}
+function renderCategory(main){
+ const area=getArea(state.area);
+ if(!area){
+  main.append(notice("Área não encontrada. Volte à biblioteca para escolher uma exploração."));
+  main.append(navButton("Ver minhas áreas →","livros","cta"));
+  return;
+ }
+ main.append(navButton("← Todas as áreas","livros","area-back"));
+ main.append(heading("ÁREA DE APRENDIZAGEM",area.title));
+ main.append(el("p","area-intro",area.description));
+ main.append(el("h2","section","Livros desta área"));
+ const books=areaBooks(area.id);
+ if(!books.length){
+  main.append(notice("Ainda não há livros disponíveis nesta área. Assim que forem revisados, aparecerão aqui."));
+ }else{
+  for(const book of books){
+   const card=el("section","continue category-book");
+   card.append(el("div","eyebrow",book.status));
+   card.append(el("h2","",book.title));
+   card.append(el("p","sub",book.description));
+   const link=el("a","cta","Abrir protótipo →");link.href=book.href;
+   card.append(link);main.append(card);
+  }
+  main.append(notice("Os novos livros estão sendo preparados na conversa dedicada a eles. Esta versão é apenas demonstrativa."));
+ }
+ const actions=el("div","home-actions");
+ actions.append(navButton("Planejar meu projeto →","projetos","soft-btn"));
+ actions.append(navButton("Explorar outra área →","livros","soft-btn"));
+ main.append(actions);
+}
+
 function demoBook0(){
  if(!state.demo)return null;
  try{const d=JSON.parse(sessionStorage.getItem(BOOK0_KEY)||"null");
