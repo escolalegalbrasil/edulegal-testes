@@ -68,3 +68,11 @@ Consulte [TESTE-LOGIN.md](TESTE-LOGIN.md) para o roteiro de teste com os seis pe
 - A página Projetos permite **criar projetos e tarefas sem livro** e gerenciar tarefas em **Backlog → Vou fazer hoje → Já terminei**. A terceira coluna representa conclusão *declarada pelo aluno*, não domínio validado ou concessão de badges.
 - Tarefas podem ser arrastadas ou movidas por botões; uma tarefa terminada pode ser retomada. Os dados são **somente demonstração em sessionStorage**, ainda não associados ao Supabase de testes.
 - **Os Livros 0 e 1 existentes são rascunhos temporários**, a serem recriados em conversa específica para livros. Nesta etapa, não alteramos conteúdo pedagógico; apenas uma ligação técnica provisória para abrir capítulos do Obby foi adicionada anteriormente. Os vínculos aos livros atuais serão substituídos pelo futuro contrato de integração.
+
+## Biblioteca por áreas (26/11/2026)
+
+- **Minhas explorações** (Início) e **Meus livros** agora abrem páginas distintas para **Roblox Studio**, **Robótica e Arduino**, **Sites e programação**, **Escrita criativa**, **Jogos 2D — PICO-8** e **Vídeo e animação**.
+- Rotas internas próprias, por exemplo: `?demo=1&view=categoria&area=roblox` e `?demo=1&view=categoria&area=robotica`. A biblioteca é o ponto de retorno; não é preciso duplicar arquivos HTML por categoria.
+- Catálogo inicial centralizado em `LEARNING_AREAS` e `BOOK_CATALOG` do `app.js`, preparado para receber novos livros após revisão. As áreas sem material mostram uma mensagem clara; **Meu Primeiro Obby** aparece apenas em Roblox, marcado como protótipo antigo.
+- **Ponto de Partida** permanece destacado na biblioteca geral como acolhimento, também rotulado como protótipo. Ambos os livros serão recriados em outra conversa e **não tiveram seu conteúdo editado nesta etapa**.
+- Tudo foi alterado somente no repositório de testes. A plataforma de produção e o banco de produção permanecem intocados.
