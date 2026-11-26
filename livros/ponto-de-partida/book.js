@@ -23,9 +23,13 @@
    "Criar um acontecimento inesperado"
   ]},
   web:{title:"Minha Primeira Página",area:"Sites e programação",available:false,preview:[
-   "Conhecer uma página HTML",
-   "Criar um título e um pequeno texto",
-   "Mudar a aparência com CSS"
+   "Conhecer uma página HTML","Criar um título e um pequeno texto","Mudar a aparência com CSS"
+  ]},
+  pico8:{title:"Meu Primeiro Jogo 2D",area:"Jogos 2D",available:false,preview:[
+   "Conhecer os personagens e o cenário de um jogo","Planejar um desafio simples","Experimentar movimentar um personagem no PICO-8"
+  ]},
+  video:{title:"Minha Primeira Animação",area:"Vídeo e animação",available:false,preview:[
+   "Escolher uma ideia para animar","Organizar duas ou três cenas","Experimentar uma sequência em movimento"
   ]}
  };
  const $=id=>document.getElementById(id);
