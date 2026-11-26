@@ -5,7 +5,7 @@
  const STORAGE_KEY="edulegal-testes-ponto-de-partida-v1";
  const THEME_KEY="edulegal-interface-theme";
  const AREA_INFO={
-  roblox:{title:"Meu Primeiro Obby",area:"Roblox Studio",available:false,preview:[
+  roblox:{title:"Meu Primeiro Obby",area:"Roblox Studio",available:true,preview:[
    "Conhecer a área de trabalho, o Explorer e a janela Propriedades",
    "Construir uma plataforma com uma Part e testar Anchored",
    "Criar e testar um pequeno percurso de obstáculos",
