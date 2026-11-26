@@ -13,6 +13,10 @@ Promover a autorregulação da aprendizagem, motivando o aluno a criar projetos 
 5. Planejamento inicial assistido: a EduLegal apresenta tarefas concretas relacionadas ao percurso escolhido. **Todas entram primeiro no Backlog**; o aluno escolhe quais levar para **Vou fazer hoje** (inicialmente vazia), podendo reorganizar, trocar ou apenas explorar.
 6. Nunca inferir personalidade, emoção, motivação ou autorregulação a partir de uma única escolha. Registros iniciais são hipóteses pedagógicas provisórias.
 
+## Princípio transversal de sequenciamento didático
+
+**Começar pelo mais geral e fácil; aprofundar progressivamente**, sempre com referência a objetos e experiências concretas. No Roblox Studio: apresentar o ambiente antes das ferramentas; mostrar uma Part no mundo 3D antes de explicar a lista do Explorer; selecionar a mesma Part antes de apresentar suas Properties; só perguntar depois de ensinar, mostrar e experimentar. Não exigir que o aluno responda sobre conceitos, objetos ou janelas ainda não apresentados. Preservar uma retomada guiada para alunos que precisarem, sem rotular o aluno.
+
 ## Livro 1 — Meu Primeiro Obby
 As tarefas exemplificam aprendizagens concretas:
 - reconhecer Explorer, Propriedades, Move, Scale, Rotate e Play;
