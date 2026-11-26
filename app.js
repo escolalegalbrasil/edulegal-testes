@@ -194,9 +194,11 @@ function renderHome(main){
  const planner=state.demo&&window.EduLegalDemoPlanning
   ?window.EduLegalDemoPlanning.summary(demoBook0(),BOOK0_TASKS,BOOK0_TITLES):null;
  const tasks=planner?.all||[];
+ const pending=tasks.filter(task=>task.zone!=="done");
+ const finished=planner?.done||[];
  const selectedToday=planner?.today||[];
  const card=el("section","continue");
- if(tasks.length){
+ if(pending.length){
   card.append(el("div","eyebrow","MEU PLANEJAMENTO"));
   card.append(el("h2","",selectedToday.length?"Meu plano de hoje":"Vamos escolher o que fazer hoje?"));
   card.append(el("p","sub",selectedToday.length
@@ -207,9 +209,9 @@ function renderHome(main){
   actions.append(navButton("Explorar meus livros →","livros","soft-btn"));
   card.append(actions);
  }else{
-  card.append(el("div","eyebrow","PRIMEIRAS POSSIBILIDADES"));
-  card.append(el("h2","","Por onde gostaria de começar?"));
-  card.append(el("p","sub","Você pode conhecer um livro interativo ou começar uma criação sua, mesmo que ainda não exista um livro sobre ela."));
+  card.append(el("div","eyebrow",finished.length?"PRÓXIMAS IDEIAS":"PRIMEIRAS POSSIBILIDADES"));
+  card.append(el("h2","",finished.length?"O que gostaria de criar agora?":"Por onde gostaria de começar?"));
+  card.append(el("p","sub",finished.length?"Você registrou tarefas concluídas. Pode começar um novo projeto, retomar uma ideia ou explorar um livro.":"Você pode conhecer um livro interativo ou começar uma criação sua, mesmo que ainda não exista um livro sobre ela."));
   const actions=el("div","home-actions");
   actions.append(navButton("Explorar meus livros →","livros","cta"));
   actions.append(navButton("Planejar meu próprio projeto →","projetos","soft-btn"));
@@ -226,6 +228,9 @@ function renderHome(main){
   if(selectedToday.length>4)summary.append(el("p","meta","E mais "+(selectedToday.length-4)+" tarefa(s) no planejamento."));
   summary.append(navButton("Revisar meu plano →","projetos","cta"));
   main.append(summary);
+ }
+ if(state.demo&&finished.length){
+  main.append(el("p","meta","Você registrou "+finished.length+" tarefa(s) em “Já terminei”. Elas continuam disponíveis na página Projetos, caso queira revisar."));
  }
  main.append(el("h2","section","Minhas explorações"));
  const tiles=el("div","tiles");
