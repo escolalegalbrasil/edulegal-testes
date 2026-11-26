@@ -85,15 +85,15 @@ textarea{width:100%;min-height:85px;border:1px solid var(--border);border-radius
    <h2>Minha missão de agora</h2>
    <p id="currentMission" class="lead"></p>
    <h3>Entenda</h3><p>Uma <code>Part</code> é um objeto que você pode colocar no mundo. Ela possui propriedades, como tamanho, posição e cor.</p>
-   <h3>Experimente</h3><ol class="steps"><li>Abra um projeto Baseplate no Roblox Studio.</li><li>Insira uma <code>Part</code> e aumente seu tamanho.</li><li>Na janela Propriedades, marque <code>Anchored</code>.</li><li>Use <code>Play</code> e observe o resultado.</li></ol>
-   <details id="hint"><summary>Preciso de uma pista</summary><p>Procure a janela <strong>Explorer</strong>, selecione a Part e encontre <strong>Anchored</strong> na janela <strong>Properties</strong>. Se essas janelas não aparecerem, abra-as pelo menu do Studio.</p></details>
+   <h3>Experimente</h3><ol class="steps" id="missionSteps"></ol>
+   <details id="hint"><summary>Preciso de uma pista</summary><p id="hintText"></p></details>
    <h3>Observe</h3><label for="reflection">O que aconteceu quando você testou a plataforma?</label>
    <textarea id="reflection" placeholder="Por exemplo: o bloco não caiu quando marquei Anchored."></textarea>
    <p class="small">Escreva o que realmente observou. Esta demonstração não consegue enxergar automaticamente seu Roblox Studio.</p>
    <button class="primary" id="saveReflection" type="button">Registrar minha descoberta</button>
    <p id="reflectionStatus" class="status" aria-live="polite"></p>
  </div>
- <div class="notice">Depois desta primeira missão, o livro real terá as etapas de plataformas, saltos, Transparency, CanCollide e o Script que faz uma peça aparecer e desaparecer. A versão completa ainda será construída e testada.</div>
+ <div class="notice">Esta é uma demonstração curta de missões vinculadas ao planejamento. Os livros completos terão testes, pistas graduais, exercícios de compreensão e expansões. A programação da repetição e da colisão será ensinada progressivamente.</div>
  <button class="secondary" id="backPlan" type="button">← Voltar ao meu plano</button>
  <button class="primary" id="seePortfolio" type="button">Ver rascunho do portfólio →</button>
 </section>
@@ -136,9 +136,41 @@ textarea{width:100%;min-height:85px;border:1px solid var(--border);border-radius
   document.querySelectorAll("[data-screen]").forEach(s=>s.classList.toggle("hidden",s.dataset.screen!==tab));
   document.querySelectorAll("[data-tab]").forEach(b=>{b.classList.toggle("active",b.dataset.tab===tab);b.setAttribute("aria-current",b.dataset.tab===tab?"page":"false");});
   if(tab==="planejamento")renderBoard();
-  if(tab==="roblox"){const task=tasks.find(t=>t.id===state.today[0]);$("currentMission").textContent=task?task.title:"Construa uma plataforma e observe seu funcionamento."; }
+  if(tab==="roblox")renderMission();
   if(tab==="portfolio")updatePortfolio();
   window.scrollTo({top:0,behavior:"auto"});
+ }
+ function renderMission(){
+   const id=state.today[0]||"part";
+   const selected=tasks.find(t=>t.id===id)||tasks[1];
+   const missions={
+    explorer:{
+      steps:["Abra um projeto Baseplate no Roblox Studio.","Localize Explorer. Se não aparecer, abra pelo menu do Studio.","Selecione a Baseplate e observe as propriedades exibidas.","Escolha uma propriedade e descreva algo que percebeu."],
+      hint:"Explorer mostra os objetos. Properties mostra os ajustes possíveis do objeto selecionado."
+    },
+    part:{
+      steps:["Abra um projeto Baseplate no Roblox Studio.","Insira uma Part e aumente seu tamanho.","Na janela Properties, marque Anchored.","Use Play e observe o resultado."],
+      hint:"Procure a Part no Explorer. Em Properties, encontre Anchored: quando ativado, o bloco não cai pela gravidade."
+    },
+    salto:{
+      steps:["Construa duas plataformas e marque Anchored nas duas.","Use Play e tente saltar de uma plataforma para a outra.","Volte ao Studio e mude a distância entre elas.","Teste novamente. Qual distância funcionou melhor?"],
+      hint:"Experimente mover apenas uma plataforma por vez e comparar o resultado dos dois testes."
+    },
+    transparency:{
+      steps:["Insira uma Part e marque Anchored.","Em Properties, altere Transparency de 0 para 1.","Teste se o personagem ainda consegue pisar nesse bloco.","Depois experimente alterar CanCollide e teste novamente."],
+      hint:"Transparency controla a aparência. CanCollide controla a colisão. Uma peça invisível pode continuar sólida."
+    },
+    script:{
+      steps:["Adicione uma Part ao Workspace, marque Anchored e insira um Script dentro dela.","Escreva apenas uma linha no Script: script.Parent.Transparency = 1","Teste no Play. O que mudou?","Agora acrescente uma linha: task.wait(2) e depois outra: script.Parent.Transparency = 0. Teste de novo."],
+      hint:"script.Parent é a Part que contém o Script. Transparency 1 torna a peça invisível; 0 torna visível. Esta etapa ainda não programa a repetição."
+    }
+   };
+   const m=missions[selected.id]||missions.part;
+   $("currentMission").textContent=selected.title;
+   const steps=$("missionSteps");steps.replaceChildren();
+   for(const line of m.steps){const li=document.createElement("li");li.textContent=line;steps.append(li);}
+   $("hintText").textContent=m.hint;
+   $("hint").open=false;
  }
  function renderChoices(){
   document.querySelectorAll("[data-area]").forEach(b=>{const active=state.area===b.dataset.area;b.classList.toggle("selected",active);b.setAttribute("aria-pressed",String(active));});
