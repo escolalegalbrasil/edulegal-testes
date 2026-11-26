@@ -38,7 +38,7 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 @media(max-width:760px){.account{gap:7px}.account #accountLabel{display:none}.top{height:auto;min-height:76px;flex-wrap:wrap;gap:8px;padding-top:10px;padding-bottom:10px}.theme-switch button{padding:7px}.login-panel{padding:22px}}
 
 /* Planejamento demonstrativo do Livro 0: só usado no modo fictício. */
-.plan-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:21px 0}
+.plan-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:21px 0}
 .plan-column{background:var(--card);border:1px solid var(--border);border-radius:13px;padding:15px;min-height:215px}
 .plan-column.dragover{outline:2px dashed var(--brand)}
 .plan-column h2{font-size:17px;margin:4px 5px 13px}
@@ -78,3 +78,13 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 .home-actions .cta,.home-actions .soft-btn{margin:0}
 .home-actions .soft-btn{min-height:40px;display:inline-flex;align-items:center;text-decoration:none}
 @media(max-width:650px){.planner-create-row{display:block}.planner-create-row .cta{margin-top:12px}.planner-input-group{min-width:0}.planner-filter{align-items:stretch;flex-direction:column}.planner-filter .org-select{max-width:none}}
+
+/* Três etapas claras para o planejamento: Backlog → Hoje → Já terminei. */
+.plan-column h2{font-size:16px}
+.plan-column[data-zone=done]{border-color:var(--border)}
+.plan-column[data-zone=done] .plan-task{border-left:3px solid var(--brand)}
+.plan-column[data-zone=today] .plan-task{border-left:3px solid var(--projectsicon)}
+.plan-column .plan-actions{gap:5px}
+.plan-column .plan-actions button{white-space:normal;text-align:left}
+@media(max-width:1000px){.plan-grid{grid-template-columns:1fr 1fr}.plan-column[data-zone=done]{grid-column:1/-1}}
+@media(max-width:650px){.plan-grid{grid-template-columns:1fr}.plan-column[data-zone=done]{grid-column:auto}}
