@@ -40,6 +40,18 @@ Princípio: **o aluno não precisa saber formular metas sobre conteúdos que des
 - Para iniciantes, sugerir um conjunto pequeno de tarefas concretas e orientar como escolher, **sem preencher automaticamente o plano do dia**. Para alunos mais autônomos, permitir escolher/criar mais tarefas. Direção é dinâmica por atividade, não rótulo da criança.
 - A conclusão de uma tarefa é uma declaração/registro do aluno até ser confrontada com evidências; **não é inferência automática de domínio**.
 
+## Regra de UX: um único planejamento, livros como mediação
+
+O planejamento é um recurso **da aba Projetos**, não uma segunda lista criada nos livros. Os livros **ensinam a planejar com experiências concretas**, sugerem tarefas e ajudam a revisar decisões; não mantêm um quadro independente.
+
+- **Início** mostra o resumo do plano e um botão contextual: sem tarefas do aluno, **Meus livros**; com tarefas disponíveis no Backlog ou no plano de hoje, **Projetos**. O botão principal nunca abre Mentoria.
+- **Meus livros** apresenta possibilidades e conteúdos; ao escolher um percurso, as tarefas sugeridas passam para o Backlog de Projetos, ainda não selecionadas para o dia.
+- **Projetos** é a fonte única para escolher e reorganizar tarefas: Backlog à esquerda, Vou fazer hoje à direita. As tarefas são vinculadas ao livro/capítulo relevante. A edição do plano fica aqui.
+- **Dentro do livro**, oferecer apenas contexto curto da tarefa atual, pistas e perguntas concretas de previsão/teste/reflexão; o livro pode sugerir um novo passo e vincular a tarefa ao Backlog, mas **não abre outro planner dentro do livro**.
+- **Depois de uma atividade**, o aluno pode registrar o que fez e como verificou; os registros atualizam o mesmo objeto de tarefa e alimentam relatórios. A conclusão no planejamento é uma declaração do aluno, não comprovação automática de competência.
+- **Na volta à plataforma**, oferecer retomar uma tarefa do plano ou revisá-lo; não impor metas abstratas, não exigir terminar tudo em uma sessão e permitir mudança de ideia.
+- No protótipo atual, as tarefas do Livro 0 já aparecem no Backlog e a tela Início já usa botão contextual. **Ainda falta** abrir a missão específica a partir do cartão e atualizar status/conclusões; persistência por aluno depende do Supabase de testes.
+
 ## Três modos inicialmente previstos
 Guiado, Acompanhado, Exploratório. Todos preservam objetivos nucleares e sequências técnicas verificadas, mas ajustam quantidade de orientação e oportunidades de escolha. O aluno pode solicitar mais direção; a transição acontece entre etapas conforme evidências e decisão pedagógica.
 
