@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Meu Primeiro Obby · Livro 1 · EduLegal</title>
+<meta name="description" content="Livro interativo da EduLegal: construção 3D e primeiros scripts no Roblox Studio. Ambiente de testes.">
+<link rel="stylesheet" href="style.css">
+<script src="book.js" defer></script>
+</head>
+<body data-theme="dark" data-mode="guiado">
+<a href="#main" class="skip">Pular para o livro</a>
+<header class="topbar">
+ <a href="../../index.html?demo=1" class="logo" aria-label="EduLegal, dashboard de testes">edu<span>Legal.</span></a>
+ <div class="topright"><span class="meta">LIVRO 1 · AMBIENTE DE TESTES</span>
+  <button id="themeToggle" class="soft" type="button">☀ Tema claro</button>
+  <a href="../../index.html?demo=1&view=projetos" class="headerlink">Meu planejamento ↗</a>
+ </div>
+</header>
+<div class="shell">
+ <nav class="sidebar" aria-label="Capítulos do livro">
+  <p class="side-label">MEU PRIMEIRO OBBY</p>
+  <button type="button" class="nav active" data-chapter="0"><span>01</span> Meu projeto</button>
+  <button type="button" class="nav" data-chapter="1"><span>02</span> Conhecer o Studio</button>
+  <button type="button" class="nav" data-chapter="2"><span>03</span> Construção 3D</button>
+  <button type="button" class="nav" data-chapter="3"><span>04</span> Meu percurso</button>
+  <button type="button" class="nav" data-chapter="4"><span>05</span> Propriedades</button>
+  <button type="button" class="nav" data-chapter="5"><span>06</span> Primeiras linhas</button>
+  <button type="button" class="nav" data-chapter="6"><span>07</span> O bloco mágico</button>
+  <button type="button" class="nav" data-chapter="7"><span>08</span> Investigar bugs</button>
+  <button type="button" class="nav" data-chapter="8"><span>09</span> Minha criação</button>
+  <div class="sidebar-note">Não precisa terminar em um dia. Você pode voltar a qualquer capítulo.</div>
+ </nav>
+ <main id="main" tabindex="-1">
+ <div class="topline">
+  <span class="meta" id="chapterCount">CAPÍTULO 1 DE 9</span>
+  <div class="modecontrols">
+   <label for="supportMode">Como quer receber orientações?</label>
+   <select id="supportMode" aria-label="Quantidade de orientação no livro">
+    <option value="guiado">Passo a passo</option>
+    <option value="acompanhado">Dicas quando precisar</option>
+    <option value="exploratorio">Mais independente</option>
+   </select>
+  </div>
+ </div>
+ <div class="mode-info" id="modeInfo" role="status">Vamos por partes. Você pode mudar a quantidade de ajuda quando quiser.</div>
+
+ <section class="chapter" data-screen="0">
+  <p class="overline">ROBLOX STUDIO · LIVRO 1</p>
+  <h1>Meu Primeiro <em>Obby</em></h1><div class="dash"></div>
+  <p class="lead">Vamos construir um jogo de obstáculos e descobrir como dar vida a uma plataforma usando programação!</p>
+  <div class="hero">
+   <div class="obby-art" role="img" aria-label="Ilustração de um percurso com plataformas coloridas, um personagem e uma plataforma transparente">
+    <span class="plat p1"></span><span class="plat p2"></span><span class="plat p3"></span><span class="plat p4"></span><span class="avatar">●</span><span class="spark">✦</span>
+   </div>
+   <div><h2>O jogo será seu</h2>
+    <p>Você decide as cores, a altura, a forma e os desafios. O livro mostrará ferramentas novas, mas suas ideias são bem-vindas.</p>
+    <p><strong>Ao final:</strong> seu personagem poderá saltar entre plataformas e encontrar uma que desaparece e reaparece.</p>
+   </div>
+  </div>
+  <div class="panel">
+   <h2>O que você vai aprender?</h2>
+   <div class="skills"><span>🧱 Construção 3D</span><span>🧭 Explorer e Propriedades</span><span>🧪 Testar e corrigir</span><span>⌨️ Programação em Luau</span></div>
+   <p>Você usará o <strong>Roblox Studio</strong> no computador. O editor deste livro ajuda a escrever e compreender o código, mas o teste do Script acontece no próprio Studio.</p>
+   <div class="info">Se ainda não tiver Roblox Studio instalado, peça a ajuda de um adulto responsável ou professor. Não precisa compartilhar senhas nem informações pessoais aqui.</div>
+  </div>
+  <div class="panel">
+   <h2>E o meu planejamento?</h2>
+   <p>As tarefas sugeridas estão no <strong>Backlog</strong> da página Projetos. Você pode escolher uma ou duas para colocar em <strong>Vou fazer hoje</strong>. O livro não exige que você faça tudo agora.</p>
+   <p id="planSummary" class="muted">Você também pode explorar o livro antes de escolher suas tarefas.</p>
+   <a href="../../index.html?demo=1&view=projetos" class="secondary aslink">Abrir meu planejamento ↗</a>
+  </div>
+  <button class="primary" type="button" data-next>Conhecer o Roblox Studio →</button>
+ </section>
+
+ <section class="chapter" data-screen="1" hidden>
+  <p class="overline">MISSÃO 1 · CONHECER AS FERRAMENTAS</p>
+  <h1>Onde construímos nosso jogo?</h1><div class="dash"></div>
+  <p class="lead">Abra o Roblox Studio e crie um projeto do tipo <strong>Baseplate</strong>. Vamos conhecer algumas partes importantes da interface.</p>
+  <figure class="screenshot">
+   <img src="https://prod.docsiteassets.roblox.com/assets/tutorials/studio-lesson/Explorer.jpg" alt="Imagem do Roblox Studio com a área 3D, a janela Explorer destacada e a janela Properties abaixo." loading="lazy" referrerpolicy="no-referrer">
+   <figcaption>Imagem de referência da documentação oficial do Roblox. A posição dos botões pode mudar conforme a versão ou o layout do Studio. <a href="https://create.roblox.com/docs/studio/ui-overview" target="_blank" rel="noopener noreferrer">Conhecer a interface na documentação ↗</a></figcaption>
+  </figure>
+  <div class="studio-schematic" aria-label="Esquema simplificado da interface do Roblox Studio">
+   <div class="studio-top">ROBLOX STUDIO <span>Move · Scale · Rotate · Play</span></div>
+   <div class="studio-main"><div class="studio-view"><div class="studio-floor"></div><div class="studio-part"></div><small>Visualização 3D</small></div><div class="studio-panels"><div>Explorer<small>Workspace<br>↳ Part</small></div><div>Properties<small>Name · Anchored · Transparency</small></div></div></div>
+  </div>
+  <div class="support">
+    <p data-mode-text="guiado">Primeiro encontre <strong>Explorer</strong> e <strong>Properties</strong>. Se uma janela não estiver visível, procure o botão correspondente na interface do Studio. Depois, observe o mundo 3D no centro.</p>
+    <p data-mode-text="acompanhado" hidden>Localize Explorer, Properties e a área 3D. Se precisar, observe o esquema acima.</p>
+    <p data-mode-text="exploratorio" hidden>Explore o Studio e descubra onde os objetos aparecem e onde suas características podem ser alteradas.</p>
+  </div>
+  <div class="panel">
+   <h2>Experimente: encontre a janela certa</h2>
+   <p>Se você quiser mudar a cor ou o tamanho de uma <strong>Part</strong>, qual janela deve observar?</p>
+   <div class="choice-row" role="group" aria-label="Onde mudar propriedades">
+    <button class="choice" data-check="properties" data-value="explorer" type="button">Explorer</button>
+    <button class="choice" data-check="properties" data-value="properties" type="button">Properties</button>
+    <button class="choice" data-check="properties" data-value="play" type="button">Play</button>
+   </div>
+   <p class="feedback" id="feedbackProperties" role="status"></p>
+   <details><summary>Quero uma pista</summary><p><strong>Explorer</strong> mostra quais objetos existem. <strong>Properties</strong> mostra características do objeto selecionado. <strong>Play</strong> permite testar o jogo.</p></details>
+  </div>
+  <div class="reflection"><label for="noteStudio">O que você encontrou primeiro no Studio? <span>(opcional)</span></label><textarea id="noteStudio" rows="2" maxlength="500" placeholder="Ex.: encontrei o Explorer, mas demorei para achar Properties."></textarea></div>
+  <div class="pager"><button class="secondary" data-prev type="button">← Voltar</button><button class="primary" data-next type="button">Criar minha primeira peça →</button></div>
+ </section>
+
+ <section class="chapter" data-screen="2" hidden>
+  <p class="overline">MISSÃO 2 · CONSTRUÇÃO 3D</p>
+  <h1>Minha primeira plataforma</h1><div class="dash"></div>
+  <p class="lead">Vamos criar uma <strong>Part</strong>, que é uma peça do mundo 3D. A partir dela, podemos construir quase qualquer cenário.</p>
+  <div class="support">
+    <p data-mode-text="guiado">Faça uma mudança por vez: insira uma Part, selecione-a e experimente as ferramentas <strong>Move</strong>, <strong>Scale</strong> e <strong>Rotate</strong>. Para transformá-la em uma plataforma, aumente principalmente sua largura e profundidade.</p>
+    <p data-mode-text="acompanhado" hidden>Crie uma Part e use Move, Scale e Rotate. Teste o que cada ferramenta altera.</p>
+    <p data-mode-text="exploratorio" hidden>Construa uma plataforma na qual seu personagem conseguiria ficar em pé. Quais ferramentas e propriedades precisou usar?</p>
+  </div>
+  <div class="tool-grid">
+   <div><strong>↔ Move</strong><small>Deslocar a peça</small></div>
+   <div><strong>⤢ Scale</strong><small>Mudar seu tamanho</small></div>
+   <div><strong>⟳ Rotate</strong><small>Girar a peça</small></div>
+   <div><strong>⚓ Anchored</strong><small>Impedir que caia pela gravidade</small></div>
+  </div>
+  <div class="panel">
+   <h2>Experiência: por que Anchored importa?</h2>
+   <p>Nesta simulação, experimente uma peça fixa e uma peça solta. Depois compare com o Roblox Studio.</p>
+   <div class="physics-sim"><div id="physicsCube" class="physics-cube"></div><div class="physics-floor"></div><span class="physics-label" id="physicsLabel">Peça fixa</span></div>
+   <div class="button-row"><button type="button" id="anchorYes" class="secondary">Anchored: ligado</button><button type="button" id="anchorNo" class="secondary">Anchored: desligado</button></div>
+   <p class="feedback" id="physicsFeedback">Experimente os botões e observe.</p>
+   <details><summary>Quero uma pista</summary><p>Uma plataforma normalmente precisa ficar imóvel. Por isso, marque <strong>Anchored = true</strong>. O Studio permite configurar isso nas Propriedades da peça.</p></details>
+  </div>
+  <div class="reflection"><label for="noteModel">Que mudança você fez na sua plataforma? <span>(opcional)</span></label><textarea id="noteModel" rows="2" maxlength="500" placeholder="Ex.: aumentei o tamanho e deixei a plataforma fixa."></textarea></div>
+  <div class="pager"><button class="secondary" data-prev type="button">← Voltar</button><button class="primary" data-next type="button">Montar meu percurso →</button></div>
+ </section>
+
+ <section class="chapter" data-screen="3" hidden>
+  <p class="overline">MISSÃO 3 · EXPERIMENTAR E PLANEJAR</p>
+  <h1>Um percurso de obstáculos!</h1><div class="dash"></div>
+  <p class="lead">Construa pelo menos três plataformas. Seu personagem precisa conseguir saltar de uma para outra.</p>
+  <div class="support">
+   <p data-mode-text="guiado">Duplique ou crie novas peças; deixe todas com Anchored ligado. Organize uma perto da outra, depois afaste um pouco a segunda. Pressione <strong>Play</strong> para testar e <strong>Stop</strong> para voltar à edição.</p>
+   <p data-mode-text="acompanhado" hidden>Crie um pequeno Obby com três plataformas. Teste as distâncias usando Play. Ajuste o que não funcionar.</p>
+   <p data-mode-text="exploratorio" hidden>Projete um percurso curto, jogável e interessante. Como você vai testar se a dificuldade está adequada?</p>
+  </div>
+  <div class="panel">
+   <h2>Antes de testar, faça uma previsão</h2>
+   <p>Se você afastar muito duas plataformas, o que provavelmente acontecerá?</p>
+   <div class="choice-row" role="group" aria-label="Previsão sobre distância">
+    <button class="choice" data-check="distance" data-value="facil" type="button">O salto ficará mais fácil</button>
+    <button class="choice" data-check="distance" data-value="dificil" type="button">O salto poderá ficar difícil ou impossível</button>
+   </div>
+   <p class="feedback" id="feedbackDistance"></p>
+  </div>
+  <div class="panel">
+   <h2>Seu primeiro ciclo de investigação</h2>
+   <div class="cycle"><span>Planejar</span><b>→</b><span>Construir</span><b>→</b><span>Testar</span><b>→</b><span>Ajustar</span></div>
+   <p>Não funcionou na primeira tentativa? Ótimo momento para investigar. Experimente mudar <strong>uma coisa de cada vez</strong> e observe a diferença.</p>
+  </div>
+  <div class="reflection"><label for="noteTesting">Conte sobre um teste que fez <span>(opcional)</span></label><textarea id="noteTesting" rows="3" maxlength="500" placeholder="Ex.: o salto ficou difícil, então aproximei as plataformas."></textarea></div>
+  <div class="pager"><button class="secondary" data-prev type="button">← Voltar</button><button class="primary" data-next type="button">Descobrir propriedades →</button></div>
+ </section>
+
+ <section class="chapter" data-screen="4" hidden>
+  <p class="overline">MISSÃO 4 · PROPRIEDADES</p>
+  <h1>Um bloco invisível pode ser sólido?</h1><div class="dash"></div>
+  <p class="lead">Na janela Properties do Roblox Studio, encontre <code>Transparency</code> e <code>CanCollide</code>. Essas propriedades fazem coisas diferentes.</p>
+  <div class="property-grid">
+    <div class="property"><strong>Transparency</strong><p><code>0</code> = visível</p><p><code>1</code> = invisível</p></div>
+    <div class="property"><strong>CanCollide</strong><p><code>true</code> = pode bloquear a passagem</p><p><code>false</code> = permite atravessar</p></div>
+  </div>
+  <div class="panel">
+   <h2>Experimente no livro</h2>
+   <p>Altere as duas propriedades separadamente. Depois repita o experimento em uma Part no Roblox Studio.</p>
+   <div class="property-sim">
+    <div class="sim-track"><div class="sim-player">🙂</div><div class="sim-wall" id="propWall"></div><div class="sim-floor"></div></div>
+    <div class="property-controls">
+      <label for="visibleToggle">Transparência</label><select id="visibleToggle"><option value="0">0 — visível</option><option value="1">1 — invisível</option></select>
+      <label for="collideToggle">CanCollide</label><select id="collideToggle"><option value="true">true — sólido</option><option value="false">false — atravessável</option></select>
+    </div>
+   </div>
+   <p id="propFeedback" class="feedback" role="status"></p>
+   <details><summary>Preciso de uma pista</summary><p>Uma peça invisível pode continuar com <code>CanCollide = true</code>. Para uma plataforma desaparecer e deixar o personagem passar, será necessário mudar <strong>as duas</strong> propriedades.</p></details>
+  </div>
+  <div class="panel">
+   <h2>Antes de continuar...</h2>
+   <p>Uma peça está invisível, mas o personagem ainda consegue pisar nela. Qual propriedade provavelmente precisamos investigar?</p>
+   <div class="choice-row" role="group" aria-label="Qual propriedade revisar">
+    <button class="choice" type="button" data-check="collision" data-value="size">Size</button>
+    <button class="choice" type="button" data-check="collision" data-value="cancollide">CanCollide</button>
+    <button class="choice" type="button" data-check="collision" data-value="color">Color</button>
+   </div><p id="feedbackCollision" class="feedback"></p>
+  </div>
+  <div class="pager"><button class="secondary" data-prev type="button">← Voltar</button><button class="primary" data-next type="button">Escrever meu primeiro Script →</button></div>
+ </section>
+
+ <section class="chapter" data-screen="5" hidden>
+  <p class="overline">MISSÃO 5 · PRIMEIRAS LINHAS DE LUAU</p>
+  <h1>Agora vamos programar</h1><div class="dash"></div>
+  <p class="lead">Crie uma plataforma especial, coloque-a no Workspace e renomeie-a para <strong>PlataformaMagica</strong>. Marque Anchored. Dentro dessa Part, insira um <strong>Script</strong> (não LocalScript).</p>
+  <div class="hierarchy" role="img" aria-label="Explorer: Workspace, Part chamada PlataformaMagica, com Script como filho"><strong>Explorer</strong><span>🌐 Workspace</span><span class="indent">🧱 PlataformaMagica</span><span class="indent2">📜 Script</span></div>
+  <p>Você vai escrever seu código em pequenas etapas. O editor abaixo ajuda a organizar as linhas. <strong>Ele não executa Luau:</strong> para testar de verdade, escreva o mesmo código no Script do Roblox Studio e use Play.</p>
+  <div class="support">
+   <p data-mode-text="guiado">Comece apenas identificando a peça que o Script vai controlar. Depois vamos alterar uma propriedade por vez, como fizemos manualmente.</p>
+   <p data-mode-text="acompanhado" hidden>Escreva um Script que encontre a Part que o contém e altere Transparency e CanCollide. Abra as pistas se precisar.</p>
+   <p data-mode-text="exploratorio" hidden>Programe uma Part para ficar invisível e atravessável; depois para reaparecer. Quais propriedades e comandos serão necessários?</p>
+  </div>
+  <div class="editor-panel" id="codeLab">
+   <div class="editor-top"><span>⌨️ Meu laboratório de código</span><span>Luau · editor de apoio</span></div>
+   <div class="code-progress" id="codeTabs" role="group" aria-label="Microdesafios de programação">
+    <button type="button" class="code-tab active" data-code-step="0">1 · A peça</button>
+    <button type="button" class="code-tab" data-code-step="1">2 · Desaparecer</button>
+    <button type="button" class="code-tab" data-code-step="2">3 · Reaparecer</button>
+    <button type="button" class="code-tab" data-code-step="3">4 · Repetir</button>
+   </div>
+   <div class="editor-prompt">
+     <h2 id="codeTitle">Comece com uma linha</h2>
+     <p id="codeInstructions"></p>
+     <div id="codeExplanation" class="code-explain"></div>
+   </div>
+   <label for="scriptEditor" class="editor-label">Escreva seu código, passo a passo:</label>
+   <textarea id="scriptEditor" rows="13" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" aria-describedby="editorWarning" placeholder="Comece aqui..."></textarea>
+   <div class="editor-buttons">
+    <button type="button" class="primary" id="checkCode">Conferir meu código</button>
+    <button type="button" class="secondary" id="codeNext">Próximo microdesafio →</button>
+    <button type="button" class="secondary" id="resetEditor">Limpar editor</button>
+   </div>
+   <p class="editor-warning" id="editorWarning">Conferimos apenas algumas partes do texto; isso não substitui o teste do Script no Roblox Studio. Seu código fica somente nesta aba de testes.</p>
+   <p id="codeFeedback" class="feedback" role="status"></p>
+   <details id="codeHint1"><summary>Pista 1 · Entender o próximo passo</summary><p id="codeHintText1"></p></details>
+   <details id="codeHint2"><summary>Pista 2 · Ver a estrutura de uma linha</summary><p id="codeHintText2"></p></details>
+   <details><summary>O que significa cada parte do código?</summary><p><code>local</code> cria um nome para usar dentro do Script. <code>script</code> representa o próprio Script e <code>Parent</code> representa o objeto que o contém. Atribuir um valor com <code>=</code> altera uma variável ou propriedade.</p></details>
+  </div>
+  <div class="note">Se estiver difícil, não precisa descobrir tudo sozinho. Uma boa pista pode ajudar você a continuar. Pedir ajuda também faz parte da aprendizagem.</div>
+  <div class="pager"><button class="secondary" data-prev type="button">← Voltar</button><button class="primary" data-next type="button">Ver como o bloco se repete →</button></div>
+ </section>
+
+ <section class="chapter" data-screen="6" hidden>
+  <p class="overline">MISSÃO 6 · FAZER A PLATAFORMA REPETIR</p>
+  <h1>A plataforma que aparece e desaparece</h1><div class="dash"></div>
+  <p class="lead">Até aqui, o Script pode esconder a peça e fazê-la voltar uma vez. Para repetir o movimento, vamos conhecer uma estrutura chamada <strong>loop</strong>.</p>
+  <div class="panel">
+   <h2>Entenda o ciclo</h2>
+   <div class="cycle"><span>Visível · 3 s</span><b>→</b><span>Invisível · 2 s</span><b>→</b><span>Repetir</span></div>
+   <p>Em Luau, usamos <code>while true do</code> para repetir continuamente. A palavra <code>end</code> fecha o bloco de repetição. <strong>Precisamos incluir pausas com task.wait()</strong>, para não travar o jogo.</p>
+   <p>Volte ao <strong>microdesafio 4 — Repetir</strong> no editor do capítulo anterior. Reorganize suas linhas e teste no Roblox Studio.</p>
+   <button type="button" class="primary" id="openLoopEditor">Ir ao microdesafio 4 →</button>
+  </div>
+  <div class="panel">
+   <h2>Teste uma simulação do resultado</h2>
+   <p>Esta pequena animação mostra a ideia. Seu código verdadeiro deve ser testado no Roblox Studio.</p>
+   <div class="loop-demo"><div class="loop-floor"></div><div id="loopPlatform" class="loop-platform"></div><div class="loop-character">🙂</div></div>
+   <div class="button-row"><button type="button" id="startLoop" class="secondary">▶ Iniciar simulação</button><button type="button" id="stopLoop" class="secondary">■ Parar</button></div>
+   <p id="loopStatus" class="feedback" role="status">Plataforma visível. Observe o ciclo quando iniciar.</p>
+  </div>
+  <div class="reflection"><label for="noteLoop">O que você observou durante o teste no Studio? <span>(opcional)</span></label><textarea id="noteLoop" rows="3" maxlength="500" placeholder="Ex.: ela desapareceu, mas o personagem ainda pisava nela..."></textarea></div>
+  <div class="pager"><button class="secondary" data-prev type="button">← Voltar</button><button class="primary" data-next type="button">Investigar um bug →</button></div>
+ </section>
+
+ <section class="chapter" data-screen="7" hidden>
+  <p class="overline">MISSÃO 7 · RESOLVER PROBLEMAS</p>
+  <h1>Detetive de bugs</h1><div class="dash"></div>
+  <p class="lead">Um bug é um problema que faz o jogo se comportar de forma diferente do esperado. Ele pode ser uma boa oportunidade para descobrir algo novo.</p>
+  <div class="panel">
+   <h2>O bloco sumiu, mas ainda consigo pisar nele!</h2>
+   <p>Qual é a primeira coisa que você investigaria?</p>
+   <div class="choice-col" role="group" aria-label="Como investigar o bloco invisível">
+    <button class="choice" type="button" data-check="bug" data-value="cor">Mudar a cor</button>
+    <button class="choice" type="button" data-check="bug" data-value="colisao">Verificar CanCollide</button>
+    <button class="choice" type="button" data-check="bug" data-value="desistir">Apagar tudo e começar do zero</button>
+   </div><p id="feedbackBug" class="feedback"></p>
+   <details><summary>Pista 1</summary><p>Pense: desaparecer da tela e permitir a passagem são exatamente a mesma coisa?</p></details>
+   <details><summary>Pista 2</summary><p>Procure a linha que altera <code>CanCollide</code>. Veja se ela usa <code>false</code> ao desaparecer e <code>true</code> ao reaparecer.</p></details>
+  </div>
+  <div class="panel">
+   <h2>Uma sequência para investigar erros</h2>
+   <ol class="steps">
+    <li><strong>Observe:</strong> o que aconteceu de diferente do esperado?</li>
+    <li><strong>Localize:</strong> qual peça, propriedade ou linha pode estar envolvida?</li>
+    <li><strong>Experimente:</strong> mude uma coisa e teste novamente.</li>
+    <li><strong>Compare:</strong> o que mudou depois do teste?</li>
+    <li><strong>Peça uma pista:</strong> se ainda não conseguir, volte às dicas do livro e peça ajuda ao professor quando houver.</li>
+   </ol>
+   <p>Se o Studio mostrar mensagens de erro, abra a janela <strong>Output</strong> e observe a linha indicada. Uma próxima expansão poderá trazer um livro inteiro de investigação de bugs.</p>
+  </div>
+  <div class="reflection"><label for="noteBug">Qual dificuldade você encontrou e o que tentou? <span>(opcional)</span></label><textarea id="noteBug" rows="3" maxlength="500" placeholder="Ex.: apareceu um erro no Output; reli a linha e corrigi..."></textarea></div>
+  <div class="pager"><button class="secondary" data-prev type="button">← Voltar</button><button class="primary" data-next type="button">Preparar minha criação →</button></div>
+ </section>
+
+ <section class="chapter" data-screen="8" hidden>
+  <p class="overline">ENCERRAMENTO · SUA CRIAÇÃO</p>
+  <h1>Seu primeiro Obby é só o começo!</h1><div class="dash"></div>
+  <p class="lead">Você conheceu ferramentas, testou obstáculos e escreveu suas primeiras linhas de programação. Agora podemos registrar o que você criou e imaginar o próximo desafio.</p>
+  <div class="panel">
+   <h2>Conte sobre seu projeto</h2>
+   <label for="projectTitle">Como você quer chamar seu jogo?</label>
+   <input id="projectTitle" type="text" maxlength="70" placeholder="Ex.: A torre impossível">
+   <label for="finalReflection">O que você descobriu ou aprendeu fazendo seu Obby?</label>
+   <textarea id="finalReflection" rows="3" maxlength="700" placeholder="Ex.: aprendi a fazer uma peça desaparecer e percebi como corrigir um erro..."></textarea>
+   <label for="nextIdea">O que gostaria de criar ou investigar depois? <span>(opcional)</span></label>
+   <textarea id="nextIdea" rows="2" maxlength="400" placeholder="Ex.: quero fazer uma plataforma se movimentar..."></textarea>
+  </div>
+  <div class="panel">
+   <h2>Quer mostrar uma imagem do projeto?</h2>
+   <p>Você pode selecionar um <strong>print</strong> do seu Roblox Studio para visualizar aqui. <strong>Nesta demonstração, a imagem não será enviada à EduLegal nem salva.</strong></p>
+   <label for="projectPrint" class="upload-label">Selecionar imagem (PNG, JPG ou WebP, até 4 MB)</label>
+   <input id="projectPrint" type="file" accept="image/png,image/jpeg,image/webp" aria-describedby="printInfo">
+   <p class="muted" id="printInfo">Evite imagens com nomes completos, conversas ou outras informações pessoais.</p>
+   <p id="printStatus" class="feedback" role="status"></p>
+   <img id="printPreview" class="print-preview" alt="Prévia local do print selecionado" hidden>
+   <button id="clearPrint" type="button" class="secondary" hidden>Retirar imagem</button>
+  </div>
+  <div class="panel">
+    <h2>Minhas conquistas em desenvolvimento</h2>
+    <div class="badges">
+      <div class="badge"><span>🧱</span><strong>Construção 3D · Inicial</strong><small>Precisa demonstrar organização de peças e um percurso jogável.</small></div>
+      <div class="badge"><span>⌨️</span><strong>Programação · Inicial</strong><small>Precisa demonstrar compreensão e funcionamento do Script.</small></div>
+      <div class="badge"><span>🔍</span><strong>Investigação · Inicial</strong><small>Precisa apresentar evidências de teste e revisão de estratégia.</small></div>
+    </div>
+    <p class="muted">Estes são exemplos de badges possíveis, <strong>não concedidos automaticamente</strong>. Concluir páginas ou escrever no editor não comprova domínio de habilidades. Os pontos não são exibidos.</p>
+  </div>
+  <div class="panel">
+   <h2>Meu registro de aprendizagem</h2>
+   <p class="muted">Este resumo mostra somente o que foi registrado no livro. Não é um relatório de IA e não define seu nível de autorregulação.</p>
+   <div id="summaryData" class="summary-data"></div>
+   <button id="saveFinal" type="button" class="primary">Registrar meu projeto neste protótipo</button>
+   <p id="saveStatus" class="feedback" role="status"></p>
+  </div>
+  <div class="note">Seu projeto e suas conquistas validadas poderão aparecer no Portfólio da EduLegal. Neste teste, mostraremos apenas um rascunho privado, sem enviar seu trabalho ao servidor.</div>
+  <div class="pager"><button type="button" data-prev class="secondary">← Revisar capítulo anterior</button><a href="../../index.html?demo=1&view=portfolio" class="primary aslink">Ver meu Portfólio de demonstração ↗</a></div>
+ </section>
+
+ <footer class="footer">Livro 1 · Meu Primeiro Obby · Laboratório de testes EduLegal. Não contém avaliação psicológica, IA, upload remoto ou conexão direta ao Supabase. Seus registros ficam somente nesta aba do navegador. <a href="https://create.roblox.com/docs/parts" target="_blank" rel="noopener noreferrer">Referência oficial: Parts ↗</a></footer>
+ </main>
+</div>
+</body>
+</html>
