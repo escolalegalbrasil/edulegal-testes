@@ -43,7 +43,7 @@ Consulte [TESTE-LOGIN.md](TESTE-LOGIN.md) para o roteiro de teste com os seis pe
 - [Abrir Livro 0 no site de testes](https://escolalegalbrasil.github.io/edulegal-testes/livros/ponto-de-partida/)
 - [Ver arquivos do livro](livros/ponto-de-partida/index.html)
 - Cinco capítulos: boas-vindas, áreas da EduLegal, microexperiências práticas (Roblox/LED virtual/escrita), escolha inicial e tarefas sugeridas.
-- Ao concluir, uma notificação leva ao **dashboard demonstrativo**: **todas as tarefas surgem no Backlog (coluna esquerda)**. O aluno escolhe quais deseja passar para **Vou fazer hoje (coluna direita)**, arrastando ou utilizando botões em **Projetos**.
+- Ao concluir, uma notificação leva ao **dashboard demonstrativo**: **todas as tarefas surgem no Backlog**. O aluno decide quais levar a **Vou fazer hoje** e pode colocar tarefas declaradas concluídas em **Já terminei**, arrastando ou utilizando botões em **Projetos**.
 - As atividades de Arduino e Roblox deste acolhimento são **simulações no navegador**, não utilizam hardware nem o Roblox Studio real. Os livros técnicos completos são etapas posteriores.
 - Dados de demonstração só ficam no `sessionStorage` da aba e só são lidos pela interface no **modo fictício** (`?demo=1`); não vinculam contas reais ou de testes, não são enviados ao Supabase e não são avaliações de autorregulação.
 - Não há chat de IA, pontuação, badges concedidos, uploads ou analytics automáticos nesta versão.
@@ -60,3 +60,11 @@ Consulte [TESTE-LOGIN.md](TESTE-LOGIN.md) para o roteiro de teste com os seis pe
 - Campos para reflexão, prévia de print local (não enviada ou salva), rascunho de projeto e próximo desafio. O rascunho aparece no Portfólio em **modo demonstração**, sem conferir domínio e sem conceder badges automaticamente.
 - Sem conexão de dados com Supabase/IA, sem pesquisa ou coleta de dados reais; usa somente sessionStorage por aba e deve ser testado com personagens fictícios.
 - Para limpar apenas as respostas do Livro 1, usar **Reiniciar somente este livro** no rodapé do livro. A EduLegal oficial não foi alterada.
+
+## Plataforma: navegação e planejador (26/11/2026)
+
+- O menu principal de testes agora contém **Início**, **Meus livros**, **Projetos** e **Portfólio**. **Mentoria saiu do menu**, sem exclusão de tabelas, dados históricos ou funções da produção.
+- Sem tarefas, o dashboard oferece dois caminhos: **Explorar meus livros** ou **Planejar meu próprio projeto**. Com tarefas, destaca o planejamento e mantém a biblioteca acessível.
+- A página Projetos permite **criar projetos e tarefas sem livro** e gerenciar tarefas em **Backlog → Vou fazer hoje → Já terminei**. A terceira coluna representa conclusão *declarada pelo aluno*, não domínio validado ou concessão de badges.
+- Tarefas podem ser arrastadas ou movidas por botões; uma tarefa terminada pode ser retomada. Os dados são **somente demonstração em sessionStorage**, ainda não associados ao Supabase de testes.
+- **Os Livros 0 e 1 existentes são rascunhos temporários**, a serem recriados em conversa específica para livros. Nenhum livro foi alterado nesta etapa; vínculos aos livros atuais são provisórios até a definição do contrato de integração.
