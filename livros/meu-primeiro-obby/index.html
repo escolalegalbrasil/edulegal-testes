@@ -74,43 +74,92 @@
  </section>
 
  <section class="chapter" data-screen="1" hidden>
-  <p class="overline">MISSÃO 1 · CONHECER AS FERRAMENTAS</p>
-  <h1>Onde construímos nosso jogo?</h1><div class="dash"></div>
-  <p class="lead">Abra o Roblox Studio e crie um projeto do tipo <strong>Baseplate</strong>. Vamos conhecer algumas partes importantes da interface.</p>
-  <figure class="screenshot">
-   <img src="https://prod.docsiteassets.roblox.com/assets/tutorials/studio-lesson/Explorer.jpg" alt="Imagem do Roblox Studio com a área 3D, a janela Explorer destacada e a janela Properties abaixo." loading="lazy" referrerpolicy="no-referrer">
-   <figcaption>Imagem de referência da documentação oficial do Roblox. A posição dos botões pode mudar conforme a versão ou o layout do Studio. <a href="https://create.roblox.com/docs/studio/ui-overview" target="_blank" rel="noopener noreferrer">Conhecer a interface na documentação ↗</a></figcaption>
-  </figure>
-  <div class="studio-schematic" aria-label="Esquema simplificado da interface do Roblox Studio">
-   <div class="studio-top">ROBLOX STUDIO <span>Move · Scale · Rotate · Play</span></div>
-   <div class="studio-main"><div class="studio-view"><div class="studio-floor"></div><div class="studio-part"></div><small>Visualização 3D</small></div><div class="studio-panels"><div>Explorer<small>Workspace<br>↳ Part</small></div><div>Properties<small>Name · Anchored · Transparency</small></div></div></div>
-  </div>
-  <div class="support">
-    <p data-mode-text="guiado">Primeiro encontre <strong>Explorer</strong> e <strong>Properties</strong>. Se uma janela não estiver visível, procure o botão correspondente na interface do Studio. Depois, observe o mundo 3D no centro.</p>
-    <p data-mode-text="acompanhado" hidden>Localize Explorer, Properties e a área 3D. Se precisar, observe o esquema acima.</p>
-    <p data-mode-text="exploratorio" hidden>Explore o Studio e descubra onde os objetos aparecem e onde suas características podem ser alteradas.</p>
-  </div>
+  <p class="overline">MISSÃO 1 · CONHECER O AMBIENTE</p>
+  <h1>Vamos conhecer nossa oficina de jogos?</h1><div class="dash"></div>
+  <p class="lead"><strong>Roblox Studio</strong> é o programa em que vamos construir nosso jogo. Pense nele como uma oficina: no espaço maior da tela você vê o mundo 3D; nas barras e janelas ao redor ficam as ferramentas.</p>
+  <p>Por enquanto, <strong>não precisa decorar nomes</strong>. Vamos conhecer uma coisa de cada vez.</p>
+
   <div class="panel">
-   <h2>Experimente: encontre a janela certa</h2>
-   <p>Se você quiser mudar a cor ou o tamanho de uma <strong>Part</strong>, qual janela deve observar?</p>
-   <div class="choice-row" role="group" aria-label="Onde mudar propriedades">
-    <button class="choice" data-check="properties" data-value="explorer" type="button">Explorer</button>
-    <button class="choice" data-check="properties" data-value="properties" type="button">Properties</button>
-    <button class="choice" data-check="properties" data-value="play" type="button">Play</button>
-   </div>
-   <p class="feedback" id="feedbackProperties" role="status"></p>
-   <details><summary>Quero uma pista</summary><p><strong>Explorer</strong> mostra quais objetos existem. <strong>Properties</strong> mostra características do objeto selecionado. <strong>Play</strong> permite testar o jogo.</p></details>
+    <h2>1. Primeiro, olhe o mundo do jogo</h2>
+    <p>Abra o Roblox Studio e escolha um projeto <strong>Baseplate</strong>. Você verá um chão e um espaço onde poderá colocar objetos. Esse espaço é a <strong>visualização 3D</strong>.</p>
+    <figure class="screenshot">
+      <img src="https://prod.docsiteassets.roblox.com/assets/tutorials/studio-lesson/Explorer.jpg" alt="Captura real do Roblox Studio: cenário 3D no centro, ferramentas na parte superior e janelas Explorer e Properties à direita. Na imagem, Lighting está selecionado; a Part será criada na atividade seguinte." loading="lazy" referrerpolicy="no-referrer">
+      <figcaption>Esta é uma imagem real da interface do Roblox Studio. Observe principalmente o cenário no centro. As janelas podem estar em outras posições no seu computador. <a href="https://create.roblox.com/docs/studio/overview" target="_blank" rel="noopener noreferrer">Ver a documentação oficial ↗</a></figcaption>
+    </figure>
+    <div class="question-tip"><strong>Observe:</strong> onde está o chão do mundo 3D? Você consegue movimentar a câmera para olhar ao redor?</div>
   </div>
-  <div class="reflection"><label for="noteStudio">O que você encontrou primeiro no Studio? <span>(opcional)</span></label><textarea id="noteStudio" rows="2" maxlength="500" placeholder="Ex.: encontrei o Explorer, mas demorei para achar Properties."></textarea></div>
-  <div class="pager"><button class="secondary" data-prev type="button">← Voltar</button><button class="primary" data-next type="button">Criar minha primeira peça →</button></div>
+
+  <div class="panel">
+    <h2>2. Agora, coloque um bloco no mundo</h2>
+    <p>No Roblox Studio, um objeto simples de construção é chamado <strong>Part</strong> (peça). Uma Part pode virar plataforma, parede, degrau ou outro objeto do cenário.</p>
+    <ol class="steps">
+      <li>Na barra superior, procure a guia <strong>Home</strong> (Início).</li>
+      <li>Clique em <strong>Part</strong> para inserir uma peça no mundo 3D. A ferramenta também pode aparecer na guia <strong>Model</strong>.</li>
+      <li>Olhe o cenário: você consegue encontrar o bloco que acabou de criar?</li>
+    </ol>
+    <p class="muted">Não precisa mudar o tamanho ou a cor agora. Isso será aprendido nos próximos passos.</p>
+  </div>
+
+  <div class="panel">
+    <h2>3. Um bloco, três lugares para observar</h2>
+    <p>A <strong>mesma Part</strong> pode ser vista no cenário 3D e encontrada na lista de objetos chamada <strong>Explorer</strong>. Ao selecioná-la, outra janela, <strong>Properties</strong>, mostra suas características.</p>
+    <p><strong>Experimente no desenho:</strong> clique no bloco dourado ou no nome <strong>Part</strong> na lista. Veja o que aparece em Properties.</p>
+
+    <div class="studio-schematic" role="group" aria-label="Ilustração interativa de como uma Part aparece no cenário, no Explorer e em Properties">
+      <div class="studio-top">Roblox Studio · desenho didático <span>Home › Part</span></div>
+      <div class="studio-main">
+        <div class="studio-view">
+          <div class="studio-view-label"><span class="diagram-num">1</span> Mundo 3D</div>
+          <div class="studio-floor"></div>
+          <button type="button" id="diagramScenePart" class="studio-part-button" aria-label="Selecionar a Part no mundo 3D" aria-pressed="false"><span class="studio-part-shape"></span><span class="part-label">Part</span></button>
+        </div>
+        <div class="studio-panels">
+          <div class="studio-explorer">
+            <div class="studio-panel-title"><span class="diagram-num">2</span> Explorer <small>Lista de objetos</small></div>
+            <div class="studio-tree"><div class="workspace-line">▾ Workspace</div>
+              <button type="button" id="diagramExplorerPart" aria-label="Selecionar Part no Explorer" aria-pressed="false" class="studio-tree-item">▣ Part</button>
+            </div>
+          </div>
+          <div class="studio-properties">
+            <div class="studio-panel-title"><span class="diagram-num">3</span> Properties <small>Características do objeto</small></div>
+            <div id="diagramProperties" class="studio-properties-rows"><p class="studio-empty">Selecione a Part para ver suas características.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="feedback" id="diagramFeedback" role="status">Selecione a Part no desenho para observar a ligação entre as três áreas.</p>
+    <div class="compare"><div><strong>Explorer</strong><p>Ajuda a encontrar e selecionar <strong>objetos</strong> do jogo.</p></div><div><strong>Properties</strong><p>Mostra o que podemos <strong>mudar no objeto selecionado</strong>: por exemplo, nome, tamanho e cor.</p></div></div>
+    <p class="muted">O desenho é uma simulação explicativa, não a interface real do Roblox Studio. As janelas podem ficar em posições diferentes.</p>
+  </div>
+
+  <div class="support">
+    <p data-mode-text="guiado"><strong>Agora no Roblox Studio:</strong> procure a janela <strong>Explorer</strong>, encontre <strong>Workspace</strong> e procure a sua <strong>Part</strong> dentro dele. Clique no nome Part. Depois olhe a janela <strong>Properties</strong> e encontre pelo menos uma característica, como <strong>Name</strong> ou <strong>Color</strong>.</p>
+    <p data-mode-text="acompanhado" hidden><strong>Experimente no Studio:</strong> encontre a Part dentro de Workspace no Explorer, selecione-a e observe o que mudou em Properties. Se precisar, siga a sequência acima.</p>
+    <p data-mode-text="exploratorio" hidden><strong>Investigue no Studio:</strong> selecione a Part no cenário e depois no Explorer. O que acontece na janela Properties? Como as três áreas se relacionam?</p>
+  </div>
+  <details><summary>Não encontrei Explorer ou Properties. Onde estão?</summary><p>Na interface atual do Roblox Studio, essas janelas podem ser abertas pela guia <strong>Home</strong> ou pelo menu <strong>Window</strong> (Janela). Procure os botões <strong>Explorer</strong> e <strong>Properties</strong>. Se seu Studio estiver organizado de outra forma, as janelas podem aparecer lado a lado ou em abas.</p></details>
+
+  <div class="panel">
+    <h2>4. Agora sim: vamos conferir!</h2>
+    <p>Você selecionou uma <strong>Part</strong> no Explorer. Em qual janela aparecem as características dessa peça, como cor e tamanho?</p>
+    <div class="choice-row" role="group" aria-label="Qual janela mostra características da Part">
+      <button class="choice" data-check="properties" data-value="explorer" type="button">Explorer</button>
+      <button class="choice" data-check="properties" data-value="properties" type="button">Properties</button>
+      <button class="choice" data-check="properties" data-value="play" type="button">Play</button>
+    </div>
+    <p class="feedback" id="feedbackProperties" role="status"></p>
+    <details><summary>Quero uma pista</summary><p>O Explorer mostra <strong>quais objetos existem</strong>. A janela que mostra a <strong>cor, o tamanho e outras características da Part selecionada</strong> é outra. Observe novamente o desenho acima.</p></details>
+  </div>
+  <div class="reflection"><label for="noteStudio">Que descoberta você fez ao selecionar uma Part? <span>(opcional)</span></label><textarea id="noteStudio" rows="2" maxlength="500" placeholder="Ex.: cliquei na Part no Explorer e apareceram suas características em Properties."></textarea></div>
+  <div class="pager"><button class="secondary" data-prev type="button">← Voltar</button><button class="primary" data-next type="button">Aprender a construir com a Part →</button></div>
  </section>
 
  <section class="chapter" data-screen="2" hidden>
   <p class="overline">MISSÃO 2 · CONSTRUÇÃO 3D</p>
   <h1>Minha primeira plataforma</h1><div class="dash"></div>
-  <p class="lead">Vamos criar uma <strong>Part</strong>, que é uma peça do mundo 3D. A partir dela, podemos construir quase qualquer cenário.</p>
+  <p class="lead">Você já conheceu a <strong>Part</strong> e descobriu onde encontrá-la. Agora vamos transformar aquela peça em uma plataforma. Se ainda não criou a sua Part, volte ao capítulo anterior para experimentá-la.</p>
   <div class="support">
-    <p data-mode-text="guiado">Faça uma mudança por vez: insira uma Part, selecione-a e experimente as ferramentas <strong>Move</strong>, <strong>Scale</strong> e <strong>Rotate</strong>. Para transformá-la em uma plataforma, aumente principalmente sua largura e profundidade.</p>
+    <p data-mode-text="guiado">Faça uma mudança por vez na <strong>Part que você já criou</strong>: selecione a peça no Explorer e experimente <strong>Move</strong>, <strong>Scale</strong> e <strong>Rotate</strong>. Para virar uma plataforma, aumente principalmente sua largura e profundidade.</p>
     <p data-mode-text="acompanhado" hidden>Crie uma Part e use Move, Scale e Rotate. Teste o que cada ferramenta altera.</p>
     <p data-mode-text="exploratorio" hidden>Construa uma plataforma na qual seu personagem conseguiria ficar em pé. Quais ferramentas e propriedades precisou usar?</p>
   </div>
