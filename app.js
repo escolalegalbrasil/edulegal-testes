@@ -130,6 +130,17 @@ function demoBook0(){
  if(!state.demo)return null;
  try{const d=JSON.parse(sessionStorage.getItem(BOOK0_KEY)||"null");
    if(d?.version!==1||!Object.hasOwn(BOOK0_TASKS,d.choice))return null;
+   if(d.completedAt&&d.plan?.mode!=="backlog-first"){
+    const all=BOOK0_TASKS[d.choice].map((_,i)=>d.choice+"-"+(i+1));
+    const today=Array.isArray(d.plan?.today)?d.plan.today:[];
+    const later=Array.isArray(d.plan?.later)?d.plan.later:[];
+    const autoToday=all.slice(0,2),autoLater=all.slice(2);
+    const wasOldDefault=JSON.stringify(today)===JSON.stringify(autoToday)&&JSON.stringify(later)===JSON.stringify(autoLater);
+    // O protótipo anterior preenchia duas tarefas automaticamente; não as tratar como escolha do aluno.
+    const chosen=wasOldDefault?[]:today.filter(id=>all.includes(id));
+    d.plan={today:chosen,later:all.filter(id=>!chosen.includes(id)),mode:"backlog-first"};
+    sessionStorage.setItem(BOOK0_KEY,JSON.stringify(d));
+   }
    return d;
  }catch(_){return null;}
 }
@@ -143,7 +154,7 @@ function demoMoveTask(id,destination){
  const ids=demoTaskIds(book);
  const oldToday=Array.isArray(book.plan?.today)?book.plan.today.filter(x=>ids.includes(x)):[];
  const oldLater=Array.isArray(book.plan?.later)?book.plan.later.filter(x=>ids.includes(x)):[];
- book.plan={today:oldToday.filter(x=>x!==id),later:oldLater.filter(x=>x!==id)};
+ book.plan={today:oldToday.filter(x=>x!==id),later:oldLater.filter(x=>x!==id),mode:"backlog-first"};
  if(destination==="today")book.plan.today.push(id);else book.plan.later.push(id);
  try{sessionStorage.setItem(BOOK0_KEY,JSON.stringify(book));}catch(_){}
  navigate("projetos");
@@ -153,7 +164,7 @@ function demoShiftTask(id,delta){
  const arr=Array.isArray(book.plan?.today)?book.plan.today.slice():[];
  const i=arr.indexOf(id),j=i+delta;if(i<0||j<0||j>=arr.length)return;
  [arr[i],arr[j]]=[arr[j],arr[i]];
- book.plan.today=arr;
+ book.plan.today=arr;book.plan.mode="backlog-first";
  try{sessionStorage.setItem(BOOK0_KEY,JSON.stringify(book));}catch(_){}
  navigate("projetos");
 }
@@ -180,7 +191,7 @@ function renderHome(main){
   if(book?.completedAt){
    card.append(el("div","eyebrow","SUA PRIMEIRA EXPLORAÇÃO"));
    card.append(el("h2","","Sua escolha já está no dashboard!"));
-   card.append(el("p","sub","Percurso escolhido: "+BOOK0_TITLES[book.choice]+". As tarefas sugeridas estão disponíveis no seu planejamento."));
+   card.append(el("p","sub","Percurso escolhido: "+BOOK0_TITLES[book.choice]+". As tarefas estão no Backlog. Você decide quais passar para “Vou fazer hoje”."));
    card.append(navButton("Ver minhas tarefas →","projetos","cta"));
    card.append(demoBookLink("Revisitar Ponto de Partida →"));
   }else{
@@ -200,7 +211,7 @@ function renderHome(main){
    main.append(el("h2","section","Meu planejamento de hoje"));
    const summary=el("section","trail-item");
    const today=Array.isArray(book.plan?.today)?book.plan.today:[];
-   if(!today.length)summary.append(el("p","meta","Você pode escolher suas primeiras tarefas na página Projetos."));
+   if(!today.length)summary.append(el("p","meta","Seu plano está vazio. Visite Projetos, escolha suas tarefas no Backlog e coloque-as em “Vou fazer hoje”."));
    today.forEach((id)=>{
      const t=demoTaskTitle(book,id);if(t)summary.append(el("p","", "• "+t));
    });
@@ -247,21 +258,23 @@ function renderProjects(main){
   return;
  }
  main.append(el("p","meta","Ideia de projeto: "+BOOK0_TITLES[book.choice]+" · Planejamento de demonstração"));
- main.append(notice("Estas tarefas foram sugeridas automaticamente quando você escolheu seu percurso. Pode arrastá-las ou usar os botões para mudar seu plano. Ainda não são atividades concluídas."));
+ main.append(notice("🗂 Planeje seu dia! No Backlog, à esquerda, estão todas as tarefas sugeridas pelo livro. Escolha uma ou duas que gostaria de experimentar hoje e arraste-as para “Vou fazer hoje”, à direita. Se preferir, use o botão “Fazer hoje”. Você pode mudar de ideia a qualquer momento."));
  const grid=el("div","plan-grid");
  const ids=demoTaskIds(book);
  const today=Array.isArray(book.plan?.today)?book.plan.today.filter(x=>ids.includes(x)):[];
  const later=Array.isArray(book.plan?.later)?book.plan.later.filter(x=>ids.includes(x)):[];
- for(const zone of ["today","later"]){
+ for(const zone of ["later","today"]){
   const col=el("section","plan-column");
-  col.append(el("h2","",zone==="today"?"Vou fazer hoje":"Posso fazer depois"));
+  col.append(el("h2","",zone==="later"?"Backlog · Todas as tarefas":"Vou fazer hoje"));
   const list=zone==="today"?today:later;
+  if(zone==="today"&&!list.length)col.append(el("p","meta","Nenhuma tarefa escolhida ainda. Arraste para cá uma tarefa do Backlog ou clique em “Fazer hoje”."));
+  if(zone==="later"&&!list.length)col.append(el("p","meta","Você já colocou todas as tarefas no seu plano. Pode devolvê-las aqui quando quiser."));
   list.forEach(id=>{
    const box=el("article","plan-task");
    box.draggable=true;
    box.append(el("strong","",demoTaskTitle(book,id)||"Tarefa"));
    const actions=el("div","plan-actions");
-   const move=el("button","soft-btn",zone==="today"?"Deixar para depois":"Fazer hoje");
+   const move=el("button","soft-btn",zone==="today"?"Voltar ao Backlog":"Fazer hoje");
    move.type="button";move.addEventListener("click",()=>demoMoveTask(id,zone==="today"?"later":"today"));actions.append(move);
    if(zone==="today"){
     for(const [label,delta] of [["↑ Antes",-1],["↓ Depois",1]]){
@@ -355,5 +368,6 @@ mountIcons();
 applyTheme();
 // O parâmetro ?demo=1 exibe SOMENTE dados fictícios e não acessa informações da conta.
 if(new URLSearchParams(window.location.search).get("demo")==="1"){
- state.demo=true;state.user=null;state.orgId=null;state.role="student";state.trails=[];state.view="inicio";showApp();
+ state.demo=true;state.user=null;state.orgId=null;state.role="student";state.trails=[];
+ state.view=new URLSearchParams(window.location.search).get("view")==="projetos"?"projetos":"inicio";showApp();
 }else refreshAuth();
