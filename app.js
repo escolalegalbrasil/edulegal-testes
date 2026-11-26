@@ -143,7 +143,7 @@ function categoryTiles(main){
   const tile=el("button","tile area-tile");tile.type="button";
   const symbol=el("span");symbol.dataset.icon=area.icon;
   const copy=el("span","area-tile-content");
-  copy.append(el("strong","",area.title),el("small","",areaBooks(area.id).length+" livro(s) em demonstração"));
+  copy.append(el("strong","",area.title),el("small","",areaBooks(area.id).length?areaBooks(area.id).length+" protótipo para conhecer":"Aguardando novos livros"));
   tile.append(symbol,copy);
   tile.addEventListener("click",()=>goToArea(area.id));
   grid.append(tile);
