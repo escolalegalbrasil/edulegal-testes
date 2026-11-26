@@ -10,7 +10,7 @@ Promover a autorregulação da aprendizagem, motivando o aluno a criar projetos 
 2. Mostrar áreas em cartões concretos com exemplos de projetos (Roblox Studio, robótica, desenvolvimento web, escrita criativa etc.).
 3. Pequenas escolhas e demonstrações práticas intercaladas com perguntas simples; **evitar perguntas abstratas sobre personalidade ou estilo**.
 4. Escolher um primeiro percurso (exemplo fictício: Roblox Studio).
-5. Planejamento inicial assistido: a EduLegal oferece duas ou três tarefas muito concretas para a primeira sessão; o aluno pode aceitar, trocar, reorganizar, incluir uma ideia própria ou simplesmente explorar.
+5. Planejamento inicial assistido: a EduLegal apresenta tarefas concretas relacionadas ao percurso escolhido. **Todas entram primeiro no Backlog**; o aluno escolhe quais levar para **Vou fazer hoje** (inicialmente vazia), podendo reorganizar, trocar ou apenas explorar.
 6. Nunca inferir personalidade, emoção, motivação ou autorregulação a partir de uma única escolha. Registros iniciais são hipóteses pedagógicas provisórias.
 
 ## Livro 1 — Meu Primeiro Obby
@@ -30,10 +30,10 @@ Princípio: **o aluno não precisa saber formular metas sobre conteúdos que des
 
 - A unidade de planejamento é uma **tarefa pequena de projeto**, vinculada a uma missão do livro e a um conhecimento/habilidade.
 - No começo do encontro: exibir cartões com ações observáveis, por exemplo: “Criar uma plataforma”; “Testar se consigo saltar”; “Observar o que muda em Transparency”.
-- O aluno arrasta do conjunto **Depois** para **Vou fazer hoje**. Permitir ação equivalente por botões/teclado, para acessibilidade.
+- A página **Projetos** apresenta duas colunas, nesta ordem: **Backlog** (esquerda, todas as tarefas sugeridas) e **Vou fazer hoje** (direita, inicialmente vazia). Uma instrução explícita orienta o aluno a escolher uma ou duas tarefas e arrastá-las, ou usar botões equivalentes para acessibilidade.
 - A ordem do plano determina a ordem de apresentação de sugestões, sem bloquear explorações espontâneas ou exigir conclusão.
 - Ao executar uma tarefa, abrir a missão correspondente do livro. Ao voltar, registrar tentativa, teste, dificuldades e eventual evidência enviada; o cartão guarda estado (não iniciado, experimentando, concluído pelo aluno, conferido).
-- Para iniciantes, apresentar um plano sugerido; para alunos mais autônomos, permitir escolher/criar mais tarefas. Direção é dinâmica por atividade, não rótulo da criança.
+- Para iniciantes, sugerir um conjunto pequeno de tarefas concretas e orientar como escolher, **sem preencher automaticamente o plano do dia**. Para alunos mais autônomos, permitir escolher/criar mais tarefas. Direção é dinâmica por atividade, não rótulo da criança.
 - A conclusão de uma tarefa é uma declaração/registro do aluno até ser confrontada com evidências; **não é inferência automática de domínio**.
 
 ## Três modos inicialmente previstos
@@ -65,7 +65,7 @@ IA analisa nos bastidores; professor/diretor revisa quando necessário.
 - Badges socioemocionais sem pontuação numérica; registros contextuais, participação voluntária e mediação humana.
 
 ## Marcos de implementação
-A. Protótipo estático + planner arrastável, sem autenticação, IA ou banco de produção.
+A. Protótipo com Livro 0 e planner arrastável na página Projetos, Backlog à esquerda e plano do dia à direita; não usa IA, coleta real nem banco de produção.
 B. Livros pedagógicos reais (acolhimento + Obby) com testes em diferentes modos.
 C. Registro estruturado no Supabase **de testes**; autoria e isolamento de escola/aluno por RLS.
 D. Entrega de prints com consentimento e segurança; relatório por atividade.
