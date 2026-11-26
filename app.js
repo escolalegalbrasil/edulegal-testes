@@ -8,7 +8,7 @@ const API_KEY="sb_publishable_pzytAyOPleWQVrTnzg22ew_qAcIgVQu";
 const app=window.supabase ? window.supabase.createClient(API_URL,API_KEY) : null;
 const $=id=>document.getElementById(id);
 const state={demo:false,user:null,memberships:[],orgs:[],orgId:null,role:null,trails:[],view:"inicio"};
-const pages=["inicio","livros","projetos","mentoria","portfolio"];
+const pages=["inicio","livros","projetos","portfolio"];
 const clone=x=>JSON.parse(JSON.stringify(x));
 let palettes=clone(defaults);
 let theme="dark";
@@ -75,15 +75,8 @@ async function updateMemberships(){
  }
  if(!state.memberships.some(x=>x.organization_id===state.orgId))state.orgId=state.memberships[0]?.organization_id||null;
  state.role=state.memberships.find(x=>x.organization_id===state.orgId)?.role||null;
- await loadTrails();
 }
-async function loadTrails(){
- state.trails=[];
- if(state.demo||!state.orgId)return;
- const {data,error}=await app.from("trails").select("id,title,created_at").eq("organization_id",state.orgId).order("created_at",{ascending:false}).limit(30);
- if(error)throw Error("Falha na leitura das mentorias: "+error.message);
- state.trails=data||[];
-}
+
 async function refreshAuth(){
  if(state.demo)return;
  if(!app){showLogin("Biblioteca Supabase indisponível; verifique a conexão.");return;}
@@ -192,43 +185,46 @@ function renderOrgPicker(main){
  if(state.orgs.length>1){
   const s=el("select","org-select");s.setAttribute("aria-label","Escola ativa");
   state.orgs.forEach(o=>{const op=el("option","",o.name);op.value=o.id;op.selected=o.id===state.orgId;s.append(op);});
-  s.addEventListener("change",async()=>{state.orgId=s.value;state.role=state.memberships.find(x=>x.organization_id===s.value)?.role||null;try{await loadTrails();showApp();}catch(e){main.append(notice(e.message));}});
+  s.addEventListener("change",async()=>{state.orgId=s.value;state.role=state.memberships.find(x=>x.organization_id===s.value)?.role||null;showApp();});
   main.append(s);
  }
 }
 function renderHome(main){
  main.append(heading("MEU ESPAÇO DE APRENDIZAGEM","O que vamos criar hoje?"));
- const book=state.demo?demoBook0():null;
- const hasSuggestedTasks=Boolean(book?.completedAt&&BOOK0_TASKS[book.choice]?.length);
- const selectedToday=hasSuggestedTasks&&Array.isArray(book.plan?.today)
-  ?book.plan.today.filter(id=>demoTaskTitle(book,id)):[];
-
+ const planner=state.demo&&window.EduLegalDemoPlanning
+  ?window.EduLegalDemoPlanning.summary(demoBook0(),BOOK0_TASKS,BOOK0_TITLES):null;
+ const tasks=planner?.all||[];
+ const selectedToday=planner?.today||[];
  const card=el("section","continue");
- if(hasSuggestedTasks){
+ if(tasks.length){
   card.append(el("div","eyebrow","MEU PLANEJAMENTO"));
-  card.append(el("h2","",selectedToday.length?"Meu plano de hoje":"Que tal escolher o que fazer hoje?"));
+  card.append(el("h2","",selectedToday.length?"Meu plano de hoje":"Vamos escolher o que fazer hoje?"));
   card.append(el("p","sub",selectedToday.length
-   ?"Você escolheu "+selectedToday.length+" tarefa(s) do seu projeto. Pode consultar ou reorganizar seu plano quando quiser."
-   :"Seu livro sugeriu tarefas para o Backlog. Escolha quais gostaria de experimentar hoje. Não precisa fazer tudo."));
-  card.append(navButton(selectedToday.length?"Abrir meu planejamento →":"Escolher minhas tarefas →","projetos","cta"));
+   ?"Você escolheu "+selectedToday.length+" tarefa(s) para hoje. Pode continuar ou reorganizar seu plano."
+   :"Você já tem tarefas no Backlog. Escolha o que quer tentar hoje; não precisa concluir tudo."));
+  const actions=el("div","home-actions");
+  actions.append(navButton(selectedToday.length?"Abrir meu planejamento →":"Escolher minhas tarefas →","projetos","cta"));
+  actions.append(navButton("Explorar meus livros →","livros","soft-btn"));
+  card.append(actions);
  }else{
-  card.append(el("div","eyebrow","MEU PRIMEIRO PERCURSO"));
-  card.append(el("h2","","Seu próximo projeto começa aqui"));
-  card.append(el("p","sub","Explore os livros interativos, conheça possibilidades e escolha algo que gostaria de criar. As tarefas do projeto aparecerão depois no Backlog."));
-  // Sem tarefas vinculadas, mostrar a biblioteca como próximo passo.
-  card.append(navButton("Explorar meus livros →","livros","cta"));
+  card.append(el("div","eyebrow","PRIMEIRAS POSSIBILIDADES"));
+  card.append(el("h2","","Por onde gostaria de começar?"));
+  card.append(el("p","sub","Você pode conhecer um livro interativo ou começar uma criação sua, mesmo que ainda não exista um livro sobre ela."));
+  const actions=el("div","home-actions");
+  actions.append(navButton("Explorar meus livros →","livros","cta"));
+  actions.append(navButton("Planejar meu próprio projeto →","projetos","soft-btn"));
+  card.append(actions);
  }
  main.append(card);
-
- if(state.demo&&hasSuggestedTasks){
-  main.append(el("h2","section","Meu plano de hoje"));
+ if(state.demo&&selectedToday.length){
+  main.append(el("h2","section","Escolhi fazer hoje"));
   const summary=el("section","trail-item");
-  if(!selectedToday.length)summary.append(el("p","meta","Ainda não escolheu tarefas para hoje. Vá a Projetos e arraste uma ou duas tarefas do Backlog."));
-  selectedToday.forEach(id=>{
-   const title=demoTaskTitle(book,id);
-   if(title)summary.append(el("p","","• "+title));
-  });
-  summary.append(navButton("Ver todas as tarefas →","projetos","cta"));
+  for(const task of selectedToday.slice(0,4)){
+    const p=el("p","", "• "+task.title+" — "+task.projectTitle);
+    summary.append(p);
+  }
+  if(selectedToday.length>4)summary.append(el("p","meta","E mais "+(selectedToday.length-4)+" tarefa(s) no planejamento."));
+  summary.append(navButton("Revisar meu plano →","projetos","cta"));
   main.append(summary);
  }
  main.append(el("h2","section","Minhas explorações"));
@@ -240,11 +236,10 @@ function renderHome(main){
  main.append(tiles);
  const idea=el("div","idea");
  const ico=el("span");ico.dataset.icon="bulb";
- idea.append(ico,el("span","","Tem uma nova ideia de projeto? Descubra outras possibilidades nos livros."));
- idea.append(navButton("→","livros","idea-link"));
- main.append(idea);
- if(state.demo)main.append(notice("Prévia com dados fictícios: o planejamento é demonstrativo e fica somente nesta aba do navegador."));
- else main.append(notice("A integração das tarefas às contas do Supabase de testes ainda não foi implementada. Por enquanto, a página inicial encaminha para a biblioteca."));
+ idea.append(ico,el("span","","Pensou em um projeto novo? Você pode planejá-lo mesmo sem livro."));
+ idea.append(navButton("→","projetos","idea-link"));main.append(idea);
+ if(state.demo)main.append(notice("Prévia fictícia: suas tarefas ficam somente nesta aba e não são enviadas ao Supabase."));
+ else main.append(notice("A integração dos projetos às contas do Supabase de testes ainda está em desenvolvimento. Você pode experimentar o planejador usando o modo de demonstração."));
  mountIcons(main);
 }
 
@@ -266,65 +261,24 @@ function renderBooks(main){
 
 function renderProjects(main){
  main.append(heading("MEUS PROJETOS","O que estou criando?"));
- const book=demoBook0();
- if(!state.demo||!book?.completedAt){
-  main.append(notice("Os projetos serão privados por padrão e poderão reunir tarefas, arquivos, registros, livros e mentorias. Integração em desenvolvimento."));
-  if(state.demo)main.append(demoBookLink("Escolher um percurso no Livro 0 →"));
+ if(!state.demo){
+  main.append(notice("O planejamento vinculado à conta ainda não está ativado. Para testar a criação de projetos próprios e o Backlog, entre na demonstração fictícia. Os dados reais não serão utilizados."));
+  const a=el("a","cta","Experimentar planejador fictício →");
+  a.href="./index.html?demo=1&view=projetos";main.append(a);
   return;
  }
- main.append(el("p","meta","Ideia de projeto: "+BOOK0_TITLES[book.choice]+" · Planejamento de demonstração"));
- main.append(notice("🗂 Planeje seu dia! No Backlog, à esquerda, estão todas as tarefas sugeridas pelo livro. Escolha uma ou duas que gostaria de experimentar hoje e arraste-as para “Vou fazer hoje”, à direita. Se preferir, use o botão “Fazer hoje”. Você pode mudar de ideia a qualquer momento."));
- const grid=el("div","plan-grid");
- const ids=demoTaskIds(book);
- const today=Array.isArray(book.plan?.today)?book.plan.today.filter(x=>ids.includes(x)):[];
- const later=Array.isArray(book.plan?.later)?book.plan.later.filter(x=>ids.includes(x)):[];
- for(const zone of ["later","today"]){
-  const col=el("section","plan-column");
-  col.append(el("h2","",zone==="later"?"Backlog · Todas as tarefas":"Vou fazer hoje"));
-  const list=zone==="today"?today:later;
-  if(zone==="today"&&!list.length)col.append(el("p","meta","Nenhuma tarefa escolhida ainda. Arraste para cá uma tarefa do Backlog ou clique em “Fazer hoje”."));
-  if(zone==="later"&&!list.length)col.append(el("p","meta","Você já colocou todas as tarefas no seu plano. Pode devolvê-las aqui quando quiser."));
-  list.forEach(id=>{
-   const box=el("article","plan-task");
-   box.draggable=true;
-   box.append(el("strong","",demoTaskTitle(book,id)||"Tarefa"));
-   const actions=el("div","plan-actions");
-   const move=el("button","soft-btn",zone==="today"?"Voltar ao Backlog":"Fazer hoje");
-   move.type="button";move.addEventListener("click",()=>demoMoveTask(id,zone==="today"?"later":"today"));actions.append(move);
-   if(zone==="today"){
-    for(const [label,delta] of [["↑ Antes",-1],["↓ Depois",1]]){
-     const b=el("button","soft-btn",label);b.type="button";
-     b.addEventListener("click",()=>demoShiftTask(id,delta));actions.append(b);
-    }
-   }
-   box.append(actions);
-   box.addEventListener("dragstart",ev=>{ev.dataTransfer.setData("text/plain",id);ev.dataTransfer.effectAllowed="move";});
-   col.append(box);
-  });
-  col.addEventListener("dragover",ev=>{ev.preventDefault();col.classList.add("dragover");});
-  col.addEventListener("dragleave",()=>col.classList.remove("dragover"));
-  col.addEventListener("drop",ev=>{ev.preventDefault();col.classList.remove("dragover");const id=ev.dataTransfer.getData("text/plain");if(ids.includes(id))demoMoveTask(id,zone);});
-  grid.append(col);
+ if(!window.EduLegalDemoPlanning){
+  main.append(notice("Não foi possível carregar o planejador desta demonstração. Recarregue a página."));return;
  }
- main.append(grid);
- if(book.choice==="roblox")main.append(demoBook1Link("Abrir Livro 1 — Meu Primeiro Obby →"));
- const note=el("p","meta","Estas são tarefas sugeridas, não uma avaliação de habilidades. O Livro 1 já pode ser experimentado em modo de testes.");main.append(note);
+ window.EduLegalDemoPlanning.render(main,{
+  book:demoBook0(),
+  catalog:BOOK0_TASKS,
+  titles:BOOK0_TITLES,
+  onRefresh:()=>navigate("projetos")
+ });
 }
 
-function renderMentoria(main){
- main.append(heading("CONVERSAS DE APRENDIZAGEM","Minhas mentorias"));
- if(state.demo){main.append(notice("Exemplo visual: Minha primeira loja no Roblox. Não é uma conversa real."));return;}
- if(!state.orgId)return;
- if(!state.trails.length){main.append(notice("Nenhuma mentoria visível para este perfil no ambiente de testes."));return;}
- const list=el("div","list-of-trails");
- state.trails.forEach(t=>{
-  const card=el("div","trail-item");card.append(el("strong","",t.title||"Mentoria"));
-  card.append(el("p","meta","Criada em "+new Date(t.created_at).toLocaleDateString("pt-BR")));
-  card.append(el("p","meta","Este protótipo consulta títulos e não carrega conteúdo das conversas."));
-  list.append(card);
- });
- main.append(list);
-}
+
 function renderPortfolio(main){
  main.append(heading("MINHAS CRIAÇÕES","Portfólio"));
  const book0=demoBook0();
@@ -381,7 +335,6 @@ function navigate(page){
  if(page==="inicio")renderHome(main);
  else if(page==="livros")renderBooks(main);
  else if(page==="projetos")renderProjects(main);
- else if(page==="mentoria")renderMentoria(main);
  else if(page==="portfolio")renderPortfolio(main);
  else renderGestao(main);
 }
