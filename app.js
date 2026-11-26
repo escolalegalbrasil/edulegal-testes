@@ -215,7 +215,7 @@ function renderHome(main){
   card.append(el("div","eyebrow","MEU PRIMEIRO PERCURSO"));
   card.append(el("h2","","Seu próximo projeto começa aqui"));
   card.append(el("p","sub","Explore os livros interativos, conheça possibilidades e escolha algo que gostaria de criar. As tarefas do projeto aparecerão depois no Backlog."));
-  // Sem tarefas vinculadas, o botão nunca direciona para mentorias.
+  // Sem tarefas vinculadas, mostrar a biblioteca como próximo passo.
   card.append(navButton("Explorar meus livros →","livros","cta"));
  }
  main.append(card);
