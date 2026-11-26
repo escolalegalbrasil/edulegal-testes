@@ -31,8 +31,8 @@ window.EduLegalDemoPlanning = (function () {
           tasks:Array.isArray(p.tasks)?p.tasks.slice(0,80).filter(t=>t&&typeof t.id==="string"&&typeof t.title==="string").map(t=>({
             id:t.id.slice(0,100),
             title:t.title.slice(0,120),
-            zone:t.zone==="today"?"today":"backlog",
-            status:STATUS.includes(t.status)?t.status:"nao_iniciada"
+            zone:(t.zone==="done"||t.status==="concluida")?"done":t.zone==="today"?"today":"backlog",
+            status:(t.zone==="done"||t.status==="concluida")?"concluida":STATUS.includes(t.status)?t.status:"nao_iniciada"
           })):[]
         }));
       }
@@ -61,7 +61,7 @@ window.EduLegalDemoPlanning = (function () {
         const id=choice+"-"+(i+1);
         rows.push({
           id,title:name,projectId:"book:"+choice,projectTitle:titles[choice]||"Projeto de livro",
-          source:"book",zone:today.has(id)?"today":"backlog",
+          source:"book",zone:own.bookStatus[id]==="concluida"?"done":today.has(id)?"today":"backlog",
           status:own.bookStatus[id]||"nao_iniciada",
           chapter:choice==="roblox"?CHAPTER_FOR_ROBLOX[i]??null:null
         });
@@ -77,7 +77,8 @@ window.EduLegalDemoPlanning = (function () {
     return {
       ...data, all:data.rows,
       today:data.rows.filter(t=>t.zone==="today"),
-      backlog:data.rows.filter(t=>t.zone==="backlog")
+      backlog:data.rows.filter(t=>t.zone==="backlog"),
+      done:data.rows.filter(t=>t.zone==="done")
     };
   }
   function projectById(d,id){return d.projects.find(p=>p.id===id);}
@@ -109,9 +110,15 @@ window.EduLegalDemoPlanning = (function () {
     rerender();
   }
   function changeZone(item,target,book,rerender){
-    if(!["today","backlog"].includes(target))return;
+    if(!["today","backlog","done"].includes(target)||item.zone===target)return;
     if(item.source==="book"){
       if(!book?.completedAt)return;
+      const d=read();
+      // Uma tarefa na coluna "Já terminei" é somente uma declaração de conclusão do aluno.
+      // Badges e domínio de habilidades dependerão de evidências e revisão posterior.
+      if(target==="done")d.bookStatus[item.id]="concluida";
+      else delete d.bookStatus[item.id];
+
       const prefix=book.choice+"-";
       const ids=book.choice&&Array.isArray(book.plan?.later)&&Array.isArray(book.plan?.today)
         ?[...book.plan.today,...book.plan.later].filter(id=>id.startsWith(prefix))
@@ -120,25 +127,22 @@ window.EduLegalDemoPlanning = (function () {
       const today=Array.isArray(book.plan?.today)?book.plan.today.filter(id=>id!==item.id):[];
       if(target==="today")today.push(item.id);
       book.plan={today,later:bookIds.filter(id=>!today.includes(id)),mode:"backlog-first"};
-      try{sessionStorage.setItem(BOOK0_STORE,JSON.stringify(book));}
-      catch(_){feedback="Não foi possível salvar o planejamento desta tarefa.";rerender();return;}
+      try{
+        sessionStorage.setItem(BOOK0_STORE,JSON.stringify(book));
+        if(!write(d)){rerender();return;}
+      }catch(_){feedback="Não foi possível salvar a mudança desta tarefa.";rerender();return;}
     }else{
       const d=read(),entry=taskById(d,item.id);
       if(!entry)return;
-      entry.task.zone=target;write(d);
+      entry.task.zone=target;
+      entry.task.status=target==="done"?"concluida":"nao_iniciada";
+      if(!write(d)){rerender();return;}
     }
-    feedback=target==="today"?"“"+item.title+"” está no seu plano de hoje.":"“"+item.title+"” voltou ao Backlog.";
-    rerender();
-  }
-  function changeStatus(item,status,rerender){
-    if(!STATUS.includes(status))return;
-    const d=read();
-    if(item.source==="book")d.bookStatus[item.id]=status;
-    else{
-      const e=taskById(d,item.id);if(!e)return;
-      e.task.status=status;
-    }
-    if(write(d))feedback="Registro atualizado. É você quem informa o andamento; isso não significa que a habilidade foi validada.";
+    feedback=target==="today"
+      ?"“"+item.title+"” está no seu plano de hoje."
+      :target==="backlog"
+      ?"“"+item.title+"” voltou ao Backlog."
+      :"“"+item.title+"” foi para “Já terminei”, segundo seu registro. Você pode retomar a tarefa quando quiser.";
     rerender();
   }
   function reorder(item,delta,book,rerender){
@@ -241,16 +245,18 @@ window.EduLegalDemoPlanning = (function () {
     filterWrap.append(filterLabel,select);main.append(filterWrap);
 
     const visible=rows.filter(t=>filter==="todos"||t.projectId===filter);
-    main.append(el("p","meta","Backlog: tarefas disponíveis. Vou fazer hoje: escolhas para este momento. Arraste os cartões ou use os botões. Você pode mudar o plano quando quiser."));
+    main.append(el("p","meta","Backlog: ideias e tarefas disponíveis. Vou fazer hoje: o que você escolheu realizar. Já terminei: tarefas que você declarou ter concluído. Arraste os cartões ou use os botões. É possível rever essas escolhas."));
     const grid=el("div","plan-grid");
-    for(const zone of ["backlog","today"]){
+    for(const zone of ["backlog","today","done"]){
       const col=el("section","plan-column");
       col.dataset.zone=zone;
-      col.append(el("h2","",zone==="backlog"?"Backlog":"Vou fazer hoje"));
+      col.append(el("h2","",zone==="backlog"?"Backlog":zone==="today"?"Vou fazer hoje":"Já terminei"));
       const tasks=visible.filter(t=>t.zone===zone);
       if(!tasks.length){
         col.append(el("p","meta",zone==="today"
           ?"Seu plano começa vazio. Escolha uma tarefa do Backlog e traga para cá."
+          :zone==="done"
+          ?"Quando terminar uma tarefa, coloque-a aqui. Você poderá voltar a trabalhar nela depois."
           :"Não há tarefas disponíveis aqui. Você pode criar um projeto e adicionar uma tarefa acima."));
       }
       for(const item of tasks){
@@ -260,24 +266,27 @@ window.EduLegalDemoPlanning = (function () {
         const tag=el("div","planner-task-project",item.projectTitle+(item.source==="own"?" · projeto próprio":" · livro"));
         const title=el("strong","",item.title);
         card.append(tag,title);
-        const current=el("div","planner-task-state");
-        const statusLabel=el("label","","Andamento:");statusLabel.htmlFor=freshId("andamento");
-        const statusSelect=el("select","planner-state-select");statusSelect.id=statusLabel.htmlFor;
-        for(const [value,label] of [["nao_iniciada","Ainda não comecei"],["fazendo","Estou fazendo"],["concluida","Concluí (meu registro)"]]){
-          const opt=el("option","",label);opt.value=value;statusSelect.append(opt);
+        if(zone==="done"){
+          card.append(el("p","meta","Conclusão registrada por você. Isso não significa que uma habilidade tenha sido validada."));
         }
-        statusSelect.value=item.status;statusSelect.addEventListener("change",()=>changeStatus(item,statusSelect.value,onRefresh));
-        current.append(statusLabel,statusSelect);card.append(current);
-        if(item.status==="concluida")card.append(el("p","meta","Concluída segundo seu registro; ainda não é uma avaliação de habilidade."));
         const actions=el("div","plan-actions");
-        actions.append(action(zone==="today"?"Voltar ao Backlog":"Fazer hoje",()=>changeZone(item,zone==="today"?"backlog":"today",book,onRefresh)));
-        if(zone==="today"){
+        if(zone==="backlog"){
+          actions.append(action("Fazer hoje",()=>changeZone(item,"today",book,onRefresh)));
+        }else if(zone==="today"){
+          actions.append(action("Já terminei ✓",()=>changeZone(item,"done",book,onRefresh)));
+          actions.append(action("Voltar ao Backlog",()=>changeZone(item,"backlog",book,onRefresh)));
           actions.append(action("↑ Antes",()=>reorder(item,-1,book,onRefresh)));
           actions.append(action("↓ Depois",()=>reorder(item,1,book,onRefresh)));
+        }else{
+          actions.append(action("Voltar a fazer",()=>changeZone(item,"today",book,onRefresh)));
+          actions.append(action("Voltar ao Backlog",()=>changeZone(item,"backlog",book,onRefresh)));
         }
+        // Os livros serão recriados no fluxo editorial; o link atual é apenas para uma prévia,
+        // não um compromisso com IDs/estrutura de capítulos antigos.
         if(item.source==="book"&&item.chapter!==null&&item.chapter!==undefined){
-          const link=el("a","soft-btn planner-book-link","Abrir atividade no livro ↗");
-          link.href="./livros/meu-primeiro-obby/?chapter="+encodeURIComponent(String(item.chapter));actions.append(link);
+          const link=el("a","soft-btn planner-book-link","Ver protótipo do livro ↗");
+          link.href="./livros/meu-primeiro-obby/";
+          actions.append(link);
         }else if(item.source==="own"){
           actions.append(action("Excluir tarefa",()=>removeTask(item,onRefresh),"soft-btn planner-delete"));
         }
