@@ -215,14 +215,14 @@
    const li=document.createElement("li");li.textContent=item;$("taskPreview").appendChild(li);
   }
   $("myDiscovery").value=state.reflection;
-  $("finishFeedback").textContent=info.available?"Você poderá abrir seu próximo livro a partir do dashboard.":"Este percurso é uma proposta. O livro específico ainda está em desenvolvimento; as primeiras tarefas já podem aparecer no seu planejamento de demonstração.";
+  $("finishFeedback").textContent=info.available?"Você poderá abrir seu próximo livro a partir do dashboard.":"Este percurso é uma proposta. O livro específico ainda está em desenvolvimento; as tarefas aparecerão no Backlog do seu planejamento de demonstração. Você escolherá quais fazer hoje.";
  }
  function makePlan(){
   const info=AREA_INFO[state.choice];
   if(!info)return {today:[],later:[]};
-  // No começo, apenas duas sugestões no dia; o aluno poderá mudar no dashboard.
+  // O livro sugere todas as tarefas; o aluno escolhe o que fará hoje no quadro de Projetos.
   const ids=info.preview.map((_,index)=>state.choice+"-"+String(index+1));
-  return {today:ids.slice(0,2),later:ids.slice(2)};
+  return {today:[],later:ids,mode:"backlog-first"};
  }
  $("finish").onclick=()=>{
   if(!state.choice){showStep(3);return;}
